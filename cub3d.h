@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/20 17:39:58 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/20 19:07:52 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,25 @@ typedef struct s_windows
 	int			height;
 }				t_windows;
 
-typedef struct s_img
+typedef struct	s_map
+{
+	char		**map;
+	void		*north;
+	void		*south;
+	void		*east;
+	void		*west;
+	void		*sprite;
+	int			floor;
+	int			ceil;
+}				t_map;
+
+typedef struct	s_player
+{
+	double		x;
+	double		y;
+}				t_player;
+
+typedef struct	s_img
 {
 	void		*id;
 	void		*mlx;
@@ -41,6 +59,13 @@ typedef struct s_rgb
 	double		green;
 	double		bleu;
 }				t_rgb;
+
+typedef struct	game
+{
+	t_windows	*win;
+	t_map		*map;
+	t_player	*ply;
+}				t_game;
 
 t_windows		*create_windows(void *init, int width, int height, char *title);
 void			*free_windows(t_windows	*windows);
