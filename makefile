@@ -1,4 +1,7 @@
-SCRS		= main.c
+SCRS		= 	main.c \
+				ft_img.c \
+				ft_print.c \
+				ft_windows.c
 
 OBJS		= ${SCRS:.c=.o}
 
