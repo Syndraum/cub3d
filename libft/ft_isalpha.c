@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roalvare <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/07 13:10:56 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/07 15:28:09 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include <ctype.h>
 
-t_map	*creat_map(int fd)
+int	ft_isalpha(int c)
 {
-	t_map	*map;
-
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	return (0);
 }

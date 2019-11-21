@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/09 11:10:31 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/22 11:08:11 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	t_map	*map;
+	unsigned char	*cursor_s1;
+	unsigned char	*cursor_s2;
+	size_t			i;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	cursor_s1 = (unsigned char*)s1;
+	cursor_s2 = (unsigned char*)s2;
+	i = 0;
+	while (i < n)
+	{
+		if (cursor_s1[i] != cursor_s2[i])
+			return (cursor_s1[i] - cursor_s2[i]);
+		i++;
+	}
+	return (0);
 }

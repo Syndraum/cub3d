@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/07 12:39:47 by roalvare          #+#    #+#             */
+/*   Updated: 2019/11/14 17:21:06 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+size_t	ft_strlen(const char *s)
 {
-	t_map	*map;
+	size_t count;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	count = 0;
+	if (s == NULL)
+		return (0);
+	while (s[count])
+		count++;
+	return (count);
 }

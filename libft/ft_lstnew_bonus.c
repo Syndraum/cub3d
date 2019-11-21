@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/11 14:03:00 by syndraum          #+#    #+#             */
+/*   Updated: 2019/10/12 10:43:27 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+t_list	*ft_lstnew(void *content)
 {
-	t_map	*map;
+	t_list	*elmt;
 
-	if (!(map = malloc(sizeof(t_map))))
+	if (!(elmt = ft_calloc(1, sizeof(t_list))))
 		return (NULL);
-	return (map);
+	elmt->content = content;
+	elmt->next = NULL;
+	return (elmt);
 }

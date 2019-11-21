@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/14 14:56:18 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/14 15:44:05 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	t_map	*map;
+	unsigned char		*crs_dst;
+	const unsigned char	*crs_src;
+	unsigned char		stop_c;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	crs_src = src;
+	crs_dst = dst;
+	stop_c = (unsigned char)c;
+	while (n-- > 0)
+	{
+		*crs_dst++ = *crs_src++;
+		if (*(crs_src - 1) == stop_c)
+			return (crs_dst);
+	}
+	return (NULL);
 }

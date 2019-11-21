@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/09 13:55:44 by roalvare          #+#    #+#             */
+/*   Updated: 2019/11/14 17:19:21 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+char	*ft_strdup(const char *s1)
 {
-	t_map	*map;
+	char *copy;
 
-	if (!(map = malloc(sizeof(t_map))))
+	copy = NULL;
+	if (s1 == NULL)
 		return (NULL);
-	return (map);
+	if (!(copy = malloc(sizeof(char) * (ft_strlen(s1) + 1))))
+		return (copy);
+	ft_strlcpy(copy, s1, (ft_strlen(s1) + 1));
+	return (copy);
 }

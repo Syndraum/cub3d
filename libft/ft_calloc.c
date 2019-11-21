@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: syndraum <syndraum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/09 15:30:58 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/20 20:05:33 by syndraum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_map	*map;
+	char	*str;
 
-	if (!(map = malloc(sizeof(t_map))))
+	str = NULL;
+	if (!(str = malloc(count * size)))
 		return (NULL);
-	return (map);
+	ft_bzero(str, count * size);
+	return (str);
 }

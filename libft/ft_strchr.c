@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: roalvare <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/07 17:17:51 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/07 17:56:29 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-t_map	*creat_map(int fd)
+char	*ft_strchr(const char *s, int c)
 {
-	t_map	*map;
+	int		i;
+	char	*chaine;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	i = -1;
+	chaine = (char*)s;
+	while (chaine[++i])
+	{
+		if (chaine[i] == c)
+			return (&chaine[i]);
+	}
+	if (chaine[i] == c)
+		return (&chaine[i]);
+	return (0);
 }

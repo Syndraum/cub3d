@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/13 13:44:01 by syndraum          #+#    #+#             */
+/*   Updated: 2019/10/14 12:57:47 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_map	*map;
+	t_list *cursor;
+	t_list *next_cursor;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	cursor = *lst;
+	while (cursor != NULL)
+	{
+		next_cursor = cursor->next;
+		ft_lstdelone(cursor, del);
+		cursor = next_cursor;
+	}
+	*lst = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/20 17:48:00 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/21 12:38:47 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		main(int argc, char *argv[])
 
 	if (argc < 2)
 	{
-		perror(strerror(1));
+		ft_putendl_fd(strerror(22), 2);
 		return(EXIT_FAILURE);
 	}
 	(void)argv;

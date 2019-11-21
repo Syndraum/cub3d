@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/08 14:58:50 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/15 13:02:48 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	t_map	*map;
+	size_t	len_dst;
+	size_t	len_src;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	len_dst = ft_strlen(dst);
+	len_src = ft_strlen(src);
+	if (len_dst >= dstsize)
+		return (len_src + dstsize);
+	if (len_src < dstsize - len_dst)
+		ft_strlcpy(dst + len_dst, src, len_src + 1);
+	else
+	{
+		ft_strlcpy(dst + len_dst, src, dstsize - len_dst);
+	}
+	return (len_dst + len_src);
 }

@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/10 13:32:50 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/22 16:30:06 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	t_map	*map;
+	unsigned int	len;
+	char			*str;
 
-	if (!(map = malloc(sizeof(t_map))))
+	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	return (map);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	str = NULL;
+	if (!(str = ft_calloc(sizeof(char), len + 1)))
+		return (NULL);
+	ft_strlcat(str, s1, ft_strlen(s1) + 1);
+	ft_strlcat(str, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (str);
 }

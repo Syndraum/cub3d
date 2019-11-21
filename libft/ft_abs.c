@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/11 13:09:22 by syndraum          #+#    #+#             */
+/*   Updated: 2019/10/14 13:06:03 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-t_map	*creat_map(int fd)
+int		ft_abs(int n)
 {
-	t_map	*map;
-
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	if (n < 0)
+		return (-n);
+	return (n);
 }

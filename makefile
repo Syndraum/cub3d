@@ -1,7 +1,10 @@
 SCRS		= 	main.c \
 				ft_img.c \
 				ft_print.c \
-				ft_windows.c
+				ft_windows.c \
+				${GNL}
+
+GNL			= get_next_line.c
 
 OBJS		= ${SCRS:.c=.o}
 
@@ -13,15 +16,21 @@ CC			= gcc
 
 CFLAG		= -Wall -Werror -Wextra
 
+DIR_LIBFT	= libft
+
 all:		${NAME}
 
 .c.o:
 	${CC} ${CFLAG} -c  $< -o ${<:.c=.o}
 
-${NAME}:	${OBJS}
-	${CC} -lmlx -framework OpenGL -framework AppKit ${OBJS} -o ${NAME}
+${NAME}:	lib ${OBJS}
+	${CC} -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} -o ${NAME}
 
-clean:	
+lib:
+	make -C $(DIR_LIBFT) all
+
+clean:
+	make -C $(DIR_LIBFT) clean
 	${RM} ${OBJS}
 
 fclean:		clean

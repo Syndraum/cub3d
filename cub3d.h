@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/20 19:07:52 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/21 11:53:09 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include "get_next_line.h"
+#include "libft/libft.h"
 
 typedef struct s_windows
 {

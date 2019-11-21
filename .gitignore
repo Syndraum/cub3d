@@ -4,5 +4,4 @@
 *.dylib
 *.swiftdoc
 *.swiftmodule
-mlx_beta
-minilibx
+gradiant.c

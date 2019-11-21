@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_map.c                                           :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:06:37 by roalvare         ###   ########.fr       */
+/*   Created: 2019/10/08 15:16:04 by roalvare          #+#    #+#             */
+/*   Updated: 2019/10/22 11:11:25 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-t_map	*creat_map(int fd)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	t_map	*map;
+	size_t	i;
+	int		j;
 
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
-	return (map);
+	i = 0;
+	if (*needle == 0)
+		return ((char*)haystack);
+	while (haystack[i] && i < len)
+	{
+		j = 0;
+		while (needle[j] != 0 && needle[j] == haystack[j + i] && i + j < len)
+			j++;
+		if (needle[j] == 0)
+			return ((char*)&haystack[i]);
+		i++;
+	}
+	return (0);
 }
