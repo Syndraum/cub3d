@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 15:30:42 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:45:56 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int		main(int argc, char *argv[])
 {
-	void		*mlx;
-	t_game		*game;
+	t_game		game;
 	int			fd;
 
 	if (argc < 2)
@@ -24,21 +23,16 @@ int		main(int argc, char *argv[])
 		return (ft_error(E2BIG));
 	if (0 > (fd = open(argv[1], O_RDONLY)))
 		return (ft_error(-1));
-	if (!(mlx = mlx_init()))
+	if (!(game.mlx = mlx_init()))
 		return (EXIT_FAILURE);
-	game = ft_calloc(sizeof(t_game), 1);
-	game->win = ft_calloc(sizeof(t_windows), 1);
-	game->win->mlx = mlx;
-	if (!(game->map = ft_calloc(sizeof(t_map), 1)))
-		return (0); //
-	if (!(set_map(fd, game)))
+	game.win.mlx = game.mlx;
+	if (!(set_map(fd, &game)))
 		return(EXIT_FAILURE);
 	ft_putendl_fd("[END]", 1);
-	if (!(create_windows(game->win, "cub3d")))
+	if (!(create_windows(&game.win, "cub3d")))
 		return (EXIT_FAILURE);
-	mlx_key_hook(game->win->id, &key_hook, game->win);
-	mlx_loop(mlx);
-	// free_windows(windows);
+	mlx_key_hook(game.win.id, key_hook, &game);
+	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
 }
 
@@ -51,23 +45,22 @@ int		ft_error(int error)
 	return (EXIT_FAILURE);
 }
 
-int	key_hook(int keycode, void *param)
+int	key_hook(int keycode, t_game *game)
 {	
-	t_windows	*windows;
-
-	windows = (t_windows*)param; 
 	printf("[KEY] = %d\n", keycode);
+	(void)game;
 	if (keycode == 53)
 	{
-		mlx_destroy_window(windows->mlx, windows->id);
+		mlx_destroy_window(game->mlx, game->win.id);
 		exit(EXIT_SUCCESS);
 	}
-	else if (keycode == 0)
-	{
-		t_img *img = create_img(windows->mlx);
-		set_image(img, windows->width, windows->height);
-		print_color(img, 0xad5d95);
-		mlx_put_image_to_window(windows->mlx, windows->id, img->id, 0, 0);
-	}
-	return (EXIT_SUCCESS);
+	// else if (keycode == 0)
+	// {
+	// 	printf("[KEY] = %d\n", keycode);
+	// 	// t_img *img = create_img(windows->mlx);
+	// 	// set_image(img, windows->width, windows->height);
+	// 	// print_color(img, 0xad5d95);
+	// 	// mlx_put_image_to_window(windows->mlx, windows->id, img->id, 0, 0);
+	// }
+	return (1);
 }

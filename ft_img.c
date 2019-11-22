@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 16:01:38 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:27:54 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_img	*create_img(void *mlx)
 void	*set_image(t_img *img, int width, int height)
 {
 	if (!(img->id = mlx_new_image(img->mlx, width, height)))
-		return (free_img(img));
+		return (NULL);
 	img->width = width;
 	img->height = height;
 	return (img);
@@ -39,15 +39,8 @@ void	*set_xmp(t_img *img, char *path)
 	img->id = mlx_xpm_file_to_image(img->mlx, path, &img->width, &img->height);
 	// ft_putendl_fd("[OK]", 2);
 	if (img->id == NULL)
-		return (free_img(img));
+		return (NULL);
 	return (img);
-}
-
-void	*free_img(t_img *img)
-{
-	free(img->id);
-	free(img);
-	return (NULL);
 }
 
 void	img_pixel_put(t_img *img, int x, int y, int color)

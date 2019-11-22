@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 15:58:31 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:37:13 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ typedef struct s_windows
 typedef struct	s_map
 {
 	char		**map;
-	t_img		*north;
-	t_img		*south;
-	t_img		*east;
-	t_img		*west;
-	t_img		*sprite;
+	t_img		north;
+	t_img		south;
+	t_img		east;
+	t_img		west;
+	t_img		sprite;
 	int			floor;
 	int			ceil;
 }				t_map;
@@ -65,9 +65,10 @@ typedef struct s_rgb
 
 typedef struct	game
 {
-	t_windows	*win;
-	t_map		*map;
-	t_player	*ply;
+	void		*mlx;
+	t_windows	win;
+	t_map		map;
+	t_player	ply;
 }				t_game;
 
 t_windows		*create_windows(t_windows *win, char *title);
@@ -83,7 +84,7 @@ void			*free_img(t_img *img);
 void			img_pixel_put(t_img *img, int x, int y, int color);
 
 int				ft_error(int error);
-int				key_hook(int keycode, void *param);
+int				key_hook(int keycode, t_game *game);
 
 t_map			*set_map(int fd, t_game *game);
 char			extract_line(char *str, t_game *game);

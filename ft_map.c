@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 18:10:47 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:27:01 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@ t_map	*set_map(int fd, t_game *game)
 	char	*line;
 	char	ext;
 
-	game->map->north = create_img(game->win->mlx); //
-	game->map->south = create_img(game->win->mlx); //
-	game->map->east = create_img(game->win->mlx); //
-	game->map->west = create_img(game->win->mlx); //
-	game->map->sprite = create_img(game->win->mlx); //
+	game->map.north.mlx = game->mlx; //
+	game->map.south.mlx = game->mlx; //
+	game->map.east.mlx = game->mlx; //
+	game->map.west.mlx = game->mlx; //
+	game->map.sprite.mlx = game->mlx; //
 	while (get_next_line(fd, &line) == 1)
 	{
-		if (1 != (ext = extract_line(line, game)))
+		if (ft_strnstr(line, "1", 1) == line)
+			printf("[MAP]\n");
+		else if (1 != (ext = extract_line(line, game)))
 		{
 			ft_putendl_fd("Error\nMessage a ajouter", 2);
 			free(line);
@@ -32,32 +34,32 @@ t_map	*set_map(int fd, t_game *game)
 		}
 		free(line);
 	}
-	printf("[F] = %d\n", game->map->floor);
-	printf("[C] = %d\n", game->map->ceil);
-	return (game->map);
+	return (&game->map);
 }
 
 char	extract_line(char *str, t_game *game)
 {
 	int rsl;
 
-	rsl = 1;
+	rsl = 0;
 	if (ft_strnstr(str, "R", 1) == str)
 		rsl = extract_resolution(str, game);
 	else if (ft_strnstr(str, "NO", 2) == str)
-		rsl = extract_texture(str, game->map->north, "NO");
+		rsl = extract_texture(str, &game->map.north, "NO");
 	else if (ft_strnstr(str, "SO", 2) == str)
-		rsl = extract_texture(str, game->map->south, "SO");
+		rsl = extract_texture(str, &game->map.south, "SO");
 	else if (ft_strnstr(str, "WE", 2) == str)
-		rsl = extract_texture(str, game->map->west, "WE");
+		rsl = extract_texture(str, &game->map.west, "WE");
 	else if (ft_strnstr(str, "EA", 2) == str)
-		rsl = extract_texture(str, game->map->east, "EA");
+		rsl = extract_texture(str, &game->map.east, "EA");
 	else if (ft_strnstr(str, "S", 1) == str)
-		rsl = extract_texture(str, game->map->sprite, "S");
+		rsl = extract_texture(str, &game->map.sprite, "S");
 	else if (ft_strnstr(str, "F", 1) == str)
-		rsl = extract_color(str, game->map, 'F');
+		rsl = extract_color(str, &game->map, 'F');
 	else if (ft_strnstr(str, "C", 1) == str)
-		rsl = extract_color(str, game->map, 'C');
+		rsl = extract_color(str, &game->map, 'C');
+	else if (ft_strnstr(str, "", 1) == str)
+		rsl = 1;
 	return (rsl);
 }
 
@@ -69,7 +71,7 @@ char	extract_resolution(char *str, t_game *game)
 	while (*cursor == ' ')
 		cursor++;
 	if (isnumber(*cursor))
-		game->win->width = ft_atoi(cursor);
+		game->win.width = ft_atoi(cursor);
 	else
 		return (0);
 	while (isnumber(*cursor))
@@ -77,7 +79,7 @@ char	extract_resolution(char *str, t_game *game)
 	while (*cursor == ' ')
 		cursor++;
 	if (isnumber(*cursor))
-		game->win->height = ft_atoi(cursor);
+		game->win.height = ft_atoi(cursor);
 	else
 		return (0);
 	return (1);
@@ -122,20 +124,4 @@ char	extract_color(char *str, t_map *map, char type)
 	else if (type == 'C')
 		map->ceil = tab[2] + (tab[1] * 256) + (tab[0] * 65536);
 	return (1);
-}
-
-void	*free_map(t_map *map)
-{
-	while (*map->map != NULL)
-	{
-		free(*map->map);
-		(map->map)++;
-	}
-	// free(map->north);
-	// free(map->south);
-	// free(map->west);
-	// free(map->east);
-	// free(map->sprite);
-	free(map);
-	return (NULL);
 }
