@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 13:04:07 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:49:10 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	*set_xmp(t_img *img, char *path)
 {
 	ft_putendl_fd(path, 2);
 	img->id = mlx_xpm_file_to_image(img->mlx, path, &img->width, &img->height);
+	ft_putendl_fd("[OK]", 2);
 	if (img->id == NULL)
 		return (free_img(img));
 	return (img);

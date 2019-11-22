@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 10:55:10 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 15:25:08 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		main(int argc, char *argv[])
 {
-	void		*link_id;
+	void		*mlx;
 	t_game		*game;
-	t_windows	*windows;
+	// t_windows	*windows;
 	int			fd;
 
 	if (argc < 2)
@@ -25,18 +25,21 @@ int		main(int argc, char *argv[])
 		return (ft_error(E2BIG));
 	if (0 > (fd = open(argv[1], O_RDONLY)))
 		return (ft_error(-1));
-	game  = ft_calloc(sizeof(t_game), 1);
+	if (!(mlx = mlx_init()))
+		return (EXIT_FAILURE);
+	game = ft_calloc(sizeof(t_game), 1);
 	game->win = ft_calloc(sizeof(t_windows), 1);
+	game->win->link_id = mlx;
 	if (!(game->map = ft_calloc(sizeof(t_map), 1)))
 		return (0); //
-	set_map(fd, game);
-	if (!(link_id = mlx_init()))
+	if (!(set_map(fd, game)))
+		return(EXIT_FAILURE);
+	ft_putendl_fd("[END]", 1);
+	if (!(create_windows(game->win, "cub3d")))
 		return (EXIT_FAILURE);
-	if (!(windows = create_windows(link_id, 1080, 720, "cub3d")))
-		return (EXIT_FAILURE);
-	mlx_key_hook(windows->id, &key_hook, windows);
-	mlx_loop(link_id);
-	free_windows(windows);
+	mlx_key_hook(game->win->id, &key_hook, game->win);
+	mlx_loop(mlx);
+	// free_windows(windows);
 	return (EXIT_SUCCESS);
 }
 

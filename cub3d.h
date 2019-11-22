@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 11:25:45 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 15:21:05 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct	s_map
 {
 	char		**map;
 	t_img		*north;
-	void		*south;
-	void		*east;
-	void		*west;
-	void		*sprite;
+	t_img		*south;
+	t_img		*east;
+	t_img		*west;
+	t_img		*sprite;
 	int			floor;
 	int			ceil;
 }				t_map;
@@ -70,7 +70,7 @@ typedef struct	game
 	t_player	*ply;
 }				t_game;
 
-t_windows		*create_windows(void *init, int width, int height, char *title);
+t_windows		*create_windows(t_windows *win, char *title);
 void			*free_windows(t_windows	*windows);
 
 void 			print_colunm(t_img *windows, int colunm, int color);

@@ -22,10 +22,10 @@ DIR_LIBFT	= libft
 all:		${NAME}
 
 .c.o:
-	${CC} ${CFLAG} -c  $< -o ${<:.c=.o}
+	${CC} -g ${CFLAG} -c  $< -o ${<:.c=.o}
 
 ${NAME}:	lib ${OBJS}
-	${CC} -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} -o ${NAME}
+	${CC} -g -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} -o ${NAME}
 
 lib:
 	make -C $(DIR_LIBFT) all

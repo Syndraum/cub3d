@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 12:59:46 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:59:10 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ t_map	*set_map(int fd, t_game *game)
 	char	ext;
 
 	game->map->north = create_img(game->win->link_id); //
+	game->map->south = create_img(game->win->link_id); //
+	game->map->east = create_img(game->win->link_id); //
+	game->map->west = create_img(game->win->link_id); //
+	game->map->sprite = create_img(game->win->link_id); //
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (1 != (ext = extract_line(line, game)))
@@ -48,13 +52,13 @@ char	extract_line(char *str, t_game *game)
 	else if (ft_strnstr(str, "NO", 2) == str)
 		rsl = extract_texture(str, game->map->north, "NO");
 	else if (ft_strnstr(str, "SO", 2) == str)
-		rsl = extract_texture(str, game->map->north, "SO");
+		rsl = extract_texture(str, game->map->south, "SO");
 	else if (ft_strnstr(str, "WE", 2) == str)
-		rsl = extract_texture(str, game->map->north, "WE");
+		rsl = extract_texture(str, game->map->west, "WE");
 	else if (ft_strnstr(str, "EA", 2) == str)
-		rsl = extract_texture(str, game->map->north, "EA");
+		rsl = extract_texture(str, game->map->east, "EA");
 	else if (ft_strnstr(str, "S", 1) == str)
-		rsl = extract_texture(str, game->map->north, "S");
+		rsl = extract_texture(str, game->map->sprite, "S");
 	return (rsl);
 }
 
@@ -84,8 +88,6 @@ int		extract_texture(char *str, t_img *img, char *type)
 {
 	char	*cursor;
 
-	if (!(img = ft_calloc(sizeof(t_img), 1)))
-		return (0);
 	cursor = str + ft_strlen(type);
 	while (*cursor == ' ')
 		cursor++;
