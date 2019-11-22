@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 15:21:05 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 15:58:31 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct	s_img
 
 typedef struct s_windows
 {
-	void		*link_id;
+	void		*mlx;
 	void		*id;
 	int			width;
 	int			height;
@@ -88,7 +88,8 @@ int				key_hook(int keycode, void *param);
 t_map			*set_map(int fd, t_game *game);
 char			extract_line(char *str, t_game *game);
 char			extract_resolution(char *str, t_game *game);
-int				extract_texture(char *str, t_img *img, char *type);
+char			extract_texture(char *str, t_img *img, char *type);
+char			extract_color(char *str, t_map *map, char type);
 void			*free_map(t_map *map);
 
 #endif

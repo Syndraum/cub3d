@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 14:59:10 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 18:10:47 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,23 @@ t_map	*set_map(int fd, t_game *game)
 	char	*line;
 	char	ext;
 
-	game->map->north = create_img(game->win->link_id); //
-	game->map->south = create_img(game->win->link_id); //
-	game->map->east = create_img(game->win->link_id); //
-	game->map->west = create_img(game->win->link_id); //
-	game->map->sprite = create_img(game->win->link_id); //
+	game->map->north = create_img(game->win->mlx); //
+	game->map->south = create_img(game->win->mlx); //
+	game->map->east = create_img(game->win->mlx); //
+	game->map->west = create_img(game->win->mlx); //
+	game->map->sprite = create_img(game->win->mlx); //
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (1 != (ext = extract_line(line, game)))
 		{
-			ft_putendl_fd("Error", 2);
-			ft_putendl_fd(line, 2);
-			ft_error(-1);
-			if (ext == -1)
-				ft_putendl_fd("Wrong resolution format", 2);
-			else if (ext == -2)
-				ft_putendl_fd("North texture not found", 2);
+			ft_putendl_fd("Error\nMessage a ajouter", 2);
 			free(line);
 			return (NULL);
 		}
 		free(line);
 	}
-	printf("[WIDTH] = %d\n[HEIGHT] = %d\n", game->map->north->width, game->map->north->height);
+	printf("[F] = %d\n", game->map->floor);
+	printf("[C] = %d\n", game->map->ceil);
 	return (game->map);
 }
 
@@ -59,6 +54,10 @@ char	extract_line(char *str, t_game *game)
 		rsl = extract_texture(str, game->map->east, "EA");
 	else if (ft_strnstr(str, "S", 1) == str)
 		rsl = extract_texture(str, game->map->sprite, "S");
+	else if (ft_strnstr(str, "F", 1) == str)
+		rsl = extract_color(str, game->map, 'F');
+	else if (ft_strnstr(str, "C", 1) == str)
+		rsl = extract_color(str, game->map, 'C');
 	return (rsl);
 }
 
@@ -84,7 +83,7 @@ char	extract_resolution(char *str, t_game *game)
 	return (1);
 }
 
-int		extract_texture(char *str, t_img *img, char *type)
+char	extract_texture(char *str, t_img *img, char *type)
 {
 	char	*cursor;
 
@@ -93,6 +92,35 @@ int		extract_texture(char *str, t_img *img, char *type)
 		cursor++;
 	if (!(set_xmp(img, cursor)))
 		return (0);
+	return (1);
+}
+
+char	extract_color(char *str, t_map *map, char type)
+{
+	char			*cursor;
+	unsigned char	tab[3];
+
+	cursor = str + 1;
+	while (*cursor == ' ')
+		cursor++;
+	if (!isnumber(*cursor) || 255 < (tab[0] = ft_atoi(cursor)))
+		return (0);
+	while (isnumber(*cursor))
+		cursor++;
+	if (*cursor == ',')
+		cursor++;
+	if (!isnumber(*cursor) || 255 < (tab[1] = ft_atoi(cursor)))
+		return (0);
+	while (isnumber(*cursor))
+		cursor++;
+	if (*cursor == ',')
+		cursor++;
+	if (!isnumber(*cursor) || 255 < (tab[2] = ft_atoi(cursor)))
+		return (0);
+	if (type == 'F')
+		map->floor = tab[2] + (tab[1] * 256) + (tab[0] * 65536);
+	else if (type == 'C')
+		map->ceil = tab[2] + (tab[1] * 256) + (tab[0] * 65536);
 	return (1);
 }
 

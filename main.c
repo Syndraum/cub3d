@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 15:25:08 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 15:30:42 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		main(int argc, char *argv[])
 {
 	void		*mlx;
 	t_game		*game;
-	// t_windows	*windows;
 	int			fd;
 
 	if (argc < 2)
@@ -29,7 +28,7 @@ int		main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	game = ft_calloc(sizeof(t_game), 1);
 	game->win = ft_calloc(sizeof(t_windows), 1);
-	game->win->link_id = mlx;
+	game->win->mlx = mlx;
 	if (!(game->map = ft_calloc(sizeof(t_map), 1)))
 		return (0); //
 	if (!(set_map(fd, game)))
@@ -60,15 +59,15 @@ int	key_hook(int keycode, void *param)
 	printf("[KEY] = %d\n", keycode);
 	if (keycode == 53)
 	{
-		mlx_destroy_window(windows->link_id, windows->id);
+		mlx_destroy_window(windows->mlx, windows->id);
 		exit(EXIT_SUCCESS);
 	}
 	else if (keycode == 0)
 	{
-		t_img *img = create_img(windows->link_id);
+		t_img *img = create_img(windows->mlx);
 		set_image(img, windows->width, windows->height);
 		print_color(img, 0xad5d95);
-		mlx_put_image_to_window(windows->link_id, windows->id, img->id, 0, 0);
+		mlx_put_image_to_window(windows->mlx, windows->id, img->id, 0, 0);
 	}
 	return (EXIT_SUCCESS);
 }

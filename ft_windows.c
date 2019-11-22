@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:47:50 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 15:20:37 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 15:31:40 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_windows	*create_windows(t_windows *win, char *title)
 {
-	if (!(win->id = mlx_new_window(win->link_id, win->width, win->height, title)))
+	if (!(win->id = mlx_new_window(win->mlx, win->width, win->height, title)))
 		return (free_windows(win));
 	return (win);
 }
