@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 12:38:47 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 10:55:10 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,21 @@
 int		main(int argc, char *argv[])
 {
 	void		*link_id;
+	t_game		*game;
 	t_windows	*windows;
+	int			fd;
 
 	if (argc < 2)
-	{
-		ft_putendl_fd(strerror(22), 2);
-		return(EXIT_FAILURE);
-	}
-	(void)argv;
+		return (ft_error(ENOENT));
+	else if (argc > 3)
+		return (ft_error(E2BIG));
+	if (0 > (fd = open(argv[1], O_RDONLY)))
+		return (ft_error(-1));
+	game  = ft_calloc(sizeof(t_game), 1);
+	game->win = ft_calloc(sizeof(t_windows), 1);
+	if (!(game->map = ft_calloc(sizeof(t_map), 1)))
+		return (0); //
+	set_map(fd, game);
 	if (!(link_id = mlx_init()))
 		return (EXIT_FAILURE);
 	if (!(windows = create_windows(link_id, 1080, 720, "cub3d")))
@@ -31,6 +38,15 @@ int		main(int argc, char *argv[])
 	mlx_loop(link_id);
 	free_windows(windows);
 	return (EXIT_SUCCESS);
+}
+
+int		ft_error(int error)
+{
+	if (error == -1 )
+		perror("");
+	else if (error <= 102)
+		ft_putendl_fd(strerror(error), 2);
+	return (EXIT_FAILURE);
 }
 
 int	key_hook(int keycode, void *param)
@@ -46,8 +62,9 @@ int	key_hook(int keycode, void *param)
 	}
 	else if (keycode == 0)
 	{
-		t_img *img = create_img(windows->link_id, windows->width, windows->height);
-		print_color(img, 0x45E7ad);
+		t_img *img = create_img(windows->link_id);
+		set_image(img, windows->width, windows->height);
+		print_color(img, 0xad5d95);
 		mlx_put_image_to_window(windows->link_id, windows->id, img->id, 0, 0);
 	}
 	return (EXIT_SUCCESS);

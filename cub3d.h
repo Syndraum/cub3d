@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/21 11:53:09 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 11:25:45 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <sys/errno.h>
 #include "get_next_line.h"
 #include "libft/libft.h"
+
+typedef struct	s_img
+{
+	void		*id;
+	void		*mlx;
+	int			width;
+	int			height;
+}				t_img;
 
 typedef struct s_windows
 {
@@ -32,7 +41,7 @@ typedef struct s_windows
 typedef struct	s_map
 {
 	char		**map;
-	void		*north;
+	t_img		*north;
 	void		*south;
 	void		*east;
 	void		*west;
@@ -46,14 +55,6 @@ typedef struct	s_player
 	double		x;
 	double		y;
 }				t_player;
-
-typedef struct	s_img
-{
-	void		*id;
-	void		*mlx;
-	int			width;
-	int			height;
-}				t_img;
 
 typedef struct s_rgb
 {
@@ -72,17 +73,22 @@ typedef struct	game
 t_windows		*create_windows(void *init, int width, int height, char *title);
 void			*free_windows(t_windows	*windows);
 
-int				key_hook(int keycode, void *param);
-
 void 			print_colunm(t_img *windows, int colunm, int color);
 void			print_color(t_img *windows, int color);
 
-t_img			*create_img(void *mlx, int width, int height);
+t_img			*create_img(void *mlx);
+void			*set_image(t_img *img, int width, int height);
+void			*set_xmp(t_img *img, char *path);
 void			*free_img(t_img *img);
 void			img_pixel_put(t_img *img, int x, int y, int color);
 
-void	print_line(t_windows *windows, void *img, int line, int color);
+int				ft_error(int error);
+int				key_hook(int keycode, void *param);
 
-void	print_gradiant(t_windows *windows, int color1, int color2, int begin, int end);
+t_map			*set_map(int fd, t_game *game);
+char			extract_line(char *str, t_game *game);
+char			extract_resolution(char *str, t_game *game);
+int				extract_texture(char *str, t_img *img, char *type);
+void			*free_map(t_map *map);
 
 #endif

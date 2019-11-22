@@ -6,23 +6,39 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/20 17:39:31 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 13:04:07 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_img	*create_img(void *mlx, int width, int height)
+t_img	*create_img(void *mlx)
 {
 	t_img	*img;
 
 	if (!(img = malloc(sizeof(t_img))))
 		return (NULL);
-	if (!(img->id = mlx_new_image(mlx, width, height)))
-		return (free_img(img));
 	img->mlx = mlx;
+	img->width = 0;
+	img->height = 0;
+	return (img);
+}
+
+void	*set_image(t_img *img, int width, int height)
+{
+	if (!(img->id = mlx_new_image(img->mlx, width, height)))
+		return (free_img(img));
 	img->width = width;
 	img->height = height;
+	return (img);
+}
+
+void	*set_xmp(t_img *img, char *path)
+{
+	ft_putendl_fd(path, 2);
+	img->id = mlx_xpm_file_to_image(img->mlx, path, &img->width, &img->height);
+	if (img->id == NULL)
+		return (free_img(img));
 	return (img);
 }
 

@@ -4,4 +4,6 @@
 *.dylib
 *.swiftdoc
 *.swiftmodule
+*.xpm
+*.cub
 gradiant.c

@@ -2,6 +2,7 @@ SCRS		= 	main.c \
 				ft_img.c \
 				ft_print.c \
 				ft_windows.c \
+				ft_map.c \
 				${GNL}
 
 GNL			= get_next_line.c
