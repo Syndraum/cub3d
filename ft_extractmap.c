@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 15:30:31 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 18:47:13 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,47 @@ char	*extract_line_map(char *line, char ***map)
 	return (NULL);
 }
 
+char	*analize_map(char **map)
+{
+	size_t	len;
+	char	*cursor;
+	int		lenm;
+
+	len = ft_strlen(*map);
+	lenm = ft_tablen(map);
+	printf("=============\n");
+	while (*map)
+	{
+		cursor = *map;
+		printf("[MAP] = %s\t", *map);
+		if (len != ft_strlen(*map))
+			return ("Wrong lenght line in map");
+		if (*cursor != '1' || cursor[ft_strlen(cursor) - 1] != '1')
+			return ("Border map error");
+		while (*cursor)
+		{
+			if ((ft_tablen(map) == lenm || ft_tablen(map) == 1) && *cursor != '1')
+				return ("Border map error");
+			cursor++;
+		}
+		map++;
+	}
+	return (NULL);
+}
+
 char	*extract_map(int fd, char *line, t_game *game)
 {
 	char *error;
 
 	if (!(game->map.map = ft_calloc(sizeof(char*), 1)))
 		return (strerror(12));
-	game->ply.x = 0;
-	game->ply.y = 0;
+	init_player(&game->ply);
 	if ((error = extract_line_map(line, &game->map.map)))
 		return (error);
 	while (get_next_line(fd, &line) >= 0 && ft_strncmp(line, "", 1))
 		if ((error = extract_line_map(line, &game->map.map)))
 			return (error);
+	if ((error = analize_map(game->map.map)))
+		return (error);
 	return (NULL);
 }

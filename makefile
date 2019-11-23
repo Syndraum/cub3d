@@ -4,6 +4,7 @@ SCRS		= 	main.c \
 				ft_windows.c \
 				ft_map.c \
 				ft_extractmap.c \
+				ft_player.c \
 				${GNL}
 
 GNL			= get_next_line.c

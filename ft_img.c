@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 10:20:34 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 17:02:48 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ void	img_pixel_put(t_img *img, int x, int y, int color)
 	*begin = u_color;
 	*(begin + 1) = u_color / 256;
 	*(begin + 2) = u_color / 256 / 256;
+	*(begin + 3) = u_color / 256 / 256 / 256;
 }

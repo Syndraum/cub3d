@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 15:49:11 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 17:01:07 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_map	*set_map(int fd, t_game *game)
 {
 	char	*line;
 	char	*error;
-	char	ext;
 	char	finish;
 
 	finish = 0;
@@ -29,8 +28,8 @@ t_map	*set_map(int fd, t_game *game)
 				return (print_error(error));
 			finish = 1;
 		}
-		else if (1 != (ext = extract_line(line, game)))
-			return(print_error("Message a ajouter"));
+		else if ((error = extract_line(line, game)))
+			return (print_error(error));
 	}
 	return (&game->map);
 }
@@ -42,11 +41,10 @@ void	*print_error(char *error)
 	return (NULL);
 }
 
-char	extract_line(char *str, t_game *game)
+char	*extract_line(char *str, t_game *game)
 {
-	int rsl;
+	static char *rsl = "A line is not empty";
 
-	rsl = 0;
 	if (ft_strnstr(str, "R", 1) == str)
 		rsl = extract_resolution(str, game);
 	else if (ft_strnstr(str, "NO", 2) == str)
@@ -64,12 +62,12 @@ char	extract_line(char *str, t_game *game)
 	else if (ft_strnstr(str, "C", 1) == str)
 		rsl = extract_color(str, &game->map, 'C');
 	else if (ft_strnstr(str, "", 1) == str)
-		rsl = 1;
+		rsl = NULL;
 	free(str);
 	return (rsl);
 }
 
-char	extract_resolution(char *str, t_game *game)
+char	*extract_resolution(char *str, t_game *game)
 {
 	char	*cursor;
 
@@ -79,7 +77,7 @@ char	extract_resolution(char *str, t_game *game)
 	if (isnumber(*cursor))
 		game->win.width = ft_atoi(cursor);
 	else
-		return (0);
+		return ("Wrong widht format");
 	while (isnumber(*cursor))
 		cursor++;
 	while (*cursor == ' ')
@@ -87,11 +85,11 @@ char	extract_resolution(char *str, t_game *game)
 	if (isnumber(*cursor))
 		game->win.height = ft_atoi(cursor);
 	else
-		return (0);
-	return (1);
+		return ("Wrong height format");
+	return (NULL);
 }
 
-char	extract_texture(char *str, t_game *game)
+char	*extract_texture(char *str, t_game *game)
 {
 	char	*cursor;
 	t_img	*img;
@@ -115,35 +113,35 @@ char	extract_texture(char *str, t_game *game)
 	while (*cursor == ' ')
 		cursor++;
 	if (!(set_xmp(img, cursor, game->mlx)))
-		return (0);
-	return (1);
+		return (strerror(2));
+	return (NULL);
 }
 
-char	extract_color(char *str, t_map *map, char type)
+char	*extract_color(char *str, t_map *map, char type)
 {
-	char			*cursor;
-	unsigned char	tab[3];
+	char		*cursor;
+	int			tab[3];
 
 	cursor = str + 1;
 	while (*cursor == ' ')
 		cursor++;
-	if (!isnumber(*cursor) || 255 < (tab[0] = ft_atoi(cursor)))
-		return (0);
+	if (!isnumber(*cursor) || (255 < (tab[0] = ft_atoi(cursor))))
+		return ("Red color wrong format");
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
 	if (!isnumber(*cursor) || 255 < (tab[1] = ft_atoi(cursor)))
-		return (0);
+		return ("Green color wrong format");
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
 	if (!isnumber(*cursor) || 255 < (tab[2] = ft_atoi(cursor)))
-		return (0);
+		return ("Blue color wrong format");
 	if (type == 'F')
 		map->floor = tab[2] + (tab[1] * 256) + (tab[0] * 65536);
 	else if (type == 'C')
 		map->ceil = tab[2] + (tab[1] * 256) + (tab[0] * 65536);
-	return (1);
+	return (NULL);
 }

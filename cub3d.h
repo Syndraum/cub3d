@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 15:44:34 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 17:23:59 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,13 @@ int				key_hook(int keycode, t_game *game);
 
 t_map			*set_map(int fd, t_game *game);
 void			*print_error(char *error);
-char			extract_line(char *str, t_game *game);
-char			extract_resolution(char *str, t_game *game);
-char			extract_texture(char *str, t_game *game);
-char			extract_color(char *str, t_map *map, char type);
+char			*extract_line(char *str, t_game *game);
+char			*extract_resolution(char *str, t_game *game);
+char			*extract_texture(char *str, t_game *game);
+char			*extract_color(char *str, t_map *map, char type);
 
 char			*extract_map(int fd, char *line, t_game *game);
+
+void			init_player(t_player *player);
 
 #endif
