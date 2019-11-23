@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 19:37:13 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 15:44:34 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ typedef struct	s_player
 {
 	double		x;
 	double		y;
+	double		dirx;
+	double		diry;
+	double		planx;
+	double		plany;
 }				t_player;
 
 typedef struct s_rgb
@@ -79,7 +83,7 @@ void			print_color(t_img *windows, int color);
 
 t_img			*create_img(void *mlx);
 void			*set_image(t_img *img, int width, int height);
-void			*set_xmp(t_img *img, char *path);
+void			*set_xmp(t_img *img, char *path, void *mlx);
 void			*free_img(t_img *img);
 void			img_pixel_put(t_img *img, int x, int y, int color);
 
@@ -87,10 +91,12 @@ int				ft_error(int error);
 int				key_hook(int keycode, t_game *game);
 
 t_map			*set_map(int fd, t_game *game);
+void			*print_error(char *error);
 char			extract_line(char *str, t_game *game);
 char			extract_resolution(char *str, t_game *game);
-char			extract_texture(char *str, t_img *img, char *type);
+char			extract_texture(char *str, t_game *game);
 char			extract_color(char *str, t_map *map, char type);
-void			*free_map(t_map *map);
+
+char			*extract_map(int fd, char *line, t_game *game);
 
 #endif

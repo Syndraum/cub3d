@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 19:45:56 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:56:22 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ int	key_hook(int keycode, t_game *game)
 		mlx_destroy_window(game->mlx, game->win.id);
 		exit(EXIT_SUCCESS);
 	}
-	// else if (keycode == 0)
-	// {
-	// 	printf("[KEY] = %d\n", keycode);
-	// 	// t_img *img = create_img(windows->mlx);
-	// 	// set_image(img, windows->width, windows->height);
-	// 	// print_color(img, 0xad5d95);
-	// 	// mlx_put_image_to_window(windows->mlx, windows->id, img->id, 0, 0);
-	// }
+	else if (keycode == 0)
+	{
+		t_img *img = create_img(game->mlx);
+		set_image(img, game->win.width, game->win.height);
+		print_color(img, 0xad5d95);
+		mlx_put_image_to_window(game->mlx, game->win.id, img->id, 0, 0);
+	}
 	return (1);
 }

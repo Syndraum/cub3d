@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/22 19:27:54 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 10:20:34 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ void	*set_image(t_img *img, int width, int height)
 	return (img);
 }
 
-void	*set_xmp(t_img *img, char *path)
+void	*set_xmp(t_img *img, char *path, void *mlx)
 {
-	// ft_putendl_fd(path, 2);
+	img->mlx = mlx;
 	img->id = mlx_xpm_file_to_image(img->mlx, path, &img->width, &img->height);
-	// ft_putendl_fd("[OK]", 2);
 	if (img->id == NULL)
 		return (NULL);
 	return (img);
