@@ -4,6 +4,7 @@ SCRS		= 	main.c \
 				ft_windows.c \
 				ft_map.c \
 				ft_extractmap.c \
+				ft_utils_map.c \
 				ft_player.c \
 				${GNL}
 

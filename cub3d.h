@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 17:23:59 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 21:17:46 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ char			*extract_texture(char *str, t_game *game);
 char			*extract_color(char *str, t_map *map, char type);
 
 char			*extract_map(int fd, char *line, t_game *game);
+
+char			str_charset(char *str, char *charset);
+char			*strdup_wc(char *str, char c);
+int				ft_tablen(char **tab);
+int				ft_tabcpy(char **dest, char **src);
+char			isdir(char c);
 
 void			init_player(t_player *player);
 
