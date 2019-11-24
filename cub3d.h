@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 21:27:50 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/24 15:32:52 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,10 @@ typedef struct	s_player
 
 typedef struct s_rgb
 {
-	double		red;
-	double		green;
-	double		bleu;
+	char		red;
+	char		green;
+	char		blue;
+	char		alpha;
 }				t_rgb;
 
 typedef struct	game
@@ -87,12 +88,15 @@ void 			print_colunm(t_img *windows, int colunm, int color);
 void			print_color(t_img *windows, int color);
 
 t_img			*create_img(void *mlx);
-void			*set_image(t_img *img, int width, int height);
+void			*set_image(t_img *img, int width, int height, void *mlx);
 void			*set_xmp(t_img *img, char *path, void *mlx);
-void			*free_img(t_img *img);
 void			img_pixel_put(t_img *img, int x, int y, int color);
+void			img_pixel_cpy(t_img *img, int x, int y, char *color);
+char			*get_img_pixel(t_img *img, int x, int y);
+void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 
 int				ft_error(int error);
+int				loop_hook(t_game *game);
 int				key_hook(int keycode, t_game *game);
 
 t_map			*set_map(int fd, t_game *game);

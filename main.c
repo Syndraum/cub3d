@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/24 11:47:22 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/24 16:22:43 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ int		main(int argc, char *argv[])
 	game.win.mlx = game.mlx;
 	if (!(set_map(fd, &game)))
 		return(EXIT_FAILURE);
+	set_image(&game.win.render, game.win.width, game.win.height, game.mlx);
 	if (!(create_windows(&game.win, "cub3d")))
 		return (EXIT_FAILURE);
+	// print_color(&game.win.render, 0xad5d95);
 	mlx_key_hook(game.win.id, key_hook, &game);
+	mlx_loop_hook(game.mlx, loop_hook, &game);
 	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
 }
@@ -44,6 +47,12 @@ int		ft_error(int error)
 	return (EXIT_FAILURE);
 }
 
+int	loop_hook(t_game *game)
+{
+	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
+	return (1);
+}
+
 int	key_hook(int keycode, t_game *game)
 {	
 	printf("[KEY] = %d\n", keycode);
@@ -55,16 +64,23 @@ int	key_hook(int keycode, t_game *game)
 	}
 	else if (keycode == 0)
 	{
-		t_img *img = create_img(game->mlx);
-		set_image(img, game->win.width, game->win.height);
-		print_color(img, 0x88ad5d95);
-		mlx_put_image_to_window(game->mlx, game->win.id, img->id, 0, 0);
+		print_color(&game->win.render, 0xad5d95);
+		// mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 	}
+	else if (keycode == 13)
+		img_xpm_put(&game->win.render, &game->map.sprite, 512/2, 512/2);
 	else if (keycode == 2)
 	{
-		mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 0, 0);
-		mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 512, 0);
-		mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 0, 512);
-		mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 512, 512);}
+		
+		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 0, 0);
+		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 512, 0);
+		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 0, 512);
+		img_xpm_put(&game->win.render, &game->map.south, 0, 0);
+		img_xpm_put(&game->win.render, &game->map.south, 512, 0);
+		img_xpm_put(&game->win.render, &game->map.south, 0, 512);
+		img_xpm_put(&game->win.render, &game->map.south, 512, 512);
+		// img_xpm_put(&game->win.render, &game->map.sprite, 512/2, 512/2);
+		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.sprite.id, 512/2, 512/2);
+	}
 	return (1);
 }

@@ -6,27 +6,27 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/24 11:46:16 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/24 16:13:15 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_img	*create_img(void *mlx)
-{
-	t_img	*img;
+// t_img	*create_img(void *mlx)
+// {
+// 	t_img	*img;
 
-	if (!(img = malloc(sizeof(t_img))))
-		return (NULL);
-	img->mlx = mlx;
-	img->width = 0;
-	img->height = 0;
-	return (img);
-}
+// 	if (!(img = malloc(sizeof(t_img))))
+// 		return (NULL);
+// 	img->mlx = mlx;
+// 	img->width = 0;
+// 	img->height = 0;
+// 	return (img);
+// }
 
-void	*set_image(t_img *img, int width, int height)
+void	*set_image(t_img *img, int width, int height, void *mlx)
 {
-	if (!(img->id = mlx_new_image(img->mlx, width, height)))
+	if (!(img->id = mlx_new_image(mlx, width, height)))
 		return (NULL);
 	img->width = width;
 	img->height = height;
@@ -56,4 +56,45 @@ void	img_pixel_put(t_img *img, int x, int y, int color)
 	cursor[1] = u_color / 256;
 	cursor[2] = u_color / 256 / 256;
 	cursor[3] = u_color / 256 / 256 / 256;
+}
+
+void	img_pixel_cpy(t_img *img, int x, int y, char *color)
+{
+	char	*cursor;
+
+	cursor = img->data;
+	cursor += (y * img->size_l) + (x * img->bpp / (sizeof(char) * 8));
+	cursor[0] = color[0];
+	cursor[1] = color[1];
+	cursor[2] = color[2];
+	cursor[3] = color[3];
+}
+
+char	*get_img_pixel(t_img *img, int x, int y)
+{
+	char	*cursor;
+
+	cursor = img->data;
+	cursor += (y * img->size_l) + (x * img->bpp / (sizeof(char) * 8));
+	return (cursor);
+}
+
+void	img_xpm_put(t_img *img, t_img *xpm, int x, int y)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (++i < xpm->width)
+	{
+		j = -1;
+		while (++j < xpm->height)
+			img_pixel_cpy(img, x + i, y + j, get_img_pixel(xpm, i, j));
+	}
+}
+
+void	print_rgba(char	*color)
+{
+	printf("%d, %d, %d, %d\n", color[0], color[1], color[2], color[3]);
+	fflush(stdout);
 }
