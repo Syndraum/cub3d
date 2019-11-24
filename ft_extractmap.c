@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 21:16:20 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/24 11:11:34 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*extract_line_map(char *line, char ***map)
 		return (strerror(12));
 	ft_tabcpy(tab, *map);
 	tab[ft_tablen(*map)] = row;
-	printf("[ROW] = %s\n", row);
+	// printf("[ROW] = %s\n", row);
 	free(*map);
 	*map = tab;
 	free(line);

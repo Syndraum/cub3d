@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 17:02:48 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/24 11:46:16 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	*set_image(t_img *img, int width, int height)
 		return (NULL);
 	img->width = width;
 	img->height = height;
+	img->data = mlx_get_data_addr(img->id, &img->bpp, &img->size_l, &img->end);
 	return (img);
 }
 
@@ -39,22 +40,20 @@ void	*set_xmp(t_img *img, char *path, void *mlx)
 	img->id = mlx_xpm_file_to_image(img->mlx, path, &img->width, &img->height);
 	if (img->id == NULL)
 		return (NULL);
+	img->data = mlx_get_data_addr(img->id, &img->bpp, &img->size_l, &img->end);
 	return (img);
 }
 
 void	img_pixel_put(t_img *img, int x, int y, int color)
 {
-	char			*begin;
-	int				bpp;
-	int				size_l;
-	int				endian;
+	char			*cursor;
 	unsigned int	u_color;
 
 	u_color = mlx_get_color_value(img->mlx, color);
-	begin = mlx_get_data_addr(img->id, &bpp, &size_l, &endian);
-	begin += (y * size_l) + (x * bpp / (sizeof(char) * 8));
-	*begin = u_color;
-	*(begin + 1) = u_color / 256;
-	*(begin + 2) = u_color / 256 / 256;
-	*(begin + 3) = u_color / 256 / 256 / 256;
+	cursor = img->data;
+	cursor += (y * img->size_l) + (x * img->bpp / (sizeof(char) * 8));
+	cursor[0] = u_color;
+	cursor[1] = u_color / 256;
+	cursor[2] = u_color / 256 / 256;
+	cursor[3] = u_color / 256 / 256 / 256;
 }

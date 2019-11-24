@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 17:01:07 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/24 11:31:40 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ char	*extract_texture(char *str, t_game *game)
 	char	s_prefix;
 
 	s_prefix = 2;
-	if (ft_strncmp(str, "NO", 2))
+	if (!(ft_strncmp(str, "NO", 2)))
 		img = &game->map.north;
-	else if (ft_strncmp(str, "SO", 2))
+	else if (!(ft_strncmp(str, "SO", 2)))
 		img = &game->map.south;
-	else if (ft_strncmp(str, "WE", 2))
+	else if (!(ft_strncmp(str, "WE", 2)))
 		img = &game->map.west;
-	else if (ft_strncmp(str, "EA", 2))
+	else if (!(ft_strncmp(str, "EA", 2)))
 		img = &game->map.east;
 	else
 	{

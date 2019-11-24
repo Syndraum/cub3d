@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 21:17:46 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/23 21:27:50 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ typedef struct	s_img
 	void		*mlx;
 	int			width;
 	int			height;
+	char		*data;
+	int			bpp;
+	int			end;
+	int			size_l;
 }				t_img;
 
 typedef struct s_windows
@@ -36,6 +40,7 @@ typedef struct s_windows
 	void		*id;
 	int			width;
 	int			height;
+	t_img		render;
 }				t_windows;
 
 typedef struct	s_map
