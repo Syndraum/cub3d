@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/24 15:32:52 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 10:48:13 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void			*free_windows(t_windows	*windows);
 
 void 			print_colunm(t_img *windows, int colunm, int color);
 void			print_color(t_img *windows, int color);
+void	print_map(t_game *game, int size);
 
 t_img			*create_img(void *mlx);
 void			*set_image(t_img *img, int width, int height, void *mlx);
@@ -94,6 +95,7 @@ void			img_pixel_put(t_img *img, int x, int y, int color);
 void			img_pixel_cpy(t_img *img, int x, int y, char *color);
 char			*get_img_pixel(t_img *img, int x, int y);
 void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
+void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
 
 int				ft_error(int error);
 int				loop_hook(t_game *game);

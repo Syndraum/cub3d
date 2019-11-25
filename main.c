@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/24 16:22:43 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 11:33:01 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int		main(int argc, char *argv[])
 	set_image(&game.win.render, game.win.width, game.win.height, game.mlx);
 	if (!(create_windows(&game.win, "cub3d")))
 		return (EXIT_FAILURE);
-	// print_color(&game.win.render, 0xad5d95);
 	mlx_key_hook(game.win.id, key_hook, &game);
 	mlx_loop_hook(game.mlx, loop_hook, &game);
 	mlx_loop(game.mlx);
@@ -49,6 +48,7 @@ int		ft_error(int error)
 
 int	loop_hook(t_game *game)
 {
+	print_map(game, 64);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 	return (1);
 }
@@ -62,25 +62,21 @@ int	key_hook(int keycode, t_game *game)
 		mlx_destroy_window(game->mlx, game->win.id);
 		exit(EXIT_SUCCESS);
 	}
-	else if (keycode == 0)
-	{
-		print_color(&game->win.render, 0xad5d95);
-		// mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
-	}
 	else if (keycode == 13)
-		img_xpm_put(&game->win.render, &game->map.sprite, 512/2, 512/2);
+		game->ply.y -= 0.1;
+	else if (keycode == 0)
+		game->ply.x -= 0.1;
+	else if (keycode == 1)
+		game->ply.y += 0.1;
 	else if (keycode == 2)
+		game->ply.x += 0.1;
+	else if (keycode == 83)
 	{
-		
-		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 0, 0);
-		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 512, 0);
-		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.south.id, 0, 512);
-		img_xpm_put(&game->win.render, &game->map.south, 0, 0);
+		xpm_resize_pit(&game->win.render, &game->map.south, 0, 0, 64);
 		img_xpm_put(&game->win.render, &game->map.south, 512, 0);
 		img_xpm_put(&game->win.render, &game->map.south, 0, 512);
 		img_xpm_put(&game->win.render, &game->map.south, 512, 512);
-		// img_xpm_put(&game->win.render, &game->map.sprite, 512/2, 512/2);
-		// mlx_put_image_to_window(game->mlx, game->win.id, game->map.sprite.id, 512/2, 512/2);
 	}
+	
 	return (1);
 }

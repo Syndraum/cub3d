@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/24 16:13:15 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 10:36:07 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,19 @@ void	img_xpm_put(t_img *img, t_img *xpm, int x, int y)
 	}
 }
 
-void	print_rgba(char	*color)
+void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size)
 {
-	printf("%d, %d, %d, %d\n", color[0], color[1], color[2], color[3]);
-	fflush(stdout);
+	double ratio;
+	int i;
+	int j;
+
+	ratio = (double)xpm->width / (double)size;
+
+	i = -1;
+	while (++i * ratio < xpm->width)
+	{
+		j = -1;
+		while (++j * ratio < xpm->height)
+			img_pixel_cpy(img, x + i, y + j, get_img_pixel(xpm, i * ratio, j * ratio));
+	}
 }

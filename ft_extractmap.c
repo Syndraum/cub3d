@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/24 11:11:34 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 11:02:54 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,34 @@ char	*extract_line_map(char *line, char ***map)
 	return (NULL);
 }
 
-void	set_player(t_player *ply, int x, int y, char dir)
+void	set_player(t_game *game, int x, int y, char dir)
 {
-	ply->x = (double)x + 0.5;
-	ply->y = (double)y + 0.5;
+	game->ply.x = (double)x + 0.5;
+	game->ply.y = (double)y + 0.5;
 	if (dir == 'N')
 	{
-		ply->dirx = ply->x;
-		ply->diry = y;
+		game->ply.dirx = game->ply.x;
+		game->ply.diry = y;
 	}
 	else if (dir == 'S')
 	{
-		ply->dirx = ply->x;
-		ply->diry = y + 1;
+		game->ply.dirx = game->ply.x;
+		game->ply.diry = y + 1;
 	}
 	else if (dir == 'E')
 	{
-		ply->dirx = x;
-		ply->diry = ply->y;
+		game->ply.dirx = x;
+		game->ply.diry = game->ply.y;
 	}
 	else if (dir == 'W')
 	{
-		ply->dirx = x + 1;
-		ply->diry = ply->y;
+		game->ply.dirx = x + 1;
+		game->ply.diry = game->ply.y;
 	}
+	game->map.map[y][x] = '0';
 }
 
-char	*analize_map(char **map, t_player *ply)
+char	*analize_map(char **map, t_game *game)
 {
 	size_t	len;
 	int		x;
@@ -77,10 +78,10 @@ char	*analize_map(char **map, t_player *ply)
 		{
 			if ((y == ft_tablen(map) || y == 0) && map[y][x] != '1')
 				return ("Border map error");
-			if (isdir(map[y][x]) && (ply->x != 0))
+			if (isdir(map[y][x]) && (game->ply.x != 0))
 				return ("Two player in map");
 			else if (isdir(map[y][x]))
-				set_player(ply, x, y, isdir(map[y][x]));
+				set_player(game, x, y, isdir(map[y][x]));
 			x++;
 		}
 	}
@@ -99,7 +100,7 @@ char	*extract_map(int fd, char *line, t_game *game)
 	while (get_next_line(fd, &line) >= 0 && ft_strncmp(line, "", 1))
 		if ((error = extract_line_map(line, &game->map.map)))
 			return (error);
-	if ((error = analize_map(game->map.map, &game->ply)))
+	if ((error = analize_map(game->map.map, game)))
 		return (error);
 	return (NULL);
 }
