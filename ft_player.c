@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:08:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/23 17:23:42 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 12:18:57 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,6 @@ void	init_player(t_player *player)
 	player->y = 0;
 	player->dirx = 0;
 	player->diry = 0;
+	player->planx = 0;
+	player->plany = 0.6;
 }

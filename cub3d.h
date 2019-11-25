@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 10:48:13 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 14:55:28 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 #include <sys/errno.h>
 #include "get_next_line.h"
 #include "libft/libft.h"
+
+typedef struct	s_pos
+{
+	double		x;
+	double		y;
+}				t_pos;
 
 typedef struct	s_img
 {
@@ -86,6 +92,8 @@ void			*free_windows(t_windows	*windows);
 
 void 			print_colunm(t_img *windows, int colunm, int color);
 void			print_color(t_img *windows, int color);
+void	print_line(t_img *img, double beg_x, double beg_y, double end_x, double end_y, int color);
+void	print_cross(t_img *img, int x, int y, int size);
 void	print_map(t_game *game, int size);
 
 t_img			*create_img(void *mlx);

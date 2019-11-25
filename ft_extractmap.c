@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 11:02:54 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 15:45:45 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,23 @@ void	set_player(t_game *game, int x, int y, char dir)
 	game->ply.y = (double)y + 0.5;
 	if (dir == 'N')
 	{
-		game->ply.dirx = game->ply.x;
-		game->ply.diry = y;
+		game->ply.dirx = 0;
+		game->ply.diry = -1;
 	}
 	else if (dir == 'S')
 	{
-		game->ply.dirx = game->ply.x;
-		game->ply.diry = y + 1;
+		game->ply.dirx = 0;
+		game->ply.diry = 1;
 	}
 	else if (dir == 'E')
 	{
-		game->ply.dirx = x;
-		game->ply.diry = game->ply.y;
+		game->ply.dirx = -1;
+		game->ply.diry = 0;
 	}
 	else if (dir == 'W')
 	{
-		game->ply.dirx = x + 1;
-		game->ply.diry = game->ply.y;
+		game->ply.dirx = 1;
+		game->ply.diry = 0;
 	}
 	game->map.map[y][x] = '0';
 }

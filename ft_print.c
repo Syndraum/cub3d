@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:23:09 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 11:33:30 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 16:22:37 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,63 @@ void	print_color(t_img *img, int color)
 		print_colunm(img, x, color);
 }
 
+void	print_line(t_img *img, double beg_x, double beg_y, double end_x, double end_y, int color)
+{
+	double diff_x = end_x - beg_x;
+	double diff_y = end_y - beg_y;
+	// printf("diff_x = %f\tdiff_y = %f\n", diff_x, diff_y);
+	double del_x;
+	double del_y;
+	double max = (fabs(diff_x) > fabs(diff_y)) ? fabs(diff_x) : fabs(diff_y);
+	// printf("max = %f\n", max);
+	if (fabs(diff_x) > fabs(diff_y))
+	{
+		// printf("diff_x +\n");
+		if (diff_x > 0)
+			del_x = 1;
+		else
+			del_x = -1;
+		if (diff_y == 0)
+			del_y = 0;
+		else
+			del_y = diff_x / diff_y;
+	}
+	else
+	{
+		// printf("diff_y +\n");
+		if (diff_y > 0)
+			del_y = 1;
+		else
+			del_y = -1;
+		if (diff_x == 0)
+			del_x = 0;
+		else
+			del_x = diff_y / diff_x;
+	}
+	// printf("del_x = %f\tdel_y = %f\n", del_x, del_y);
+	fflush(stdout);
+	double i = 0;
+	while (i < max)
+	{
+		img_pixel_put(img, (int)beg_x, (int)beg_y, color);
+		beg_x += del_x;
+		beg_y += del_y;
+		i++;
+	}
+}
+
+void	print_cross(t_img *img, int x, int y, int size)
+{
+	int i = -size;
+
+	while(i < size + 1)
+	{
+		img_pixel_put(img, x + i, y, 0xFF0000);
+		img_pixel_put(img, x, y + i, 0xFF0000);
+		i++;
+	}
+}
+
 void	print_map(t_game *game, int size)
 {
 	int x;
@@ -44,16 +101,16 @@ void	print_map(t_game *game, int size)
 			if (game->map.map[y][x] == '1')
 				xpm_resize_pit(&game->win.render, &game->map.north, x * size, y * size, size);
 			else if (game->map.map[y][x] == '0')
-				xpm_resize_pit(&game->win.render, &game->map.east, x * size, y * size, size);
-			else if (game->map.map[y][x] == '2')
 				xpm_resize_pit(&game->win.render, &game->map.west, x * size, y * size, size);
+			else if (game->map.map[y][x] == '2')
+				xpm_resize_pit(&game->win.render, &game->map.east, x * size, y * size, size);
 		}
 	}
+	// printf("dirx = %.0f\tdiry = %.0f\n", game->ply.dirx, game->ply.diry);
+	double dirx = (game->ply.x * size) + (game->ply.dirx * size);
+	double diry = (game->ply.y * size) + (game->ply.diry * size);
+	print_cross(&game->win.render, game->ply.x * size, game->ply.y * size, 10);
+	print_line(&game->win.render, game->ply.x * size, game->ply.y * size, dirx, diry, 0xFF00);
+	// print_line(&game->win.render, 5 * size, 5 * size, 7 * size, 9 * size, 0xFF00);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
-	xpm_resize_pit(&game->win.render, &game->map.sprite, (game->ply.x-0.5) * size, (game->ply.y-0.5) * size, size);
-}
-
-void	print_player(t_game *game, int size_m)
-{
-	xpm_resize_pit(&game->win.render, &game->map.sprite, game->ply.x * size_m, game->ply.y * size_m, size_m);
 }
