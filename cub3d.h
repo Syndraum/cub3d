@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 14:55:28 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 18:45:20 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 #include <sys/errno.h>
 #include "get_next_line.h"
 #include "libft/libft.h"
+# define FOV 0.66
 
-typedef struct	s_pos
+typedef struct	s_vector
 {
 	double		x;
 	double		y;
-}				t_pos;
+}				t_vector;
 
 typedef struct	s_img
 {
@@ -65,10 +66,8 @@ typedef struct	s_player
 {
 	double		x;
 	double		y;
-	double		dirx;
-	double		diry;
-	double		planx;
-	double		plany;
+	t_vector	dir;
+	t_vector	plan;
 }				t_player;
 
 typedef struct s_rgb
@@ -125,5 +124,7 @@ int				ft_tabcpy(char **dest, char **src);
 char			isdir(char c);
 
 void			init_player(t_player *player);
+void			set_dir(t_player *player, double x, double y);
+void			set_vector(t_vector *vector, double x, double y);
 
 #endif
