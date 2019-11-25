@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 18:45:20 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:09:35 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ char			isdir(char c);
 void			init_player(t_player *player);
 void			set_dir(t_player *player, double x, double y);
 void			set_vector(t_vector *vector, double x, double y);
+void			rotate_vector(t_vector *vector, double speed);
 
 #endif

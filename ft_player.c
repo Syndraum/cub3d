@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:08:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 18:52:35 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:50:10 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,13 @@ void	set_vector(t_vector *vector, double x, double y)
 {
 	vector->x = x;
 	vector->y = y;
+}
+
+void	rotate_vector(t_vector *vector, double speed)
+{
+	double tmp;
+
+	tmp = vector->x;
+	vector->x = vector->x * cos(speed) - vector->y * sin(speed);
+	vector->y = tmp * sin(speed) + vector->y * cos(speed);
 }

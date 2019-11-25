@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 13:59:16 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/25 19:55:10 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,17 @@ int	key_hook(int keycode, t_game *game)
 		game->ply.y += 0.2;
 	else if (keycode == 2)
 		game->ply.x += 0.2;
+	else if (keycode == 14)
+	{
+		rotate_vector(&game->ply.dir, -0.1);
+		rotate_vector(&game->ply.plan, -0.1);
+		printf("dir(%f, %f)\tplan(%f, %f)\n", game->ply.dir.x, game->ply.dir.y, game->ply.plan.x, game->ply.plan.y);
+		fflush(stdout);
+	}
+	else if (keycode == 12)
+	{
+		rotate_vector(&game->ply.dir, 0.1);
+		rotate_vector(&game->ply.plan, 0.1);
+	}
 	return (1);
 }
