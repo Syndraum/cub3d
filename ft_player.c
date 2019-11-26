@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:08:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/26 12:14:11 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/26 14:45:45 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	set_dir(t_player *player, double x, double y)
 	else if (x == 1 && y == 0)
 		set_vector(&player->plan, 0, FOV);
 	else if (x == -1 && y == 0)
-		set_vector(&player->plan, 0,-FOV);
+		set_vector(&player->plan, 0, -FOV);
 }
 
 void	set_vector(t_vector *vector, double x, double y)

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/26 14:01:57 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/26 14:50:04 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int		main(int argc, char *argv[])
 	if (!(create_windows(&game.win, "cub3d")))
 		return (EXIT_FAILURE);
 	mlx_do_key_autorepeatoff(game.mlx);
-	// mlx_key_hook(game.win.id, key_hook, &game);
 	mlx_loop_hook(game.mlx, loop_hook, &game);
 	mlx_hook(game.win.id, 2, 0, key_press_hook, &game);
 	mlx_hook(game.win.id, 3, 0, key_release_hook, &game);
@@ -68,6 +67,8 @@ int	exit_hook(t_game *game)
 
 int	key_press_hook(int keycode, t_game *game)
 {
+	printf("[KEY] = %d\n", keycode);
+	fflush(stdout);
 	if (keycode == 53)
 	{
 		mlx_destroy_window(game->mlx, game->win.id);
@@ -110,13 +111,26 @@ int	event_exec(t_game *game)
 	// printf("[KEY] = %d\n", keycode);
 	// fflush(stdout);
 	if (game->event[FORWARD])
-		game->ply.y -= 0.1;
+	{
+		game->ply.x += game->ply.dir.x * 0.1;
+		game->ply.y += game->ply.dir.y * 0.1;
+	}
 	if (game->event[LEFT])
-		game->ply.x -= 0.1;
+	{
+		game->ply.x -= (-game->ply.dir.y) * 0.1;
+		game->ply.y -= (game->ply.dir.x) * 0.1;
+	}
+		// game->ply.x -= 0.1;
 	if (game->event[BACKWARD])
-		game->ply.y += 0.1;
+	{
+		game->ply.x -= game->ply.dir.x * 0.1;
+		game->ply.y -= game->ply.dir.y * 0.1;
+	}
 	if (game->event[RIGHT])
-		game->ply.x += 0.1;
+	{
+		game->ply.x -= (game->ply.dir.y) * 0.1;
+		game->ply.y -= (-game->ply.dir.x) * 0.1;
+	}
 	 if (game->event[ROTATE_LEFT])
 	{
 		rotate_vector(&game->ply.dir, -0.1);
@@ -151,14 +165,12 @@ int	key_hook(int keycode, t_game *game)
 	{
 		rotate_vector(&game->ply.dir, -0.1);
 		rotate_vector(&game->ply.plan, -0.1);
-		// printf("dir(%f, %f)\tplan(%f, %f)\n", game->ply.dir.x, game->ply.dir.y, game->ply.plan.x, game->ply.plan.y);
 		fflush(stdout);
 	}
 	else if (keycode == 14)
 	{
 		rotate_vector(&game->ply.dir, 0.1);
 		rotate_vector(&game->ply.plan, 0.1);
-		// printf("dir(%f, %f)\tplan(%f, %f)\n", game->ply.dir.x, game->ply.dir.y, game->ply.plan.x, game->ply.plan.y);
 		fflush(stdout);
 	}
 	return (1);
