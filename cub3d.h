@@ -6,22 +6,33 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 19:09:35 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/26 13:53:41 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <mlx.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <sys/errno.h>
-#include "get_next_line.h"
-#include "libft/libft.h"
-# define FOV 0.66
+# include <mlx.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <math.h>
+# include <sys/errno.h>
+# include "get_next_line.h"
+# include "libft/libft.h"
+# define FOV 0.6
+
+typedef enum e_event
+{
+	FORWARD = 1,
+	BACKWARD,
+	LEFT,
+	RIGHT,
+	ROTATE_LEFT,
+	ROTATE_RIGHIT,
+	ESCAPE
+}				t_event;
 
 typedef struct	s_vector
 {
@@ -84,6 +95,7 @@ typedef struct	game
 	t_windows	win;
 	t_map		map;
 	t_player	ply;
+	char		event[ESCAPE];
 }				t_game;
 
 t_windows		*create_windows(t_windows *win, char *title);
@@ -106,6 +118,10 @@ void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
 
 int				ft_error(int error);
 int				loop_hook(t_game *game);
+int				exit_hook(t_game *game);
+int				key_press_hook(int keycode, t_game *game);
+int				key_release_hook(int keycode, t_game *game);
+int				event_exec(t_game *game);
 int				key_hook(int keycode, t_game *game);
 
 t_map			*set_map(int fd, t_game *game);
