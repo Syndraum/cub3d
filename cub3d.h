@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/26 13:53:41 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:16:30 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 # include <sys/errno.h>
 # include "get_next_line.h"
 # include "libft/libft.h"
-# define FOV 0.6
 
-typedef enum e_event
+# define FOV 0.6
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.1
+
+typedef enum	e_event
 {
 	FORWARD = 1,
 	BACKWARD,

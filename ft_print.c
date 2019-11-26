@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:23:09 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/26 11:04:45 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:01:46 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,15 @@ void	print_map(t_game *game, int size)
 		}
 	}
 	// printf("dirx = %.0f\tdiry = %.0f\n", game->ply.dirx, game->ply.diry);
-	double dirx = (game->ply.x * size) + (game->ply.dir.x * size);
-	double diry = (game->ply.y * size) + (game->ply.dir.y * size);
-	double planex = game->ply.plan.x * size;
-	double planey = game->ply.plan.y * size;
+	double dirx = (game->ply.x * size) + (game->ply.dir.x * size/2);
+	double diry = (game->ply.y * size) + (game->ply.dir.y * size/2);
+	double planex = game->ply.plan.x * size/2;
+	double planey = game->ply.plan.y * size/2;
 	print_cross(&game->win.render, game->ply.x * size, game->ply.y * size, 10);
 	print_line(&game->win.render, game->ply.x * size, game->ply.y * size, dirx - planex, diry - planey, 0xFF0000);
 	print_line(&game->win.render, game->ply.x * size, game->ply.y * size, dirx + planex, diry + planey, 0xFF0000);
 	print_line(&game->win.render, game->ply.x * size, game->ply.y * size, dirx, diry, 0xFF00);
 	print_line(&game->win.render, dirx, diry, dirx + planex, diry + planey, 0xFF);
-	// print_line(&game->win.render, dirx, diry, dirx - planex, diry - planey, 0xFF);
+	print_line(&game->win.render, dirx, diry, dirx - planex, diry - planey, 0xFF);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 }

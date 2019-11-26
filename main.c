@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/26 14:50:04 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:12:27 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int		ft_error(int error)
 int	loop_hook(t_game *game)
 {
 	event_exec(game);
-	// if (game->event[FORWARD])
-	// 	game->ply.y -= 0.1;
 	print_map(game, 64);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 	return (1);
@@ -106,40 +104,51 @@ int	key_release_hook(int keycode, t_game *game)
 	return (1);
 }
 
+void	move(t_game *game, double move_x, double move_y)
+{
+	printf("map[%d][%d]\n", (int)(game->ply.x - (move_x * MOVE_SPEED)), (int)game->ply.y);
+	fflush(stdout);
+	if (game->map.map[(int)game->ply.y][(int)(game->ply.x - (move_x * MOVE_SPEED))] != '1')
+		game->ply.x -= move_x * MOVE_SPEED;
+	if (game->map.map[(int)(game->ply.y - (move_y * MOVE_SPEED))][(int)game->ply.x] != '1')
+		game->ply.y -= move_y * MOVE_SPEED;
+}
+
 int	event_exec(t_game *game)
 {	
-	// printf("[KEY] = %d\n", keycode);
-	// fflush(stdout);
 	if (game->event[FORWARD])
 	{
-		game->ply.x += game->ply.dir.x * 0.1;
-		game->ply.y += game->ply.dir.y * 0.1;
+		move(game, (-game->ply.dir.x), (-game->ply.dir.y));
+		// game->ply.x -= -game->ply.dir.x * MOVE_SPEED;
+		// game->ply.y -= -game->ply.dir.y * MOVE_SPEED;
 	}
 	if (game->event[LEFT])
 	{
-		game->ply.x -= (-game->ply.dir.y) * 0.1;
-		game->ply.y -= (game->ply.dir.x) * 0.1;
+		move(game, (-game->ply.dir.y), (game->ply.dir.x));
+		// game->ply.x -= (-game->ply.dir.y) * MOVE_SPEED;
+		// game->ply.y -= (game->ply.dir.x) * MOVE_SPEED;
 	}
-		// game->ply.x -= 0.1;
 	if (game->event[BACKWARD])
 	{
-		game->ply.x -= game->ply.dir.x * 0.1;
-		game->ply.y -= game->ply.dir.y * 0.1;
+		move(game, (game->ply.dir.x), (game->ply.dir.y));
+		// game->ply.x -= game->ply.dir.x * MOVE_SPEED;
+		// game->ply.y -= game->ply.dir.y * MOVE_SPEED;
 	}
 	if (game->event[RIGHT])
 	{
-		game->ply.x -= (game->ply.dir.y) * 0.1;
-		game->ply.y -= (-game->ply.dir.x) * 0.1;
+		move(game, (game->ply.dir.y), (-game->ply.dir.x));
+		// game->ply.x -= (game->ply.dir.y) * MOVE_SPEED;
+		// game->ply.y -= (-game->ply.dir.x) * MOVE_SPEED;
 	}
 	 if (game->event[ROTATE_LEFT])
 	{
-		rotate_vector(&game->ply.dir, -0.1);
-		rotate_vector(&game->ply.plan, -0.1);
+		rotate_vector(&game->ply.dir, -ROT_SPEED);
+		rotate_vector(&game->ply.plan, -ROT_SPEED);
 	}
 	 if (game->event[ROTATE_RIGHIT])
 	{
-		rotate_vector(&game->ply.dir, 0.1);
-		rotate_vector(&game->ply.plan, 0.1);
+		rotate_vector(&game->ply.dir, ROT_SPEED);
+		rotate_vector(&game->ply.plan, ROT_SPEED);
 	}
 	return (1);
 }
