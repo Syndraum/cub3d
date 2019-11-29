@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/29 15:37:45 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:40:04 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ typedef struct	s_ray
 	int			step_x;
 	int			step_y;
 	double		len;
+	int			line_h;
 	int			pixel_start;
 	int			pixel_end;
 	char		wall;
+	double		wall_x;
 }				t_ray;
 
 typedef struct	s_img

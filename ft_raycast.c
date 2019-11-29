@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/29 15:39:07 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:04:53 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,31 @@ void	exec_dda(t_ray *ray, t_game *game)
 		ray->len = (ray->map_x - game->ply.x + ( 1 - ray->step_x) / 2) / ray->ray.x;
 }
 
-void	drawray(t_game *game, t_ray *ray, int line, int color)
+t_img	*get_side_texture(t_map *map, char side)
+{
+	if (side == 0)
+		return (&map->east);
+	else if (side == 1)
+		return (&map->north);
+	else if (side == 2)
+		return (&map->west);
+	else if (side == 3)
+		return (&map->south);
+	return (NULL);
+}
+
+void	drawray(t_game *game, t_ray *ray, int line)
 {
 	int i;
+	int j;
+	int text_x;
+	int text_y;
+	int d;
+	t_img *img;
 
 	i = -1;
+	j = ray->pixel_start;
+	img = get_side_texture(&game->map, ray->wall);
 	while (++i < game->win.height)
 	{
 		if (i < ray->pixel_start)
@@ -100,7 +120,17 @@ void	drawray(t_game *game, t_ray *ray, int line, int color)
 		else if (i >= ray->pixel_end)
 			img_pixel_put(&game->win.render, line, i, game->map.floor);
 		else
-			img_pixel_put(&game->win.render, line, i, color);
+		{
+			d = j * 256 - game->win.height * 128 + ray->line_h * 128;
+			text_x = (int)(ray->wall_x * (double)img->width);
+			if ((ray->wall % 2) && ray->ray.y < 0)
+				text_x = img->width - text_x - 1;
+			if (!(ray->wall % 2) && ray->ray.x > 0)
+				text_x = img->width - text_x - 1;
+			text_y = ((d * (double)img->height) / (double)(ray->line_h)) / 256;
+			img_pixel_cpy(&game->win.render, line, i, get_img_pixel(img, text_x, text_y));
+			j++;
+		}
 	}
 }
 
@@ -108,20 +138,25 @@ void	raycasting(t_game *game)
 {
 	int		x;
 	t_ray	ray;
-	int		line_h;
 
 	x = -1;
 	while (++x < game->win.width)
 	{
 		init_ray(&ray, game, x);
 		exec_dda(&ray, game);
-		line_h = (int)(game->win.height / ray.len);
-		ray.pixel_start = -line_h / 2 + game->win.height / 2;
+		ray.line_h = (int)(game->win.height / ray.len);
+		ray.pixel_start = -ray.line_h / 2 + game->win.height / 2;
 		if (ray.pixel_start < 0)
 			ray.pixel_start = 0;
-		ray.pixel_end = line_h / 2 + game->win.height / 2;
+		ray.pixel_end = ray.line_h / 2 + game->win.height / 2;
 		if (ray.pixel_end >= game->win.height)
 			ray.pixel_end = game->win.height - 1;
-		drawray(game, &ray, x, 0x177A28);
+		if (ray.wall % 2)
+			ray.wall_x = game->ply.x + ray.len * ray.ray.x;
+		else
+			ray.wall_x = game->ply.y + ray.len * ray.ray.y;
+		ray.wall_x -= floor(ray.wall_x);
+		// printf("len = %d\ndif = %d\n=======", line_h, ray.pixel_end - ray.pixel_start);
+		drawray(game, &ray, x);
 	}
 }
