@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/26 17:16:30 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:37:45 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ typedef struct	s_vector
 	double		x;
 	double		y;
 }				t_vector;
+
+typedef struct	s_ray
+{
+	double		camera;
+	t_vector	ray;
+	int			map_x;
+	int			map_y;
+	t_vector	side_d;
+	t_vector	delta_d;
+	int			step_x;
+	int			step_y;
+	double		len;
+	int			pixel_start;
+	int			pixel_end;
+	char		wall;
+}				t_ray;
 
 typedef struct	s_img
 {
@@ -146,5 +162,7 @@ void			init_player(t_player *player);
 void			set_dir(t_player *player, double x, double y);
 void			set_vector(t_vector *vector, double x, double y);
 void			rotate_vector(t_vector *vector, double speed);
+
+void			raycasting(t_game *game);
 
 #endif
