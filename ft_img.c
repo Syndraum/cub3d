@@ -6,23 +6,11 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/25 10:36:07 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:55:08 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// t_img	*create_img(void *mlx)
-// {
-// 	t_img	*img;
-
-// 	if (!(img = malloc(sizeof(t_img))))
-// 		return (NULL);
-// 	img->mlx = mlx;
-// 	img->width = 0;
-// 	img->height = 0;
-// 	return (img);
-// }
 
 void	*set_image(t_img *img, int width, int height, void *mlx)
 {
@@ -68,6 +56,18 @@ void	img_pixel_cpy(t_img *img, int x, int y, char *color)
 	cursor[1] = color[1];
 	cursor[2] = color[2];
 	cursor[3] = color[3];
+}
+
+void	img_pixel_rgb(t_img *img, int x, int y, t_rgb *color)
+{
+	char	*cursor;
+
+	cursor = img->data;
+	cursor += (y * img->size_l) + (x * img->bpp / (sizeof(char) * 8));
+	cursor[2] = color->red;
+	cursor[1] = color->green;
+	cursor[0] = color->blue;
+	cursor[3] = color->alpha;
 }
 
 char	*get_img_pixel(t_img *img, int x, int y)

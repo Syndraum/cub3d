@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/29 13:19:52 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:52:25 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ char	*extract_line(char *str, t_game *game)
 	else if (ft_strnstr(str, "S", 1) == str)
 		rsl = extract_texture(str, game);
 	else if (ft_strnstr(str, "F", 1) == str)
-		rsl = extract_color(str, &game->map, 'F');
+		rsl = extract_color(str, &game->map.floor);
 	else if (ft_strnstr(str, "C", 1) == str)
-		rsl = extract_color(str, &game->map, 'C');
+		rsl = extract_color(str, &game->map.ceil);
 	else if (ft_strnstr(str, "", 1) == str)
 		rsl = NULL;
 	free(str);
@@ -117,31 +117,31 @@ char	*extract_texture(char *str, t_game *game)
 	return (NULL);
 }
 
-char	*extract_color(char *str, t_map *map, char type)
+char	*extract_color(char *str, t_rgb *type)
 {
 	char		*cursor;
-	int			tab[3];
+	int			value;
 
 	cursor = str + 1;
 	while (*cursor == ' ')
 		cursor++;
-	if (!isnumber(*cursor) || (255 < (tab[0] = ft_atoi(cursor))))
+	if (!isnumber(*cursor) || (255 < (value = ft_atoi(cursor))))
 		return ("Red color wrong format");
+	type->red = value;
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
-	if (!isnumber(*cursor) || 255 < (tab[1] = ft_atoi(cursor)))
+	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
 		return ("Green color wrong format");
+	type->green = value;
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
-	if (!isnumber(*cursor) || 255 < (tab[2] = ft_atoi(cursor)))
+	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
 		return ("Blue color wrong format");
-	if (type == 'F')
-		map->floor = tab[2] + (tab[1] * 256) + (tab[0] * 65536);
-	else if (type == 'C')
-		map->ceil = tab[2] + (tab[1] * 256) + (tab[0] * 65536);
+	type->blue = value;
+	type->alpha = 0;
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/29 17:40:04 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:49:25 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include "get_next_line.h"
 # include "libft/libft.h"
 
+# define MAX_HEIGHT 1400
+# define MAX_WIDHT 2560
 # define FOV 0.6
 # define MOVE_SPEED 0.1
 # define ROT_SPEED 0.1
@@ -42,6 +44,14 @@ typedef struct	s_vector
 	double		x;
 	double		y;
 }				t_vector;
+
+typedef struct s_rgb
+{
+	char		red;
+	char		green;
+	char		blue;
+	char		alpha;
+}				t_rgb;
 
 typedef struct	s_ray
 {
@@ -90,8 +100,8 @@ typedef struct	s_map
 	t_img		east;
 	t_img		west;
 	t_img		sprite;
-	int			floor;
-	int			ceil;
+	t_rgb		floor;
+	t_rgb		ceil;
 }				t_map;
 
 typedef struct	s_player
@@ -101,14 +111,6 @@ typedef struct	s_player
 	t_vector	dir;
 	t_vector	plan;
 }				t_player;
-
-typedef struct s_rgb
-{
-	char		red;
-	char		green;
-	char		blue;
-	char		alpha;
-}				t_rgb;
 
 typedef struct	game
 {
@@ -133,6 +135,7 @@ void			*set_image(t_img *img, int width, int height, void *mlx);
 void			*set_xmp(t_img *img, char *path, void *mlx);
 void			img_pixel_put(t_img *img, int x, int y, int color);
 void			img_pixel_cpy(t_img *img, int x, int y, char *color);
+void			img_pixel_rgb(t_img *img, int x, int y, t_rgb *color);
 char			*get_img_pixel(t_img *img, int x, int y);
 void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
@@ -150,7 +153,7 @@ void			*print_error(char *error);
 char			*extract_line(char *str, t_game *game);
 char			*extract_resolution(char *str, t_game *game);
 char			*extract_texture(char *str, t_game *game);
-char			*extract_color(char *str, t_map *map, char type);
+char			*extract_color(char *str, t_rgb *type);
 
 char			*extract_map(int fd, char *line, t_game *game);
 

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/29 18:04:53 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:50:31 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ void	drawray(t_game *game, t_ray *ray, int line)
 	while (++i < game->win.height)
 	{
 		if (i < ray->pixel_start)
-			img_pixel_put(&game->win.render, line, i, game->map.ceil);
+			img_pixel_rgb(&game->win.render, line, i, &game->map.ceil);
 		else if (i >= ray->pixel_end)
-			img_pixel_put(&game->win.render, line, i, game->map.floor);
+			img_pixel_rgb(&game->win.render, line, i, &game->map.floor);
 		else
 		{
 			d = j * 256 - game->win.height * 128 + ray->line_h * 128;
