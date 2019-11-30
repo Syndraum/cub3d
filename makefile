@@ -19,7 +19,7 @@ NAME		= cube3d.out
 
 CC			= gcc
 
-CFLAG		= -Wall -Werror -Wextra
+CFLAG		= -Ofast -Wall -Werror -Wextra
 
 DIR_LIBFT	= libft
 
