@@ -2,7 +2,6 @@
 
 TODO
 
-- definition trop grande
 - screenshot (-save)
 - free tab
 - sprite

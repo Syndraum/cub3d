@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/30 18:52:25 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:03:15 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,20 @@ char	*extract_resolution(char *str, t_game *game)
 	cursor = str + 1;
 	while (*cursor == ' ')
 		cursor++;
-	if (isnumber(*cursor))
-		game->win.width = ft_atoi(cursor);
-	else
+	if (!isnumber(*cursor))
 		return ("Wrong widht format");
+	game->win.width = ft_atoi(cursor);
+	if (game->win.width > MAX_WIDHT)
+		game->win.width =  MAX_WIDHT;
 	while (isnumber(*cursor))
 		cursor++;
 	while (*cursor == ' ')
 		cursor++;
-	if (isnumber(*cursor))
-		game->win.height = ft_atoi(cursor);
-	else
+	if (!isnumber(*cursor))
 		return ("Wrong height format");
+	game->win.height = ft_atoi(cursor);
+	if (game->win.height > MAX_HEIGHT)
+		game->win.height =  MAX_HEIGHT;
 	return (NULL);
 }
 
