@@ -6,6 +6,5 @@
 *.swiftmodule
 *.xpm
 *.cub
-gradiant.c
 .vscode
 *.bmp

@@ -6,11 +6,25 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:23:09 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/26 17:01:46 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 18:43:49 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	img_pixel_put(t_img *img, int x, int y, int color)
+{
+	char			*cursor;
+	unsigned int	u_color;
+
+	u_color = mlx_get_color_value(img->mlx, color);
+	cursor = img->data;
+	cursor += (y * img->size_l) + (x * img->bpp / (sizeof(char) * 8));
+	cursor[0] = u_color;
+	cursor[1] = u_color / 256;
+	cursor[2] = u_color / 256 / 256;
+	cursor[3] = u_color / 256 / 256 / 256;
+}
 
 void	print_colunm(t_img *img, int colunm, int color)
 {

@@ -8,6 +8,8 @@ SCRS		= 	main.c \
 				ft_player.c \
 				ft_raycast.c \
 				ft_bmp.c \
+				ft_xpm.c \
+				ft_hook.c \
 				${GNL}
 
 GNL			= get_next_line.c

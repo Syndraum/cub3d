@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 18:13:36 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 18:58:13 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,24 +125,25 @@ typedef struct	game
 t_windows		*create_windows(t_windows *win, char *title);
 void			*free_windows(t_windows	*windows);
 
-void 			print_colunm(t_img *windows, int colunm, int color);
-void			print_color(t_img *windows, int color);
+void	img_pixel_put(t_img *img, int x, int y, int color);
+void 	print_colunm(t_img *windows, int colunm, int color);
+void	print_color(t_img *windows, int color);
 void	print_line(t_img *img, double beg_x, double beg_y, double end_x, double end_y, int color);
 void	print_cross(t_img *img, int x, int y, int size);
 void	print_map(t_game *game, int size);
 
-t_img			*create_img(void *mlx);
 void			*set_image(t_img *img, int width, int height, void *mlx);
 void			*set_xmp(t_img *img, char *path, void *mlx);
-void			img_pixel_put(t_img *img, int x, int y, int color);
 void			img_pixel_cpy(t_img *img, int x, int y, char *color);
 void			img_pixel_rgb(t_img *img, int x, int y, t_rgb *color);
 char			*get_img_pixel(t_img *img, int x, int y);
-void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
+
+void	img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
 
 int				ft_error(int error);
 int				loop_hook(t_game *game);
+
 int				exit_hook(t_game *game);
 int				key_press_hook(int keycode, t_game *game);
 int				key_release_hook(int keycode, t_game *game);

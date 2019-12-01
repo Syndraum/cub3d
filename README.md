@@ -6,3 +6,4 @@ TODO
 - sprite
 - map new parsing ?
 - error need parameters
+- static function

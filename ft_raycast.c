@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/30 18:50:31 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:10:58 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,6 @@ void	init_ray(t_ray *ray, t_game *game, int x)
 		ray->step_y = 1;
 		ray->side_d.y = (ray->map_y + 1.0 - game->ply.y) * ray->delta_d.y;
 	}
-	// printf("ray  = (%f, %f)\n", ray->ray.x, ray->ray.y);
-	// printf("map  = (%d, %d)\n", ray->map_x, ray->map_y);
-	// printf("delt = (%f, %f)\n", ray->delta_d.x, ray->delta_d.y);
-	// printf("step = (%d, %d)\n", ray->step_x, ray->step_y);
-	// printf("side = (%f, %f)\n", ray->side_d.x, ray->side_d.y);
-	// fflush(stdout);
 }
 
 void	exec_dda(t_ray *ray, t_game *game)
@@ -64,8 +58,6 @@ void	exec_dda(t_ray *ray, t_game *game)
 				ray->wall = 0;
 			else
 				ray->wall = 2;
-			
-			// printf("side_x = %f\n", ray->side_d.x);
 		}
 		else
 		{
@@ -75,17 +67,14 @@ void	exec_dda(t_ray *ray, t_game *game)
 				ray->wall = 1;
 			else
 				ray->wall = 3;
-			// printf("side_y = %f\n", ray->side_d.y);
 		}
-		// printf("map  = (%d, %d)\n", ray->map_x, ray->map_y);
-		// fflush(stdout);
 		if (game->map.map[ray->map_y][ray->map_x] == '1')
 			hit = 1;
 	}
 	if (ray->wall % 2)
-		ray->len = (ray->map_y - game->ply.y + ( 1 - ray->step_y) / 2) / ray->ray.y;
+		ray->len = (ray->map_y - game->ply.y + (1 - ray->step_y) / 2) / ray->ray.y;
 	else
-		ray->len = (ray->map_x - game->ply.x + ( 1 - ray->step_x) / 2) / ray->ray.x;
+		ray->len = (ray->map_x - game->ply.x + (1 - ray->step_x) / 2) / ray->ray.x;
 }
 
 t_img	*get_side_texture(t_map *map, char side)
@@ -103,12 +92,12 @@ t_img	*get_side_texture(t_map *map, char side)
 
 void	drawray(t_game *game, t_ray *ray, int line)
 {
-	int i;
-	int j;
-	int text_x;
-	int text_y;
-	int d;
-	t_img *img;
+	int		i;
+	int		j;
+	int		text_x;
+	int		text_y;
+	int		d;
+	t_img	*img;
 
 	i = -1;
 	j = ray->pixel_start;
@@ -156,7 +145,6 @@ void	raycasting(t_game *game)
 		else
 			ray.wall_x = game->ply.y + ray.len * ray.ray.y;
 		ray.wall_x -= floor(ray.wall_x);
-		// printf("len = %d\ndif = %d\n=======", line_h, ray.pixel_end - ray.pixel_start);
 		drawray(game, &ray, x);
 	}
 }

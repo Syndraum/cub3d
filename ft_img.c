@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:09:57 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/30 18:55:08 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 18:50:23 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ void	*set_xmp(t_img *img, char *path, void *mlx)
 		return (NULL);
 	img->data = mlx_get_data_addr(img->id, &img->bpp, &img->size_l, &img->end);
 	return (img);
-}
-
-void	img_pixel_put(t_img *img, int x, int y, int color)
-{
-	char			*cursor;
-	unsigned int	u_color;
-
-	u_color = mlx_get_color_value(img->mlx, color);
-	cursor = img->data;
-	cursor += (y * img->size_l) + (x * img->bpp / (sizeof(char) * 8));
-	cursor[0] = u_color;
-	cursor[1] = u_color / 256;
-	cursor[2] = u_color / 256 / 256;
-	cursor[3] = u_color / 256 / 256 / 256;
 }
 
 void	img_pixel_cpy(t_img *img, int x, int y, char *color)
@@ -77,35 +63,4 @@ char	*get_img_pixel(t_img *img, int x, int y)
 	cursor = img->data;
 	cursor += (y * img->size_l) + (x * img->bpp / (sizeof(char) * 8));
 	return (cursor);
-}
-
-void	img_xpm_put(t_img *img, t_img *xpm, int x, int y)
-{
-	int i;
-	int j;
-
-	i = -1;
-	while (++i < xpm->width)
-	{
-		j = -1;
-		while (++j < xpm->height)
-			img_pixel_cpy(img, x + i, y + j, get_img_pixel(xpm, i, j));
-	}
-}
-
-void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size)
-{
-	double ratio;
-	int i;
-	int j;
-
-	ratio = (double)xpm->width / (double)size;
-
-	i = -1;
-	while (++i * ratio < xpm->width)
-	{
-		j = -1;
-		while (++j * ratio < xpm->height)
-			img_pixel_cpy(img, x + i, y + j, get_img_pixel(xpm, i * ratio, j * ratio));
-	}
 }
