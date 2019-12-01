@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/30 18:49:25 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 18:13:36 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define FOV 0.6
 # define MOVE_SPEED 0.1
 # define ROT_SPEED 0.1
+# define NAME_SCREENSHOT "screenshot.bmp"
 
 typedef enum	e_event
 {
@@ -169,5 +170,7 @@ void			set_vector(t_vector *vector, double x, double y);
 void			rotate_vector(t_vector *vector, double speed);
 
 void			raycasting(t_game *game);
+
+void			sreenshot(t_game *game);
 
 #endif

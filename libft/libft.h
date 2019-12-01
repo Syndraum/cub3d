@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 12:52:53 by roalvare          #+#    #+#             */
-/*   Updated: 2019/10/22 11:16:00 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 18:09:54 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *l, void *(*f)(void *), void (*d)(void *));
 
 int				ft_abs(int n);
+void			ft_putnstr_fd(char *s, int fd, int n);
 
 #endif

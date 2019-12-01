@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putnstr_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 10:44:49 by syndraum          #+#    #+#             */
-/*   Updated: 2019/12/01 12:00:55 by roalvare         ###   ########.fr       */
+/*   Created: 2019/12/01 18:06:38 by roalvare          #+#    #+#             */
+/*   Updated: 2019/12/01 18:06:40 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putnstr_fd(char *s, int fd, int n)
 {
 	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+		write(fd, s, n);
 }

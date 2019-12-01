@@ -2,8 +2,7 @@
 
 TODO
 
-- screenshot (-save)
-- free tab
+- all free tab
 - sprite
-- map new parsing
-- 
+- map new parsing ?
+- error need parameters

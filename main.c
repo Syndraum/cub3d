@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/11/29 17:27:42 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 15:37:04 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ int		main(int argc, char *argv[])
 	game.win.mlx = game.mlx;
 	if (!(set_map(fd, &game)))
 		return(EXIT_FAILURE);
-	// printf("pos  = (%.1f, %.1f)\n", game->ply.dir.x, game->ply.dir.y);
 	set_image(&game.win.render, game.win.width, game.win.height, game.mlx);
+	if (argc == 3 && (!ft_strncmp(argv[2], "-save", 6)))
+	{
+		sreenshot(&game);
+		return(EXIT_SUCCESS);
+	}
 	if (!(create_windows(&game.win, "cub3d")))
 		return (EXIT_FAILURE);
 	mlx_do_key_autorepeatoff(game.mlx);
