@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 19:21:55 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/01 19:59:57 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_map	*set_map(int fd, t_game *game)
 
 	finish = 0;
 	error = NULL;
+	init_map(game);
 	while (get_next_line(fd, &line) == 1 && !finish)
 	{
 		if (ft_strnstr(line, "1", 1) == line)
@@ -31,7 +32,67 @@ t_map	*set_map(int fd, t_game *game)
 		else if ((error = extract_line(line, game)))
 			return (print_error(error));
 	}
+	if ((error = is_complete(game)))
+		return (print_error(error));
 	return (&game->map);
+}
+
+char	*is_complete(t_game *game)
+{
+	if (game->map.map == NULL)
+		return ("Map is missing");
+	else if (game->map.north.id == NULL)
+		return ("North texture is missing");
+	else if (game->map.south.id == NULL)
+		return ("South texture is missing");
+	else if (game->map.east.id == NULL)
+		return ("East texture is missing");
+	else if (game->map.west.id == NULL)
+		return ("West texture is missing");
+	else if (game->map.sprite.id == NULL)
+		return ("Sprite texture is missing");
+	else if (game->win.height == 0 || game->win.width == 0)
+		return ("Definition is mising");
+	return (NULL);
+}
+
+void	init_rgb(t_rgb *rgb)
+{
+	rgb->alpha = 0;
+	rgb->blue = 0;
+	rgb->green = 0;
+	rgb->red = 0;
+}
+
+void	init_map(t_game *game)
+{
+	game->win.height = 0;
+	game->win.width = 0;
+	game->map.map = NULL;
+	game->map.north.id = NULL;
+	game->map.south.id = NULL;
+	game->map.east.id = NULL;
+	game->map.west.id = NULL;
+	game->map.sprite.id = NULL;
+	init_rgb(&game->map.ceil);
+	init_rgb(&game->map.floor);
+}
+
+void	*free_map(char **tab)
+{
+	char **cursor;
+
+	cursor = tab;
+	if (tab != NULL)
+	{
+		while (*cursor)
+		{
+			free(*cursor);
+			cursor++;
+		}
+		free(tab);
+	}
+	return (NULL);
 }
 
 void	*print_error(char *error)

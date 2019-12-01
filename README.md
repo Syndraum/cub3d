@@ -5,5 +5,4 @@ TODO
 - all free tab
 - sprite
 - map new parsing ?
-- error need parameters
 - static function
