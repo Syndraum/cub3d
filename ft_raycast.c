@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/02 15:22:35 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 19:38:01 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	exec_dda(t_ray *ray, t_game *game)
 			else
 				ray->wall = 3;
 		}
-		if (game->map.map[ray->map_y][ray->map_x] == '1')
+		if (game->map.map[ray->map_y][ray->map_x] == '2')
+			add_vector(&game->ply, (double)ray->map_x + 0.5, (double)ray->map_y + 0.5);
+		else if (game->map.map[ray->map_y][ray->map_x] == '1')
 			hit = 1;
 	}
 	if (ray->wall % 2)
@@ -125,6 +127,7 @@ void	raycasting(t_game *game)
 	t_ray	ray;
 
 	x = -1;
+	init_tabvector(&game->ply);
 	while (++x < game->win.width)
 	{
 		init_ray(&ray, game, x);
@@ -143,4 +146,5 @@ void	raycasting(t_game *game)
 		ray.wall_x -= floor(ray.wall_x);
 		drawray(game, &ray, x);
 	}
+	// printf("=========\n");
 }

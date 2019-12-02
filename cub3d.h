@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/02 15:58:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:53:06 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 # define MAX_HEIGHT 1400
 # define MAX_WIDHT 2560
 # define FOV 0.6
-# define MOVE_SPEED 0.1
-# define ROT_SPEED 0.1
+# define MOVE_SPEED 0.08
+# define ROT_SPEED 0.07
 # define NAME_SCREENSHOT "screenshot.bmp"
+# define MAX_NBR_SPRITE 256
 
 typedef enum	e_event
 {
@@ -111,6 +112,8 @@ typedef struct	s_player
 	double		y;
 	t_vector	dir;
 	t_vector	plan;
+	t_vector	sprite[MAX_NBR_SPRITE + 1];
+	double		sprite_dist[MAX_NBR_SPRITE + 1];
 }				t_player;
 
 typedef struct	game
@@ -175,6 +178,9 @@ void			set_vector(t_vector *vector, double x, double y);
 void			rotate_vector(t_vector *vector, double speed);
 
 void			raycasting(t_game *game);
+
+char			add_vector(t_player *ply, double sprit_x, double sprit_y);
+void			init_tabvector(t_player *ply);
 
 void			sreenshot(t_game *game);
 
