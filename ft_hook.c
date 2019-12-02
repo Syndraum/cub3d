@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 18:53:16 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 18:59:02 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 15:59:23 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		exit_hook(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->win.id);
-	exit(EXIT_SUCCESS);
+	exit(free_map(game->map.map));
 }
 
 int		key_press_hook(int keycode, t_game *game)
@@ -23,10 +23,11 @@ int		key_press_hook(int keycode, t_game *game)
 	printf("[KEY] = %d\n", keycode);
 	fflush(stdout);
 	if (keycode == 53)
-	{
-		mlx_destroy_window(game->mlx, game->win.id);
-		exit(EXIT_SUCCESS);
-	}
+		exit_hook(game);
+	// {
+	// 	mlx_destroy_window(game->mlx, game->win.id);
+	// 	exit(EXIT_SUCCESS);
+	// }
 	if (keycode == 13)
 		game->event[FORWARD] = 1;
 	if (keycode == 1)

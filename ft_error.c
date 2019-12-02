@@ -6,13 +6,13 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:56:26 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/02 14:47:05 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 16:01:07 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_error(int error)
+int		ft_error(int error)
 {
 	if (error == -1)
 		perror("");
@@ -28,7 +28,7 @@ void	*print_error(char *error)
 	return (NULL);
 }
 
-void	*free_map(char **tab)
+int		free_map(char **tab)
 {
 	char **cursor;
 
@@ -42,5 +42,5 @@ void	*free_map(char **tab)
 		}
 		free(tab);
 	}
-	return (NULL);
+	return (0);
 }

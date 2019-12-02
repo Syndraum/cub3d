@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/02 14:58:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 15:58:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
 
 int				ft_error(int error);
-void			*free_map(char **tab);
+int				free_map(char **tab);
 void			*print_error(char *error);
 
 int				exit_hook(t_game *game);
