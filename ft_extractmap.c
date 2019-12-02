@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 18:59:58 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 15:34:48 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*analize_map(char **map, t_game *game)
 			return ("Border map error");
 		while (map[y][x])
 		{
-			if ((y == ft_tablen(map) || y == 0) && map[y][x] != '1')
+			if ((y == (ft_tablen(map) - 1) || y == 0) && map[y][x] != '1')
 				return ("Border map error");
 			if (isdir(map[y][x]) && (game->ply.x != 0))
 				return ("Two player in map");

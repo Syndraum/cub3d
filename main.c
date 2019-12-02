@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 19:07:05 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 14:42:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,6 @@ int	main(int argc, char *argv[])
 	mlx_hook(game.win.id, 17, 0, exit_hook, &game);
 	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
-}
-
-int	ft_error(int error)
-{
-	if (error == -1)
-		perror("");
-	else if (error <= 102)
-		ft_putendl_fd(strerror(error), 2);
-	return (EXIT_FAILURE);
 }
 
 int	loop_hook(t_game *game)

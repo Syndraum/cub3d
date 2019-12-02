@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 19:10:58 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 15:22:35 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,6 @@ void	drawray(t_game *game, t_ray *ray, int line)
 		{
 			d = j * 256 - game->win.height * 128 + ray->line_h * 128;
 			text_x = (int)(ray->wall_x * (double)img->width);
-			if ((ray->wall % 2) && ray->ray.y < 0)
-				text_x = img->width - text_x - 1;
-			if (!(ray->wall % 2) && ray->ray.x > 0)
-				text_x = img->width - text_x - 1;
 			text_y = ((d * (double)img->height) / (double)(ray->line_h)) / 256;
 			img_pixel_cpy(&game->win.render, line, i, get_img_pixel(img, text_x, text_y));
 			j++;

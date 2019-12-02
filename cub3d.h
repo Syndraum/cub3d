@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 19:58:49 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/02 14:58:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ typedef struct	game
 	char		event[ESCAPE];
 }				t_game;
 
+int				loop_hook(t_game *game);
+
 t_windows		*create_windows(t_windows *win, char *title);
 void			*free_windows(t_windows	*windows);
 
@@ -142,7 +144,8 @@ void	img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
 
 int				ft_error(int error);
-int				loop_hook(t_game *game);
+void			*free_map(char **tab);
+void			*print_error(char *error);
 
 int				exit_hook(t_game *game);
 int				key_press_hook(int keycode, t_game *game);
@@ -153,8 +156,6 @@ int				key_hook(int keycode, t_game *game);
 t_map			*set_map(int fd, t_game *game);
 char			*is_complete(t_game *game);
 void			init_map(t_game *game);
-void			*free_map(char **tab);
-void			*print_error(char *error);
 char			*extract_line(char *str, t_game *game);
 char			*extract_resolution(char *str, t_game *game);
 char			*extract_texture(char *str, t_game *game);

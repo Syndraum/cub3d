@@ -10,6 +10,7 @@ SCRS		= 	main.c \
 				ft_bmp.c \
 				ft_xpm.c \
 				ft_hook.c \
+				ft_error.c \
 				${GNL}
 
 GNL			= get_next_line.c
