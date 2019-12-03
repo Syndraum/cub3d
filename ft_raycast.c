@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/02 19:38:01 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/03 14:22:39 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,7 @@ void	raycasting(t_game *game)
 		ray.wall_x -= floor(ray.wall_x);
 		drawray(game, &ray, x);
 	}
-	// printf("=========\n");
+	print_sprite(game->ply.sprite);
+	ft_lstclear(&game->ply.sprite, free_sprite);
+	printf("=========\n");
 }

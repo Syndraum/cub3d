@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/02 18:53:06 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/03 14:23:08 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ typedef struct	s_img
 	int			size_l;
 }				t_img;
 
+typedef struct	s_sprite
+{
+	t_vector	pos;
+	double		dist;
+}				t_sprite;
+
 typedef struct s_windows
 {
 	void		*mlx;
@@ -112,8 +118,9 @@ typedef struct	s_player
 	double		y;
 	t_vector	dir;
 	t_vector	plan;
-	t_vector	sprite[MAX_NBR_SPRITE + 1];
-	double		sprite_dist[MAX_NBR_SPRITE + 1];
+	t_list		*sprite;
+	// t_vector	sprite[MAX_NBR_SPRITE + 1];
+	// double		sprite_dist[MAX_NBR_SPRITE + 1];
 }				t_player;
 
 typedef struct	game
@@ -179,6 +186,9 @@ void			rotate_vector(t_vector *vector, double speed);
 
 void			raycasting(t_game *game);
 
+t_list			*new_sprite(double dist, double sprit_x, double sprit_y);
+void			free_sprite(void *sprite);
+void	print_sprite(t_list *lst);
 char			add_vector(t_player *ply, double sprit_x, double sprit_y);
 void			init_tabvector(t_player *ply);
 
