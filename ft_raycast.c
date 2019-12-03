@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/03 14:22:39 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/03 16:47:41 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,11 @@ void	raycasting(t_game *game)
 			ray.wall_x = game->ply.y + ray.len * ray.ray.y;
 		ray.wall_x -= floor(ray.wall_x);
 		drawray(game, &ray, x);
+		game->ply.z_index[x] = ray.len;
 	}
-	print_sprite(game->ply.sprite);
+	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
+	// print_sprite(game->ply.sprite);
+	put_sprite(game);
 	ft_lstclear(&game->ply.sprite, free_sprite);
-	printf("=========\n");
+	printf("\n=========\n");
 }

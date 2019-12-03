@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/03 14:23:08 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/03 16:23:52 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct	s_player
 	t_vector	dir;
 	t_vector	plan;
 	t_list		*sprite;
+	double		*z_index;
 	// t_vector	sprite[MAX_NBR_SPRITE + 1];
 	// double		sprite_dist[MAX_NBR_SPRITE + 1];
 }				t_player;
@@ -191,6 +192,7 @@ void			free_sprite(void *sprite);
 void	print_sprite(t_list *lst);
 char			add_vector(t_player *ply, double sprit_x, double sprit_y);
 void			init_tabvector(t_player *ply);
+void			put_sprite(t_game *game);
 
 void			sreenshot(t_game *game);
 
