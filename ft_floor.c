@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:13:51 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 16:54:22 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:30:27 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	floor_casting(t_game *game, t_ray *ray, int x)
 	double		currentdist;
 	double		weight;
 
-	img = &game->map.east;
+	img = &game->map.west;
 	if (ray->wall == 2)
 	{
 		floorwall.x = ray->map.x;

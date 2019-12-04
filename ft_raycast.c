@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 16:50:01 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:02:55 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 t_img	*get_side_texture(t_map *map, char side)
 {
 	if (side == 0)
-		return (&map->east);
+		return (&map->west);
 	else if (side == 1)
 		return (&map->north);
 	else if (side == 2)
-		return (&map->west);
+		return (&map->east);
 	else if (side == 3)
 		return (&map->south);
 	return (NULL);
