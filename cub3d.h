@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/03 16:23:52 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/04 15:54:54 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct	s_vector
 	double		y;
 }				t_vector;
 
+typedef struct	s_coord
+{
+	int		x;
+	int		y;
+}				t_coord;
+
 typedef struct s_rgb
 {
 	char		red;
@@ -59,18 +65,17 @@ typedef struct	s_ray
 {
 	double		camera;
 	t_vector	ray;
-	int			map_x;
-	int			map_y;
+	t_coord		map;
 	t_vector	side_d;
 	t_vector	delta_d;
-	int			step_x;
-	int			step_y;
+	t_coord		step;
 	double		len;
 	int			line_h;
 	int			pixel_start;
 	int			pixel_end;
 	char		wall;
 	double		wall_x;
+	t_coord		text;
 }				t_ray;
 
 typedef struct	s_img
@@ -90,6 +95,19 @@ typedef struct	s_sprite
 	t_vector	pos;
 	double		dist;
 }				t_sprite;
+
+typedef struct s_info
+{
+	t_vector	tmp;
+	double		det;
+	t_vector	trans;
+	int			sprit_screenx;
+	int			sprit_height;
+	int			sprit_widht;
+	t_coord		draw_start;
+	t_coord		draw_end;
+	t_coord		text;
+}				t_info;
 
 typedef struct s_windows
 {
@@ -120,8 +138,6 @@ typedef struct	s_player
 	t_vector	plan;
 	t_list		*sprite;
 	double		*z_index;
-	// t_vector	sprite[MAX_NBR_SPRITE + 1];
-	// double		sprite_dist[MAX_NBR_SPRITE + 1];
 }				t_player;
 
 typedef struct	game
@@ -185,13 +201,17 @@ void			set_dir(t_player *player, double x, double y);
 void			set_vector(t_vector *vector, double x, double y);
 void			rotate_vector(t_vector *vector, double speed);
 
+void			init_ray(t_ray *ray, t_game *game, int x);
+void			exec_dda(t_ray *ray, t_game *g);
 void			raycasting(t_game *game);
 
 t_list			*new_sprite(double dist, double sprit_x, double sprit_y);
+t_list			*ft_lstadd(t_list **list, t_list *elmt);
 void			free_sprite(void *sprite);
-void	print_sprite(t_list *lst);
+
+void	print_lstsprite(t_list *lst);
 char			add_vector(t_player *ply, double sprit_x, double sprit_y);
-void			init_tabvector(t_player *ply);
+void			print_sprite(t_game *game, t_info *info);
 void			put_sprite(t_game *game);
 
 void			sreenshot(t_game *game);

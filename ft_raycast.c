@@ -6,78 +6,11 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/03 16:47:41 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/04 15:53:29 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	init_ray(t_ray *ray, t_game *game, int x)
-{
-	ray->camera = 2 * x / (double)game->win.width - 1;
-	ray->ray.x = game->ply.dir.x + game->ply.plan.x * ray->camera;
-	ray->ray.y = game->ply.dir.y + game->ply.plan.y * ray->camera;
-	ray->map_x = (int)game->ply.x;
-	ray->map_y = (int)game->ply.y;
-	ray->delta_d.x = fabs(1 / ray->ray.x);
-	ray->delta_d.y = fabs(1 / ray->ray.y);
-	if (ray->ray.x < 0)
-	{
-		ray->step_x = -1;
-		ray->side_d.x = (game->ply.x - ray->map_x) * ray->delta_d.x;
-	}
-	else
-	{
-		ray->step_x = 1;
-		ray->side_d.x = (ray->map_x + 1.0 - game->ply.x) * ray->delta_d.x;
-	}
-	if (ray->ray.y < 0)
-	{
-		ray->step_y = -1;
-		ray->side_d.y = (game->ply.y - ray->map_y) * ray->delta_d.y;
-	}
-	else
-	{
-		ray->step_y = 1;
-		ray->side_d.y = (ray->map_y + 1.0 - game->ply.y) * ray->delta_d.y;
-	}
-}
-
-void	exec_dda(t_ray *ray, t_game *game)
-{
-	char hit;
-
-	hit = 0;
-	while (hit == 0)
-	{
-		if (ray->side_d.x < ray->side_d.y)
-		{
-			ray->side_d.x += ray->delta_d.x;
-			ray->map_x += ray->step_x;
-			if (ray->step_x == -1)
-				ray->wall = 0;
-			else
-				ray->wall = 2;
-		}
-		else
-		{
-			ray->side_d.y += ray->delta_d.y;
-			ray->map_y += ray->step_y;
-			if (ray->step_y == -1)
-				ray->wall = 1;
-			else
-				ray->wall = 3;
-		}
-		if (game->map.map[ray->map_y][ray->map_x] == '2')
-			add_vector(&game->ply, (double)ray->map_x + 0.5, (double)ray->map_y + 0.5);
-		else if (game->map.map[ray->map_y][ray->map_x] == '1')
-			hit = 1;
-	}
-	if (ray->wall % 2)
-		ray->len = (ray->map_y - game->ply.y + (1 - ray->step_y) / 2) / ray->ray.y;
-	else
-		ray->len = (ray->map_x - game->ply.x + (1 - ray->step_x) / 2) / ray->ray.x;
-}
 
 t_img	*get_side_texture(t_map *map, char side)
 {
@@ -96,10 +29,9 @@ void	drawray(t_game *game, t_ray *ray, int line)
 {
 	int		i;
 	int		j;
-	int		text_x;
-	int		text_y;
 	int		d;
 	t_img	*img;
+	char	*pixel;
 
 	i = -1;
 	j = ray->pixel_start;
@@ -112,13 +44,30 @@ void	drawray(t_game *game, t_ray *ray, int line)
 			img_pixel_rgb(&game->win.render, line, i, &game->map.floor);
 		else
 		{
-			d = j * 256 - game->win.height * 128 + ray->line_h * 128;
-			text_x = (int)(ray->wall_x * (double)img->width);
-			text_y = ((d * (double)img->height) / (double)(ray->line_h)) / 256;
-			img_pixel_cpy(&game->win.render, line, i, get_img_pixel(img, text_x, text_y));
+			d = j * 2 - game->win.height + ray->line_h;
+			ray->text.x = (int)(ray->wall_x * (double)img->width);
+			ray->text.y = ((d * (double)img->height) / (double)ray->line_h) / 2;
+			pixel = get_img_pixel(img, ray->text.x, ray->text.y);
+			img_pixel_cpy(&game->win.render, line, i, pixel);
 			j++;
 		}
 	}
+}
+
+void	set_pixelcord(t_game *game, t_ray *ray)
+{
+	ray->line_h = (int)(game->win.height / ray->len);
+	ray->pixel_start = -ray->line_h / 2 + game->win.height / 2;
+	if (ray->pixel_start < 0)
+		ray->pixel_start = 0;
+	ray->pixel_end = ray->line_h / 2 + game->win.height / 2;
+	if (ray->pixel_end >= game->win.height)
+		ray->pixel_end = game->win.height - 1;
+	if (ray->wall % 2)
+		ray->wall_x = game->ply.x + ray->len * ray->ray.x;
+	else
+		ray->wall_x = game->ply.y + ray->len * ray->ray.y;
+	ray->wall_x -= floor(ray->wall_x);
 }
 
 void	raycasting(t_game *game)
@@ -127,29 +76,16 @@ void	raycasting(t_game *game)
 	t_ray	ray;
 
 	x = -1;
-	init_tabvector(&game->ply);
+	game->ply.sprite = NULL;
 	while (++x < game->win.width)
 	{
 		init_ray(&ray, game, x);
 		exec_dda(&ray, game);
-		ray.line_h = (int)(game->win.height / ray.len);
-		ray.pixel_start = -ray.line_h / 2 + game->win.height / 2;
-		if (ray.pixel_start < 0)
-			ray.pixel_start = 0;
-		ray.pixel_end = ray.line_h / 2 + game->win.height / 2;
-		if (ray.pixel_end >= game->win.height)
-			ray.pixel_end = game->win.height - 1;
-		if (ray.wall % 2)
-			ray.wall_x = game->ply.x + ray.len * ray.ray.x;
-		else
-			ray.wall_x = game->ply.y + ray.len * ray.ray.y;
-		ray.wall_x -= floor(ray.wall_x);
+		set_pixelcord(game, &ray);
 		drawray(game, &ray, x);
 		game->ply.z_index[x] = ray.len;
 	}
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
-	// print_sprite(game->ply.sprite);
 	put_sprite(game);
 	ft_lstclear(&game->ply.sprite, free_sprite);
-	printf("\n=========\n");
 }

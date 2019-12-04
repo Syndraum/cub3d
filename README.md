@@ -2,8 +2,8 @@
 
 TODO
 
-- sprite
-- map new parsing ?
+- free list
 - static function
 
+x map new parsing ?
 ~ all free tab
