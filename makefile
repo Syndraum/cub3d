@@ -2,7 +2,7 @@ SCRS		= 	main.c ft_img.c ft_print.c \
 				ft_windows.c ft_map.c ft_extractmap.c \
 				ft_utils_map.c ft_player.c ft_raycast.c \
 				ft_bmp.c ft_xpm.c ft_hook.c ft_error.c \
-				ft_sprite.c ft_list.c ft_wall.c\
+				ft_sprite.c ft_list.c ft_wall.c ft_floor.c\
 				${GNL}
 
 GNL			= get_next_line.c

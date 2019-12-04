@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 15:54:54 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/04 16:41:01 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ void			rotate_vector(t_vector *vector, double speed);
 void			init_ray(t_ray *ray, t_game *game, int x);
 void			exec_dda(t_ray *ray, t_game *g);
 void			raycasting(t_game *game);
+void			floor_casting(t_game *game, t_ray *ray, int x);
 
 t_list			*new_sprite(double dist, double sprit_x, double sprit_y);
 t_list			*ft_lstadd(t_list **list, t_list *elmt);
