@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 18:53:16 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 15:57:18 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/07 16:01:09 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,22 @@ void	move(t_game *game, double move_x, double move_y)
 
 	m_x = move_x * MOVE_SPEED;
 	m_y = move_y * MOVE_SPEED;
-	if (game->map.map[(int)game->ply.y][(int)(game->ply.x - (m_x))] != '1')
-		game->ply.x -= m_x;
-	if (game->map.map[(int)(game->ply.y - (m_y))][(int)game->ply.x] != '1')
-		game->ply.y -= m_y;
+	if (BONUS)
+	{
+		if (game->map.map[(int)game->ply.y][(int)(game->ply.x - (m_x))] != '1')
+			game->ply.x -= m_x;
+		if (game->map.map[(int)(game->ply.y - (m_y))][(int)game->ply.x] != '1')
+			game->ply.y -= m_y;
+	}
+	else
+	{
+		if ((game->ply.x - (m_x)) > 1 &&
+		(game->ply.x - (m_x)) < ft_strlen(game->map.map[0]) - 1)
+			game->ply.x -= m_x;
+		if ((game->ply.y - (m_y)) > 1 &&
+		(game->ply.y - (m_y)) < ft_tablen(game->map.map) - 1)
+			game->ply.y -= m_y;
+	}
 }
 
 int		event_exec(t_game *game)

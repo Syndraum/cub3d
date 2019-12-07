@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 17:38:25 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/07 15:26:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include "get_next_line.h"
 # include "libft/libft.h"
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
 # define MAX_HEIGHT 1400
 # define MAX_WIDHT 2560
 # define FOV 0.66

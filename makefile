@@ -24,7 +24,7 @@ BONUS		= 0
 all:		${NAME}
 
 .c.o:
-	${CC} -g ${CFLAG} -c  $< -o ${<:.c=.o}
+	${CC} -g ${CFLAG} -D BONUS=${BONUS} -c  $< -o ${<:.c=.o}
 
 ${NAME}:	lib ${OBJS}
 	${CC} -g -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} -o ${NAME}
@@ -39,7 +39,12 @@ clean:
 fclean:		clean
 	${RM} ${NAME}
 
+ev:
+	$(eval BONUS := 1)
+
+bonus: ev lib ${OBJS}
+	${CC} -g -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} -o ${NAME}
+
 re:			fclean all
 
-bonus:
-	${NAME}
+re_bonus:	fclean bonus
