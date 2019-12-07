@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/07 16:05:54 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/07 18:59:06 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,7 @@ void	raycasting(t_game *game)
 		game->ply.z_index[x] = ray.len;
 	}
 	put_sprite(game);
+	if (BONUS)
+		minimap(game);
 	ft_lstclear(&game->ply.sprite, free_sprite);
 }

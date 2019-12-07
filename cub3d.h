@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/07 15:26:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/07 21:14:34 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 # endif
 # define MAX_HEIGHT 1400
 # define MAX_WIDHT 2560
-# define FOV 0.66
+# define FOV 0.6
 # define MOVE_SPEED 0.08
 # define ROT_SPEED 0.07
 # define NAME_SCREENSHOT "screenshot.bmp"
 # define MAX_NBR_SPRITE 256
+# define PADDING_MAP 4
 
 typedef enum	e_event
 {
@@ -219,5 +220,7 @@ void			print_sprite(t_game *game, t_info *info);
 void			put_sprite(t_game *game);
 
 void			sreenshot(t_game *game);
+
+void			minimap(t_game *game);
 
 #endif
