@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 16:41:01 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:38:25 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define MAX_HEIGHT 1400
 # define MAX_WIDHT 2560
-# define FOV 0.6
+# define FOV 0.66
 # define MOVE_SPEED 0.08
 # define ROT_SPEED 0.07
 # define NAME_SCREENSHOT "screenshot.bmp"
