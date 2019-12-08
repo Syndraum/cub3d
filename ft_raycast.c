@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 10:30:57 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 17:37:52 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	raycasting(t_game *game)
 		drawray(game, &ray, x);
 		if (BONUS && game->map.floor_text.id != NULL)
 			floor_casting(game, &ray, x);
+		if (BONUS && game->map.skybox.id != NULL)
+			skybox(game, &ray, x);
 		game->ply.z_index[x] = ray.len;
 	}
 	put_sprite(game);

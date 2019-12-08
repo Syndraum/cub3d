@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 12:54:44 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 18:08:52 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define ROT_SPEED 0.07
 # define NAME_SCREENSHOT "screenshot.bmp"
 # define MAX_NBR_SPRITE 256
-# define PADDING_MAP 4
+# define PADDING_MAP 6
 
 typedef enum	e_event
 {
@@ -138,6 +138,7 @@ typedef struct	s_map
 	t_sprite	sprite;
 	t_img		floor_text;
 	t_rgb		floor;
+	t_img		skybox;
 	t_rgb		ceil;
 }				t_map;
 
@@ -229,5 +230,7 @@ void			put_sprite(t_game *game);
 void			sreenshot(t_game *game);
 
 void			minimap(t_game *game);
+
+void			skybox(t_game *game, t_ray *ray, int x);
 
 #endif

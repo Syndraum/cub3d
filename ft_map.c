@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 12:49:09 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 16:45:11 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	init_map(t_game *game)
 	game->map.sprite.img.id = NULL;
 	game->map.sprite.step = 0;
 	game->map.floor_text.id = NULL;
+	game->map.skybox.id = NULL;
 	init_rgb(&game->map.ceil);
 	init_rgb(&game->map.floor);
 }
@@ -102,7 +103,10 @@ char	*extract_line(char *str, t_game *game)
 			rsl = extract_color(str, &game->map.floor);
 	}
 	else if (ft_strnstr(str, "C", 1) == str)
-		rsl = extract_color(str, &game->map.ceil);
+	{
+		if (NULL != (rsl = extract_texture(str, game)))
+			rsl = extract_color(str, &game->map.ceil);
+	}
 	else if (ft_strnstr(str, "", 1) == str)
 		rsl = NULL;
 	free(str);
@@ -152,6 +156,8 @@ char	*extract_texture(char *str, t_game *game)
 	{
 		if (!(ft_strncmp(str, "F", 1)))
 			img = &game->map.floor_text;
+		else if (!(ft_strncmp(str, "C", 1)))
+			img = &game->map.skybox;
 		else
 			img = &game->map.sprite.img;
 		s_prefix = 1;
