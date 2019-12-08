@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/02 14:49:09 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 10:32:03 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	init_map(t_game *game)
 	game->map.east.id = NULL;
 	game->map.west.id = NULL;
 	game->map.sprite.id = NULL;
+	game->map.floor_text.id = NULL;
 	init_rgb(&game->map.ceil);
 	init_rgb(&game->map.floor);
 }
@@ -95,7 +96,10 @@ char	*extract_line(char *str, t_game *game)
 	else if (ft_strnstr(str, "S", 1) == str)
 		rsl = extract_texture(str, game);
 	else if (ft_strnstr(str, "F", 1) == str)
-		rsl = extract_color(str, &game->map.floor);
+	{
+		if (NULL != (rsl = extract_texture(str, game)))
+			rsl = extract_color(str, &game->map.floor);
+	}
 	else if (ft_strnstr(str, "C", 1) == str)
 		rsl = extract_color(str, &game->map.ceil);
 	else if (ft_strnstr(str, "", 1) == str)
@@ -145,7 +149,10 @@ char	*extract_texture(char *str, t_game *game)
 		img = &game->map.east;
 	else
 	{
-		img = &game->map.sprite;
+		if (!(ft_strncmp(str, "F", 1)))
+			img = &game->map.floor_text;
+		else
+			img = &game->map.sprite;
 		s_prefix = 1;
 	}
 	cursor = str + s_prefix;

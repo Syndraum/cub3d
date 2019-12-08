@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/07 21:14:34 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 10:15:21 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct	s_map
 	t_img		east;
 	t_img		west;
 	t_img		sprite;
+	t_img		floor_text;
 	t_rgb		floor;
 	t_rgb		ceil;
 }				t_map;
