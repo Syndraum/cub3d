@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:23:09 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/01 18:43:49 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 12:50:53 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,37 +93,4 @@ void	print_cross(t_img *img, int x, int y, int size)
 		img_pixel_put(img, x, y + i, 0xFF0000);
 		i++;
 	}
-}
-
-void	print_map(t_game *game, int size)
-{
-	int x;
-	int y;
-
-	y = -1;
-	while (game->map.map[++y])
-	{
-		x = -1;
-		while (game->map.map[y][++x])
-		{
-			if (game->map.map[y][x] == '1')
-				xpm_resize_pit(&game->win.render, &game->map.north, x * size, y * size, size);
-			else if (game->map.map[y][x] == '0')
-				xpm_resize_pit(&game->win.render, &game->map.west, x * size, y * size, size);
-			else if (game->map.map[y][x] == '2')
-				xpm_resize_pit(&game->win.render, &game->map.east, x * size, y * size, size);
-		}
-	}
-	// printf("dirx = %.0f\tdiry = %.0f\n", game->ply.dirx, game->ply.diry);
-	double dirx = (game->ply.x * size) + (game->ply.dir.x * size/2);
-	double diry = (game->ply.y * size) + (game->ply.dir.y * size/2);
-	double planex = game->ply.plan.x * size/2;
-	double planey = game->ply.plan.y * size/2;
-	print_cross(&game->win.render, game->ply.x * size, game->ply.y * size, 10);
-	print_line(&game->win.render, game->ply.x * size, game->ply.y * size, dirx - planex, diry - planey, 0xFF0000);
-	print_line(&game->win.render, game->ply.x * size, game->ply.y * size, dirx + planex, diry + planey, 0xFF0000);
-	print_line(&game->win.render, game->ply.x * size, game->ply.y * size, dirx, diry, 0xFF00);
-	print_line(&game->win.render, dirx, diry, dirx + planex, diry + planey, 0xFF);
-	print_line(&game->win.render, dirx, diry, dirx - planex, diry - planey, 0xFF);
-	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 }

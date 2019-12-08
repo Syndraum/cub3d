@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/07 12:31:07 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 14:42:47 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,16 @@ int	main(int argc, char *argv[])
 	return (EXIT_SUCCESS);
 }
 
+void	add_step_sprite(t_sprite *sprite)
+{
+	sprite->step = (sprite->step + sprite->img.height) % sprite->img.width;
+}
+
 int	loop_hook(t_game *game)
 {
 	event_exec(game);
-	// print_map(game, 64);
 	raycasting(game);
+	add_step_sprite(&game->map.sprite);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 	return (1);
 }

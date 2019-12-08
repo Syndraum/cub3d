@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 10:15:21 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 12:54:44 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,15 @@ typedef struct	s_img
 
 typedef struct	s_sprite
 {
+	t_img		img;
+	int 		step;
+}				t_sprite;
+
+typedef struct	s_lstsprite
+{
 	t_vector	pos;
 	double		dist;
-}				t_sprite;
+}				t_lstsprite;
 
 typedef struct s_info
 {
@@ -129,7 +135,7 @@ typedef struct	s_map
 	t_img		south;
 	t_img		east;
 	t_img		west;
-	t_img		sprite;
+	t_sprite	sprite;
 	t_img		floor_text;
 	t_rgb		floor;
 	t_rgb		ceil;

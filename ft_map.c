@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 10:32:03 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 12:49:09 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*is_complete(t_game *game)
 		return ("East texture is missing");
 	else if (game->map.west.id == NULL)
 		return ("West texture is missing");
-	else if (game->map.sprite.id == NULL)
+	else if (game->map.sprite.img.id == NULL)
 		return ("Sprite texture is missing");
 	else if (game->win.height == 0 || game->win.width == 0)
 		return ("Definition is mising");
@@ -73,7 +73,8 @@ void	init_map(t_game *game)
 	game->map.south.id = NULL;
 	game->map.east.id = NULL;
 	game->map.west.id = NULL;
-	game->map.sprite.id = NULL;
+	game->map.sprite.img.id = NULL;
+	game->map.sprite.step = 0;
 	game->map.floor_text.id = NULL;
 	init_rgb(&game->map.ceil);
 	init_rgb(&game->map.floor);
@@ -152,7 +153,7 @@ char	*extract_texture(char *str, t_game *game)
 		if (!(ft_strncmp(str, "F", 1)))
 			img = &game->map.floor_text;
 		else
-			img = &game->map.sprite;
+			img = &game->map.sprite.img;
 		s_prefix = 1;
 	}
 	cursor = str + s_prefix;

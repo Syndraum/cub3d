@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/07 21:24:08 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 11:59:20 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	minimap(t_game *game)
 	set_rgb(&blank, 37, 38, 41);
 	set_rgb(&wall, 89, 86, 82);
 	set_rgb(&fill, 113, 114, 117);
-	set_rgb(&ignore, 30, (char)153, 72);
+	set_rgb(&ignore, 0, -1, 0);
 	begin.x = game->ply.x - PADDING_MAP;
 	end.x = game->ply.x + PADDING_MAP;
 	end.y = game->ply.y + PADDING_MAP;

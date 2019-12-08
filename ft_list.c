@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:47:47 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 15:49:29 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/08 12:38:34 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 t_list	*new_sprite(double dist, double sprit_x, double sprit_y)
 {
 	t_list		*elmt;
-	t_sprite	*sprite;
+	t_lstsprite	*sprite;
 
-	if (!(sprite = ft_calloc(sizeof(t_sprite), 1)))
+	if (!(sprite = ft_calloc(sizeof(t_lstsprite), 1)))
 		return (NULL);
 	sprite->pos.x = sprit_x;
 	sprite->pos.y = sprit_y;
