@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 19:59:04 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:17:20 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define NAME_SCREENSHOT "screenshot.bmp"
 # define MAX_NBR_SPRITE 256
 # define PADDING_MAP 6
+# define PLY_LIFE 100.0
 
 typedef enum	e_event
 {
@@ -263,5 +264,8 @@ void			minimap(t_game *game);
 
 double			get_anglediff(t_game *game);
 void			skybox(t_game *game, t_ray *ray, int x);
+
+void			damage(t_game *game, double damage);
+void			heal(t_game *game, double heal);
 
 #endif

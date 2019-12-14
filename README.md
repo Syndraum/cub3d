@@ -3,12 +3,14 @@
 TODO
 
 - static function
+- makefile
 
 ~ free list
 ~ all free tab
 
 Bonus :
-- HUD
 - floorcasting clean
 - more object
 - object collision
+- object damage/heal
+- levels
