@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 17:49:24 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:11:59 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	set_rgb(t_rgb *rgb, char red, char green, char blue)
 	rgb->alpha = 0;
 }
 
-void	init_minimap(t_minimap *map, t_game *game)
+static void		init_minimap(t_minimap *map, t_game *game)
 {
 	set_xmp(&map->img, "./assets/minimap.xpm", game->mlx);
 	set_rgb(&map->blank, 27, 51, 82);
 	set_rgb(&map->wall, 54, 89, -120);
 	set_rgb(&map->fill, 74, 124, -68);
 	set_rgb(&map->ignore, 0, -1, 0);
-	set_rgb(&map->ply, 106, (char)190, 48);
+	set_rgb(&map->ply, 106, -65, 48);
 	map->height = game->win.height / 4.5;
 	map->delcalage = PADDING_MAP * 2 / map->height;
 	map->del.x = (double)map->img.width / map->height;
@@ -64,7 +64,7 @@ void	init_minimap(t_minimap *map, t_game *game)
 	map->tmp.y = 0;
 }
 
-void	print_ply(t_minimap *map, t_game *game)
+static void	print_ply(t_minimap *map, t_game *game)
 {
 	int size_p;
 	int i;
@@ -88,7 +88,7 @@ void	print_ply(t_minimap *map, t_game *game)
 	}
 }
 
-void	print_minimap(t_minimap *map, t_game *game)
+static void	print_minimap(t_minimap *map, t_game *game)
 {
 	t_rgb color;
 
@@ -116,9 +116,47 @@ void	print_minimap(t_minimap *map, t_game *game)
 	}
 }
 
-void	minimap(t_game *game)
+void	init_jauge(t_jauge *jauge, t_minimap *map, t_game *game)
 {
-	t_minimap map;
+	set_xmp(&jauge->jauge, "assets/jauge.xpm", game->mlx);
+	set_xmp(&jauge->life, "assets/life.xpm", game->mlx);
+	jauge->height = game->win.height / 25;
+	jauge->widht = game->win.width / 3.5;
+	jauge->del.x = (double)jauge->jauge.width / jauge->widht;
+	jauge->del.y = (double)jauge->jauge.height / jauge->height;
+	jauge->crs_j = jauge->jauge.data;
+	jauge->crs_l = jauge->jauge.data;
+	jauge->pi.x = map->height + 2 * map->padding;
+	jauge->tmp.x = 0;
+	jauge->tmp.y = 0;
+}
+
+void	print_jauge(t_jauge *j, t_minimap *map, t_game *game)
+{
+	while (j->tmp.x < j->jauge.width)
+	{
+		j->pi.y = 2 * map->padding;
+		j->tmp.y = 0;
+		while (j->tmp.y < j->jauge.height)
+		{
+			j->crs_j = get_img_pixel(&j->jauge, (int)j->tmp.x, (int)j->tmp.y);
+			j->crs_l = get_img_pixel(&j->life, (int)j->tmp.x, (int)j->tmp.y);
+			if (*(j->crs_l + 3) == 0 && 100 * j->tmp.x / j->jauge.width < game->ply.life)
+				img_pixel_cpy(&game->win.render, j->pi.x, j->pi.y, j->crs_l);
+			else if (*(j->crs_j + 3) == 0)
+				img_pixel_cpy(&game->win.render, j->pi.x, j->pi.y, j->crs_j);
+			j->tmp.y += j->del.y;
+			(j->pi.y)++;
+		}
+		(j->pi.x)++;
+		j->tmp.x += j->del.x;
+	}
+}
+
+void		minimap(t_game *game)
+{
+	t_minimap	map;
+	t_jauge		jauge;
 
 	init_minimap(&map, game);
 	while (map.tmp.x < map.img.width)
@@ -129,4 +167,6 @@ void	minimap(t_game *game)
 		map.begin.x += map.delcalage;
 	}
 	print_ply(&map, game);
+	init_jauge(&jauge, &map, game);
+	print_jauge(&jauge, &map, game);
 }

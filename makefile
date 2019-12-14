@@ -1,4 +1,4 @@
-SCRS		= 	main.c ft_img.c ft_print.c \
+SCRS		= 	main.c ft_img.c \
 				ft_windows.c ft_map.c ft_extractmap.c \
 				ft_utils_map.c ft_player.c ft_raycast.c \
 				ft_bmp.c ft_xpm.c ft_hook.c ft_error.c \

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 11:01:52 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:04:00 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char *argv[])
 	game.win.mlx = game.mlx;
 	if (!(set_map(fd, &game)))
 		return (free_game(&game));
-	game.ply.z_index = ft_calloc(sizeof(double), game.win.width); //
+	game.ply.z_index = ft_calloc(sizeof(double), game.win.width);
 	set_image(&game.win.render, game.win.width, game.win.height, game.mlx);
 	if (argc == 3 && (!ft_strncmp(argv[2], "-save", 6)))
 	{

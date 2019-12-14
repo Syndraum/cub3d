@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 18:53:16 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/07 16:01:09 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:06:32 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,14 @@ int		key_press_hook(int keycode, t_game *game)
 	printf("[KEY] = %d\n", keycode);
 	fflush(stdout);
 	if (keycode == 53)
-		exit_hook(game);
+	{
+		game->ply.life -= 20;
+		if (game->ply.life < 0)
+			game->ply.life = 0;
+		printf("LIFE = %f\n", game->ply.life);
+		fflush(stdout);
+	}
+		// exit_hook(game);
 	if (keycode == 13)
 		game->event[FORWARD] = 1;
 	if (keycode == 1)

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 17:49:04 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 19:59:04 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,18 @@ typedef struct	s_minimap
 	char		*crs;
 }				t_minimap;
 
+typedef struct	s_jauge
+{
+	t_img		jauge;
+	t_img		life;
+	t_vector	tmp;
+	t_vector	del;
+	t_coord		pi;
+	double		height;
+	double		widht;
+	char		*crs_j;
+	char		*crs_l;
+}				t_jauge;
 
 typedef struct s_windows
 {
@@ -189,13 +201,6 @@ int				loop_hook(t_game *game);
 
 t_windows		*create_windows(t_windows *win, char *title);
 void			*free_windows(t_windows	*windows);
-
-void	img_pixel_put(t_img *img, int x, int y, int color);
-void 	print_colunm(t_img *windows, int colunm, int color);
-void	print_color(t_img *windows, int color);
-void	print_line(t_img *img, double beg_x, double beg_y, double end_x, double end_y, int color);
-void	print_cross(t_img *img, int x, int y, int size);
-void	print_map(t_game *game, int size);
 
 void			*set_image(t_img *img, int width, int height, void *mlx);
 void			*set_xmp(t_img *img, char *path, void *mlx);
