@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 14:25:12 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 17:49:04 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,26 @@ typedef struct s_info
 	t_coord		draw_end;
 	t_coord		text;
 }				t_info;
+
+typedef struct	s_minimap
+{
+	t_img		img;
+	t_rgb		wall;
+	t_rgb		blank;
+	t_rgb		fill;
+	t_rgb		ignore;
+	t_rgb		ply;
+	t_vector	tmp;
+	t_vector	begin;
+	t_vector	end;
+	t_vector	del;
+	t_coord		pi;
+	double		height;
+	double		delcalage;
+	int			padding;
+	char		*crs;
+}				t_minimap;
+
 
 typedef struct s_windows
 {

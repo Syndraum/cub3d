@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 11:59:20 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 17:49:24 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,80 +42,91 @@ void	set_rgb(t_rgb *rgb, char red, char green, char blue)
 	rgb->alpha = 0;
 }
 
-void	minimap(t_game *game)
+void	init_minimap(t_minimap *map, t_game *game)
 {
-	t_img img;
-	set_xmp(&img, "./assets/minimap.xpm", game->mlx);
-	t_vector begin;
-	t_vector end;
-	t_rgb	wall;
-	t_rgb	blank;
-	t_rgb	fill;
-	t_rgb	ignore;
-	t_coord	pixel;
+	set_xmp(&map->img, "./assets/minimap.xpm", game->mlx);
+	set_rgb(&map->blank, 27, 51, 82);
+	set_rgb(&map->wall, 54, 89, -120);
+	set_rgb(&map->fill, 74, 124, -68);
+	set_rgb(&map->ignore, 0, -1, 0);
+	set_rgb(&map->ply, 106, (char)190, 48);
+	map->height = game->win.height / 4.5;
+	map->delcalage = PADDING_MAP * 2 / map->height;
+	map->del.x = (double)map->img.width / map->height;
+	map->del.y = (double)map->img.height / map->height;
+	map->padding = game->win.height / 40;
+	map->pi.x = map->padding;
+	map->begin.x = game->ply.x - PADDING_MAP;
+	map->end.x = game->ply.x + PADDING_MAP;
+	map->end.y = game->ply.y + PADDING_MAP;
+	map->crs = map->img.data;
+	map->tmp.x = 0;
+	map->tmp.y = 0;
+}
 
-	double height = 150;
-	double delcalage = PADDING_MAP * 2 / height;
-	double del_x = (double)img.width / (double)height;
-	double del_y = (double)img.height / (double)height;
-	double x = 0;
-	double y = 0;
-
-	pixel.x = 10;
-	pixel.y = 10;
-	set_rgb(&blank, 37, 38, 41);
-	set_rgb(&wall, 89, 86, 82);
-	set_rgb(&fill, 113, 114, 117);
-	set_rgb(&ignore, 0, -1, 0);
-	begin.x = game->ply.x - PADDING_MAP;
-	end.x = game->ply.x + PADDING_MAP;
-	end.y = game->ply.y + PADDING_MAP;
-
-	char *cursor = img.data;
-	while (x < img.width)
-	{
-		begin.y = game->ply.y - PADDING_MAP;
-		pixel.y = 10;
-		y = 0;
-		while (y < img.height)
-		{
-			cursor = get_img_pixel(&img, (int)x, (int)y);
-			if (rgbcmp(cursor , &ignore))
-			{
-				if (!(is_inmap(game->map.map, &begin)))
-					img_pixel_rgb(&game->win.render, pixel.x, pixel.y, &blank);
-				else if (game->map.map[(int)begin.y][(int)begin.x] == '1')
-					img_pixel_rgb(&game->win.render, pixel.x, pixel.y, &wall);
-				else
-					img_pixel_rgb(&game->win.render, pixel.x, pixel.y, &fill);
-			}
-			else if (*(cursor + 3) == 0)
-				img_pixel_cpy(&game->win.render, pixel.x, pixel.y, cursor);
-			begin.y += delcalage;
-			y += del_y;
-			(pixel.y)++;
-		}
-		(pixel.x)++;
-		x += del_x;
-		begin.x += delcalage;
-		// cursor += 4;
-	}
-	pixel.x = 10 + (height / 2) - 3;
-	int i = 0;
+void	print_ply(t_minimap *map, t_game *game)
+{
+	int size_p;
+	int i;
 	int j;
-	t_rgb ply;
-	set_rgb(&ply, 106, (char)190, 48);
-	while (i < 6)
+
+	size_p = game->win.height / 100;
+	map->pi.x = map->padding + (map->height / 2) - 3;
+	i = 0;
+	while (i < size_p)
 	{
 		j = 0;
-		pixel.y = 10 + (height / 2) - 3;
-		while (j < 6)
+		map->pi.y = map->padding + (map->height / 2) - 3;
+		while (j < size_p)
 		{
-			img_pixel_rgb(&game->win.render, pixel.x, pixel.y, &ply);
-			(pixel.y)++;
+			img_pixel_rgb(&game->win.render, map->pi.x, map->pi.y, &map->ply);
+			(map->pi.y)++;
 			j++;
 		}
 		i++;
-		(pixel.x)++;
+		(map->pi.x)++;
 	}
+}
+
+void	print_minimap(t_minimap *map, t_game *game)
+{
+	t_rgb color;
+
+	map->begin.y = game->ply.y - PADDING_MAP;
+	map->pi.y = map->padding;
+	map->tmp.y = 0;
+	while (map->tmp.y < map->img.height)
+	{
+		map->crs = get_img_pixel(&map->img, (int)map->tmp.x, (int)map->tmp.y);
+		if (rgbcmp(map->crs, &map->ignore))
+		{
+			if (!(is_inmap(game->map.map, &map->begin)))
+				color = map->blank;
+			else if (game->map.map[(int)map->begin.y][(int)map->begin.x] == '1')
+				color = map->wall;
+			else
+				color = map->fill;
+			img_pixel_rgb(&game->win.render, map->pi.x, map->pi.y, &color);
+		}
+		else if (*(map->crs + 3) == 0)
+			img_pixel_cpy(&game->win.render, map->pi.x, map->pi.y, map->crs);
+		map->begin.y += map->delcalage;
+		map->tmp.y += map->del.y;
+		(map->pi.y)++;
+	}
+}
+
+void	minimap(t_game *game)
+{
+	t_minimap map;
+
+	init_minimap(&map, game);
+	while (map.tmp.x < map.img.width)
+	{
+		print_minimap(&map, game);
+		(map.pi.x)++;
+		map.tmp.x += map.del.x;
+		map.begin.x += map.delcalage;
+	}
+	print_ply(&map, game);
 }

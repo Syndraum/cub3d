@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 13:45:38 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:37:12 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	drawray(t_game *game, t_ray *ray, int line)
 	img = get_side_texture(&game->map, ray->wall);
 	while (++i < game->win.height)
 	{
-		if (i < ray->pixel_start)
+		if (i < ray->pixel_start && !BONUS)
 			img_pixel_rgb(&game->win.render, line, i, &game->map.ceil);
-		else if (i >= ray->pixel_end)
+		else if (i >= ray->pixel_end && !BONUS)
 			img_pixel_rgb(&game->win.render, line, i, &game->map.floor);
-		else
+		else if (i < ray->pixel_end && i > ray->pixel_start)
 		{
 			d = j * 2 - game->win.height + ray->line_h;
 			ray->text.x = (int)(ray->wall_x * (double)img->width);
@@ -91,7 +91,7 @@ void	raycasting(t_game *game)
 		game->ply.z_index[x] = ray.len;
 	}
 	put_sprite(game);
-	// if (BONUS)
-	// 	minimap(game);
+	if (BONUS)
+		minimap(game);
 	ft_lstclear(&game->ply.sprite, free_sprite);
 }
