@@ -2,7 +2,6 @@
 
 TODO
 
-- parsing detect double
 - static function
 
 ~ free list
@@ -13,6 +12,5 @@ Bonus :
 - minimap/HUD rezise
 - minimap clean
 - floorcasting clean
-- life
 - more object
 - object collision

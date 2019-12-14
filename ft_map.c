@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 16:45:11 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 14:45:11 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ char	*is_complete(t_game *game)
 	else if (game->map.sprite.img.id == NULL)
 		return ("Sprite texture is missing");
 	else if (game->win.height == 0 || game->win.width == 0)
-		return ("Definition is mising");
+		return ("Definition is missing");
+	else if (game->map.as_ceil == 0)
+		return ("ceil color is missing");
+	else if (game->map.as_floor == 0)
+		return ("floor color is missing");
 	return (NULL);
 }
 
@@ -79,6 +83,8 @@ void	init_map(t_game *game)
 	game->map.skybox.id = NULL;
 	init_rgb(&game->map.ceil);
 	init_rgb(&game->map.floor);
+	game->map.as_ceil = 0;
+	game->map.as_floor = 0;
 }
 
 char	*extract_line(char *str, t_game *game)
@@ -99,13 +105,17 @@ char	*extract_line(char *str, t_game *game)
 		rsl = extract_texture(str, game);
 	else if (ft_strnstr(str, "F", 1) == str)
 	{
-		if (NULL != (rsl = extract_texture(str, game)))
-			rsl = extract_color(str, &game->map.floor);
+		if (BONUS && NULL == (rsl = extract_texture(str, game)))
+			game->map.as_floor = 1;
+		else if (!BONUS)
+			rsl = extract_color(str, &game->map.floor, &game->map.as_floor);
 	}
 	else if (ft_strnstr(str, "C", 1) == str)
 	{
-		if (NULL != (rsl = extract_texture(str, game)))
-			rsl = extract_color(str, &game->map.ceil);
+		if (BONUS && NULL == (rsl = extract_texture(str, game)))
+			game->map.as_ceil = 1;
+		else if (!BONUS)
+			rsl = extract_color(str, &game->map.ceil, &game->map.as_ceil);
 	}
 	else if (ft_strnstr(str, "", 1) == str)
 		rsl = NULL;
@@ -120,18 +130,18 @@ char	*extract_resolution(char *str, t_game *game)
 	cursor = str + 1;
 	while (*cursor == ' ')
 		cursor++;
-	if (!isnumber(*cursor))
-		return ("Wrong widht format");
-	game->win.width = ft_atoi(cursor);
+	if (game->win.width != 0)
+		return ("Duplicate resolution");
+	if (0 >= (game->win.width = ft_atoi(cursor)))
+		return ("Wrong widht, resolution need to be higher than 0 x 0");
 	if (game->win.width > MAX_WIDHT)
 		game->win.width = MAX_WIDHT;
 	while (isnumber(*cursor))
 		cursor++;
 	while (*cursor == ' ')
 		cursor++;
-	if (!isnumber(*cursor))
-		return ("Wrong height format");
-	game->win.height = ft_atoi(cursor);
+	if (0 >= (game->win.height = ft_atoi(cursor)))
+		return ("Wrong height, resolution need to be higher than 0 x 0");
 	if (game->win.height > MAX_HEIGHT)
 		game->win.height = MAX_HEIGHT;
 	return (NULL);
@@ -162,6 +172,8 @@ char	*extract_texture(char *str, t_game *game)
 			img = &game->map.sprite.img;
 		s_prefix = 1;
 	}
+	if (img->id != NULL)
+		return ("Duplicate texture");
 	cursor = str + s_prefix;
 	while (*cursor == ' ')
 		cursor++;
@@ -170,7 +182,7 @@ char	*extract_texture(char *str, t_game *game)
 	return (NULL);
 }
 
-char	*extract_color(char *str, t_rgb *type)
+char	*extract_color(char *str, t_rgb *type, char *as_color)
 {
 	char		*cursor;
 	int			value;
@@ -179,22 +191,22 @@ char	*extract_color(char *str, t_rgb *type)
 	while (*cursor == ' ')
 		cursor++;
 	if (!isnumber(*cursor) || (255 < (value = ft_atoi(cursor))))
-		return ("Red color wrong format");
+		return ("Bad red format, colors need to be between 0 and 255");
 	type->red = value;
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
-		return ("Green color wrong format");
+		return ("Bad green format, colors need to be between 0 and 255");
 	type->green = value;
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
-		return ("Blue color wrong format");
+		return ("Bad green format, colors need to be between 0 and 255");
 	type->blue = value;
-	type->alpha = 0;
+	*as_color = 1;
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:08:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 17:28:48 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 13:10:04 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_player(t_player *player)
 {
+	player->life = 100;
 	player->x = 0;
 	player->y = 0;
 	set_vector(&player->dir, 0, 1);
