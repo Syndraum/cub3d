@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 09:58:40 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 13:00:43 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ typedef struct	s_vector
 
 typedef struct	s_coord
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 }				t_coord;
 
 typedef struct s_rgb
@@ -80,6 +80,7 @@ typedef struct	s_ray
 	char		wall;
 	double		wall_x;
 	t_coord		text;
+	double 		angle;
 }				t_ray;
 
 typedef struct	s_img
@@ -183,6 +184,7 @@ void	img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
 
 int				ft_error(int error);
+int				free_game(t_game *game);
 int				free_map(char **tab);
 void			*print_error(char *error);
 
@@ -231,6 +233,7 @@ void			sreenshot(t_game *game);
 
 void			minimap(t_game *game);
 
+double			get_anglediff(t_game *game);
 void			skybox(t_game *game, t_ray *ray, int x);
 
 #endif

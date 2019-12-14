@@ -2,17 +2,17 @@
 
 TODO
 
-- free list
+- parsing detect double
 - static function
 
-x map new parsing ?
+~ free list
 ~ all free tab
 
 Bonus :
+- HUD
+- minimap/HUD rezise
 - minimap clean
 - floorcasting clean
-- skybox
-- animated sprites
 - life
 - more object
 - object collision

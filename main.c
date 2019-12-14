@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 14:42:47 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/14 11:01:52 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,22 @@ int	main(int argc, char *argv[])
 
 	if (argc < 2)
 		return (ft_error(ENOENT));
-	else if (argc > 3)
-		return (ft_error(E2BIG));
 	if (0 > (fd = open(argv[1], O_RDONLY)))
 		return (ft_error(-1));
 	if (!(game.mlx = mlx_init()))
 		return (EXIT_FAILURE);
 	game.win.mlx = game.mlx;
 	if (!(set_map(fd, &game)))
-		return (free_map(game.map.map));
+		return (free_game(&game));
 	game.ply.z_index = ft_calloc(sizeof(double), game.win.width); //
 	set_image(&game.win.render, game.win.width, game.win.height, game.mlx);
 	if (argc == 3 && (!ft_strncmp(argv[2], "-save", 6)))
 	{
 		sreenshot(&game);
-		return (free_map(game.map.map));
+		return (free_game(&game));
 	}
 	if (!(create_windows(&game.win, "cub3d")))
-		return (free_map(game.map.map));
+		return (free_game(&game));
 	mlx_do_key_autorepeatoff(game.mlx);
 	mlx_loop_hook(game.mlx, loop_hook, &game);
 	mlx_hook(game.win.id, 2, 0, key_press_hook, &game);

@@ -18,7 +18,7 @@ NAME		= libft.a
 
 CC			= gcc
 
-CFLAG		= -Wall -Wextra -Werror
+CFLAG		= -Ofast -Wall -Werror -Wextra
 
 OBJS		= ${SRCS:.c=.o}
 

@@ -12,7 +12,7 @@ OBJS		= ${SCRS:.c=.o}
 
 RM			= rm -f
 
-NAME		= cube3d.out
+NAME		= cub3d
 
 CC			= gcc
 
