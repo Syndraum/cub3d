@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 13:05:29 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:06:50 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,12 @@ typedef struct	s_sprite
 	double		effect;
 }				t_sprite;
 
-typedef struct	s_lstsprite
+typedef struct	s_object
 {
 	t_vector	pos;
 	double		dist;
-}				t_lstsprite;
+	char		id;
+}				t_object;
 
 typedef struct s_info
 {
@@ -188,7 +189,7 @@ typedef struct	s_player
 	double		y;
 	t_vector	dir;
 	t_vector	plan;
-	t_list		*sprite;
+	t_list		*object;
 	double		*z_index;
 }				t_player;
 
@@ -253,14 +254,15 @@ void			exec_dda(t_ray *ray, t_game *g);
 void			raycasting(t_game *game);
 void			floor_casting(t_game *game, t_ray *ray, int x);
 
-t_list			*new_sprite(double dist, double sprit_x, double sprit_y);
+t_list			*new_object(double dist, double sprit_x, double sprit_y, char id);
 t_list			*ft_lstadd(t_list **list, t_list *elmt);
 void			free_sprite(void *sprite);
 
 void	print_lstsprite(t_list *lst);
-t_list			*get_sprite(void);
+t_list			*new_sprite(void);
 char			issprite(char id, t_game *game);
-char			add_vector(t_player *ply, double sprit_x, double sprit_y);
+char			is_id_forbidden(char id);
+char			add_vector(t_player *ply, double x, double y, char id);
 void			print_sprite(t_game *game, t_info *info, t_sprite *sprite);
 void			put_sprite(t_game *game);
 

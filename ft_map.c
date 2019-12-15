@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 13:13:20 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 14:38:21 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,16 +156,27 @@ char	*extract_sprite(char *str, t_game *game)
 
 	if (!BONUS && game->map.sprite != NULL)
 		return ("Duplicate sprite");
-	if (!(elmt = get_sprite()))
+	if (!(elmt = new_sprite()))
 		return ("Allocution failed");
 	sprite = (t_sprite*)elmt->content;
 	cursor = str + 1;
 	while (*cursor == ' ')
 		cursor++;
+	if (BONUS)
+	{
+		if (is_id_forbidden(*cursor))
+			return ("Forbiddent identifiant");
+		if (issprite(*cursor, game))
+			return ("Identifiant be unique");
+		sprite->id = *(cursor++);
+		if (*cursor != ' ')
+			return ("Srite identifiant");
+		while (*cursor == ' ')
+		cursor++;
+	}
 	if (!(set_xmp(&sprite->img, cursor, game->mlx)))
 	{
-		free(sprite);
-		free(elmt); //
+		ft_lstdelone(elmt, free_sprite);
 		return (strerror(2));
 	}
 	ft_lstadd_back(&game->map.sprite, elmt);

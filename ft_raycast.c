@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 16:37:12 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:31:26 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	raycasting(t_game *game)
 	t_ray	ray;
 
 	x = -1;
-	game->ply.sprite = NULL;
+	game->ply.object = NULL;
 	ray.angle = ((double)game->map.skybox.width * get_anglediff(game)) / M_PI;
 	while (++x < game->win.width)
 	{
@@ -93,5 +93,5 @@ void	raycasting(t_game *game)
 	put_sprite(game);
 	if (BONUS)
 		minimap(game);
-	ft_lstclear(&game->ply.sprite, free_sprite);
+	ft_lstclear(&game->ply.object, free_sprite);
 }

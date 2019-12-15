@@ -6,13 +6,13 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:11:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 13:26:35 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:14:36 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_list	*get_sprite(void)
+t_list	*new_sprite(void)
 {
 	t_list		*elmt;
 	t_sprite	*sprite;
@@ -32,6 +32,32 @@ t_list	*get_sprite(void)
 	return (elmt);
 }
 
+t_sprite	*get_sprite(char *id, t_game *game)
+{
+	t_list		*cursor;
+	t_sprite	*sprite;
+
+	cursor = game->map.sprite;
+	while (cursor != NULL)
+	{
+		sprite = (t_sprite*)cursor->content;
+		if (sprite->id == *id)
+			return (sprite);
+		cursor = cursor->next;
+	}
+	return (NULL);
+}
+
+char	is_id_forbidden(char id)
+{
+	if (id == '0' || id == '1' || id == 'N' || id == 'W' ||
+	id == 'S' || id == 'E')
+		return (1);
+	if (!ft_isprint(id))
+		return (1);
+	return (0);
+}
+
 char	issprite(char id, t_game *game)
 {
 	t_list		*cursor;
@@ -48,30 +74,30 @@ char	issprite(char id, t_game *game)
 	return (0);
 }
 
-char	add_vector(t_player *ply, double sprit_x, double sprit_y)
+char	add_vector(t_player *ply, double sprit_x, double sprit_y, char id)
 {
 	t_list		*cursor;
 	t_list		*prec;
-	t_lstsprite	*sprite;
+	t_object	*object;
 	double		dist;
 
 	dist = (pow(ply->x - sprit_x, 2) + pow(ply->y - sprit_y, 2));
-	cursor = ply->sprite;
+	cursor = ply->object;
 	prec = NULL;
 	while (cursor != NULL)
 	{
-		sprite = cursor->content;
-		if (sprit_x == sprite->pos.x && sprit_y == sprite->pos.y)
+		object = cursor->content;
+		if (sprit_x == object->pos.x && sprit_y == object->pos.y)
 			return (0);
-		if (sprite->dist < dist)
+		if (object->dist < dist)
 			break ;
 		prec = cursor;
 		cursor = cursor->next;
 	}
 	if (prec == NULL)
-		ft_lstadd_front(&ply->sprite, new_sprite(dist, sprit_x, sprit_y));
+		ft_lstadd_front(&ply->object, new_object(dist, sprit_x, sprit_y, id));
 	else
-		ft_lstadd(&prec, new_sprite(dist, sprit_x, sprit_y));
+		ft_lstadd(&prec, new_object(dist, sprit_x, sprit_y, id));
 	return (1);
 }
 
@@ -110,40 +136,42 @@ void	print_sprite(t_game *g, t_info *i, t_sprite *sprite)
 	}
 }
 
-void	set_info(t_player *ply, t_windows *w, t_info *i, t_lstsprite *sprite)
+void	set_info(t_player *ply, t_windows *w, t_info *i, t_object *object)
 {
-	i->tmp.x = sprite->pos.x - ply->x;
-	i->tmp.y = sprite->pos.y - ply->y;
+	i->tmp.x = object->pos.x - ply->x;
+	i->tmp.y = object->pos.y - ply->y;
 	i->det = 1.0 / (ply->plan.x * ply->dir.y - ply->dir.x * ply->plan.y);
 	i->trans.x = i->det * (ply->dir.y * i->tmp.x - ply->dir.x * i->tmp.y);
 	i->trans.y = i->det * (-ply->plan.y * i->tmp.x + ply->plan.x * i->tmp.y);
 	i->sprit_screenx = (int)((w->width / 2) * (1 + i->trans.x / i->trans.y));
+	i->sprit_height = abs((int)(w->height / (i->trans.y)));
+	i->sprit_widht = abs((int)(w->height / (i->trans.y)));
 }
 
 void	put_sprite(t_game *game)
 {
 	t_list		*lst;
 	t_info		info;
+	t_object	*object;
 
-	lst = game->ply.sprite;
+	lst = game->ply.object;
 	while (lst != NULL)
 	{
-		set_info(&game->ply, &game->win, &info, (t_lstsprite*)lst->content);
-		info.sprit_height = abs((int)(game->win.height / (info.trans.y)));
+		object = (t_object*)lst->content;
+		set_info(&game->ply, &game->win, &info, object);
 		info.draw_start.y = -info.sprit_height / 2 + game->win.height / 2;
 		if (info.draw_start.y < 0)
 			info.draw_start.y = 0;
 		info.draw_end.y = info.sprit_height / 2 + game->win.height / 2;
 		if (info.draw_end.y >= game->win.height)
 			info.draw_end.y = game->win.height - 1;
-		info.sprit_widht = abs((int)(game->win.height / (info.trans.y)));
 		info.draw_start.x = -info.sprit_widht / 2 + info.sprit_screenx;
 		if (info.draw_start.x < 0)
 			info.draw_start.x = 0;
 		info.draw_end.x = info.sprit_height / 2 + info.sprit_screenx;
 		if (info.draw_end.x >= game->win.width)
 			info.draw_end.x = game->win.width - 1;
-		print_sprite(game, &info, game->map.sprite->content);
+		print_sprite(game, &info, get_sprite(&object->id, game));
 		lst = lst->next;
 	}
 }

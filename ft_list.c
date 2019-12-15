@@ -6,25 +6,26 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:47:47 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 12:38:34 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:07:07 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_list	*new_sprite(double dist, double sprit_x, double sprit_y)
+t_list	*new_object(double dist, double sprit_x, double sprit_y, char id)
 {
 	t_list		*elmt;
-	t_lstsprite	*sprite;
+	t_object	*object;
 
-	if (!(sprite = ft_calloc(sizeof(t_lstsprite), 1)))
+	if (!(object = ft_calloc(sizeof(t_object), 1)))
 		return (NULL);
-	sprite->pos.x = sprit_x;
-	sprite->pos.y = sprit_y;
-	sprite->dist = dist;
-	if (!(elmt = ft_lstnew(sprite)))
+	object->pos.x = sprit_x;
+	object->pos.y = sprit_y;
+	object->dist = dist;
+	object->id = id;
+	if (!(elmt = ft_lstnew(object)))
 	{
-		free(sprite);
+		free(object);
 		return (NULL);
 	}
 	return (elmt);

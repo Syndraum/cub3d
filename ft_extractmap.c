@@ -6,18 +6,33 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 17:29:29 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:30:23 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*extract_line_map(char *line, char ***map)
+char	isvalide_bonus(char *line, t_game *game)
 {
+	while (*line != 0)
+	{
+		if (!issprite(*line, game) && 0 == ft_strchr(" 01NSWE", *line))
+			return (0);
+		line++;
+	}
+	return (1);
+}
+
+char	*extract_line_map(char *line, t_game *game)
+{
+	char	***map;
 	char	*row;
 	char	**tab;
 
-	if (!(str_charset(line, " 012NSWE")))
+	map = &game->map.map;
+	if (!(str_charset(line, " 012NSWE")) && !BONUS)
+		return ("Invalid character in map");
+	if (BONUS && !isvalide_bonus(line, game))
 		return ("Invalid character in map");
 	if (!(row = strdup_wc(line, ' ')))
 		return (strerror(12));
@@ -82,10 +97,10 @@ char	*extract_map(int fd, char *line, t_game *game)
 	if (!(game->map.map = ft_calloc(sizeof(char*), 1)))
 		return (strerror(12));
 	init_player(&game->ply);
-	if ((error = extract_line_map(line, &game->map.map)))
+	if ((error = extract_line_map(line, game)))
 		return (error);
 	while (get_next_line(fd, &line) >= 0 && ft_strncmp(line, "", 1))
-		if ((error = extract_line_map(line, &game->map.map)))
+		if ((error = extract_line_map(line, game)))
 			return (error);
 	if ((error = analize_map(game->map.map, game)))
 		return (error);

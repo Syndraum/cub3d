@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:53:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/04 15:53:45 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:05:33 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ void		exec_dda(t_ray *ray, t_game *g)
 	while (hit == 0)
 	{
 		ray_increment(ray);
-		if (g->map.map[ray->map.y][ray->map.x] == '2')
+		if (issprite(g->map.map[ray->map.y][ray->map.x], g))
 		{
 			sprite.x = (double)(ray->map.x) + 0.5;
 			sprite.y = (double)(ray->map.y) + 0.5;
-			add_vector(&g->ply, sprite.x, sprite.y);
+			add_vector(&g->ply, sprite.x, sprite.y, g->map.map[ray->map.y][ray->map.x]);
 		}
 		else if (g->map.map[ray->map.y][ray->map.x] == '1')
 			hit = 1;
