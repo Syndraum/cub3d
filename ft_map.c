@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 14:38:21 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 16:57:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,20 @@ char	*extract_sprite(char *str, t_game *game)
 			return ("Identifiant be unique");
 		sprite->id = *(cursor++);
 		if (*cursor != ' ')
-			return ("Srite identifiant");
+			return ("Srite identifiant not found");
 		while (*cursor == ' ')
+			cursor++;
+		if (*cursor == '1')
+			sprite->collision = 1;
+		else if (*cursor == '0')
+			sprite->collision = 0;
+		else
+			return ("Bad collision setting");
 		cursor++;
+		if (*cursor != ' ')
+			return ("Collision setting not found");
+		while (*cursor == ' ')
+			cursor++;
 	}
 	if (!(set_xmp(&sprite->img, cursor, game->mlx)))
 	{

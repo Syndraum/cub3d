@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 18:53:16 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 11:15:56 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 17:22:05 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,19 @@ int		key_release_hook(int keycode, t_game *game)
 
 void	move(t_game *game, double move_x, double move_y)
 {
-	double m_x;
-	double m_y;
+	double	m_x;
+	double	m_y;
+	char	value;
 
 	m_x = move_x * MOVE_SPEED;
 	m_y = move_y * MOVE_SPEED;
 	if (BONUS)
 	{
-		if (game->map.map[(int)game->ply.y][(int)(game->ply.x - (m_x))] != '1')
+		value = game->map.map[(int)game->ply.y][(int)(game->ply.x - (m_x))];
+		if (value != '1' && !issprite_wall(value, game))
 			game->ply.x -= m_x;
-		if (game->map.map[(int)(game->ply.y - (m_y))][(int)game->ply.x] != '1')
+		value = game->map.map[(int)(game->ply.y - (m_y))][(int)game->ply.x];
+		if (value != '1' && !issprite_wall(value, game))
 			game->ply.y -= m_y;
 	}
 	else

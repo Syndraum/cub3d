@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:11:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 15:14:36 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 17:13:54 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_list	*new_sprite(void)
 	if (!(sprite = ft_calloc(1, sizeof(t_sprite))))
 		return (NULL);
 	sprite->id = 0;
+	if (!BONUS)
+		sprite->id = '2';
 	sprite->img.id = NULL;
 	sprite->step = 0;
 	sprite->collision = 0;
@@ -69,6 +71,24 @@ char	issprite(char id, t_game *game)
 		sprite = (t_sprite*)cursor->content;
 		if (sprite->id == id)
 			return (1);
+		cursor = cursor->next;
+	}
+	return (0);
+}
+
+char	issprite_wall(char id, t_game *game)
+{
+	t_list		*cursor;
+	t_sprite	*sprite;
+
+	cursor = game->map.sprite;
+	while (cursor != NULL)
+	{
+		sprite = (t_sprite*)cursor->content;
+		if (sprite->id == id && sprite->collision == 1)
+			return (1);
+		else if (sprite->id == id && sprite->collision == 0)
+			return (0);
 		cursor = cursor->next;
 	}
 	return (0);
