@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 18:04:00 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:04:24 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,25 @@ int	main(int argc, char *argv[])
 	return (EXIT_SUCCESS);
 }
 
-void	add_step_sprite(t_sprite *sprite)
+void	add_step_sprite(t_list *lst)
 {
-	sprite->step = (sprite->step + sprite->img.height) % sprite->img.width;
+	t_sprite	*sprite;
+	t_list		*cursor;
+
+	cursor = lst;
+	while(cursor != NULL)
+	{
+		sprite = (t_sprite*)cursor->content;
+		sprite->step = (sprite->step + sprite->img.height) % sprite->img.width;
+		cursor = cursor->next;
+	}
 }
 
 int	loop_hook(t_game *game)
 {
 	event_exec(game);
 	raycasting(game);
-	add_step_sprite(&game->map.sprite);
+	add_step_sprite(game->map.sprite);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 	return (1);
 }

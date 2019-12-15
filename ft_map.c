@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 14:45:11 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:13:20 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*is_complete(t_game *game)
 		return ("East texture is missing");
 	else if (game->map.west.id == NULL)
 		return ("West texture is missing");
-	else if (game->map.sprite.img.id == NULL)
+	else if (game->map.sprite == NULL)
 		return ("Sprite texture is missing");
 	else if (game->win.height == 0 || game->win.width == 0)
 		return ("Definition is missing");
@@ -77,8 +77,9 @@ void	init_map(t_game *game)
 	game->map.south.id = NULL;
 	game->map.east.id = NULL;
 	game->map.west.id = NULL;
-	game->map.sprite.img.id = NULL;
-	game->map.sprite.step = 0;
+	game->map.sprite = NULL;
+	// game->map.sprite.img.id = NULL;
+	// game->map.sprite.step = 0;
 	game->map.floor_text.id = NULL;
 	game->map.skybox.id = NULL;
 	init_rgb(&game->map.ceil);
@@ -102,7 +103,7 @@ char	*extract_line(char *str, t_game *game)
 	else if (ft_strnstr(str, "EA", 2) == str)
 		rsl = extract_texture(str, game);
 	else if (ft_strnstr(str, "S", 1) == str)
-		rsl = extract_texture(str, game);
+		rsl = extract_sprite(str, game);
 	else if (ft_strnstr(str, "F", 1) == str)
 	{
 		if (BONUS && NULL == (rsl = extract_texture(str, game)))
@@ -147,6 +148,30 @@ char	*extract_resolution(char *str, t_game *game)
 	return (NULL);
 }
 
+char	*extract_sprite(char *str, t_game *game)
+{
+	char		*cursor;
+	t_list		*elmt;
+	t_sprite	*sprite;
+
+	if (!BONUS && game->map.sprite != NULL)
+		return ("Duplicate sprite");
+	if (!(elmt = get_sprite()))
+		return ("Allocution failed");
+	sprite = (t_sprite*)elmt->content;
+	cursor = str + 1;
+	while (*cursor == ' ')
+		cursor++;
+	if (!(set_xmp(&sprite->img, cursor, game->mlx)))
+	{
+		free(sprite);
+		free(elmt); //
+		return (strerror(2));
+	}
+	ft_lstadd_back(&game->map.sprite, elmt);
+	return (NULL);
+}
+
 char	*extract_texture(char *str, t_game *game)
 {
 	char	*cursor;
@@ -166,10 +191,8 @@ char	*extract_texture(char *str, t_game *game)
 	{
 		if (!(ft_strncmp(str, "F", 1)))
 			img = &game->map.floor_text;
-		else if (!(ft_strncmp(str, "C", 1)))
-			img = &game->map.skybox;
 		else
-			img = &game->map.sprite.img;
+			img = &game->map.skybox;
 		s_prefix = 1;
 	}
 	if (img->id != NULL)

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 20:11:59 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 11:14:21 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ void	print_jauge(t_jauge *j, t_minimap *map, t_game *game)
 		{
 			j->crs_j = get_img_pixel(&j->jauge, (int)j->tmp.x, (int)j->tmp.y);
 			j->crs_l = get_img_pixel(&j->life, (int)j->tmp.x, (int)j->tmp.y);
-			if (*(j->crs_l + 3) == 0 && 100 * j->tmp.x / j->jauge.width < game->ply.life)
+			if (*(j->crs_l + 3) == 0 &&
+			100 * j->tmp.x / j->jauge.width < game->ply.life)
 				img_pixel_cpy(&game->win.render, j->pi.x, j->pi.y, j->crs_l);
 			else if (*(j->crs_j + 3) == 0)
 				img_pixel_cpy(&game->win.render, j->pi.x, j->pi.y, j->crs_j);

@@ -6,11 +6,47 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:11:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 14:39:46 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:26:35 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+t_list	*get_sprite(void)
+{
+	t_list		*elmt;
+	t_sprite	*sprite;
+
+	if (!(sprite = ft_calloc(1, sizeof(t_sprite))))
+		return (NULL);
+	sprite->id = 0;
+	sprite->img.id = NULL;
+	sprite->step = 0;
+	sprite->collision = 0;
+	sprite->effect = 0;
+	if (!(elmt = ft_lstnew(sprite)))
+	{
+		free(sprite);
+		return (NULL);
+	}
+	return (elmt);
+}
+
+char	issprite(char id, t_game *game)
+{
+	t_list		*cursor;
+	t_sprite	*sprite;
+
+	cursor = game->map.sprite;
+	while (cursor != NULL)
+	{
+		sprite = (t_sprite*)cursor->content;
+		if (sprite->id == id)
+			return (1);
+		cursor = cursor->next;
+	}
+	return (0);
+}
 
 char	add_vector(t_player *ply, double sprit_x, double sprit_y)
 {
@@ -39,7 +75,7 @@ char	add_vector(t_player *ply, double sprit_x, double sprit_y)
 	return (1);
 }
 
-void	print_sprite(t_game *g, t_info *i)
+void	print_sprite(t_game *g, t_info *i, t_sprite *sprite)
 {
 	int		x;
 	int		y;
@@ -52,19 +88,19 @@ void	print_sprite(t_game *g, t_info *i)
 		i->text.x = (x - (-i->sprit_widht / 2 + i->sprit_screenx));
 		if (BONUS)
 		{
-			i->text.x = i->text.x * g->map.sprite.img.height / i->sprit_widht;
-			i->text.x += g->map.sprite.step;
+			i->text.x = i->text.x * sprite->img.height / i->sprit_widht;
+			i->text.x += sprite->step;
 		}
 		else
-			i->text.x = i->text.x * g->map.sprite.img.width / i->sprit_widht;
+			i->text.x = i->text.x * sprite->img.width / i->sprit_widht;
 		if (x > 0 && x < g->win.width && i->trans.y < g->ply.z_index[x])
 		{
 			y = i->draw_start.y;
 			while (y < i->draw_end.y)
 			{
 				d = (y) * 2 - g->win.height + i->sprit_height;
-				i->text.y = ((d * g->map.sprite.img.height) / i->sprit_height / 2);
-				pixel = get_img_pixel(&g->map.sprite.img, i->text.x, i->text.y);
+				i->text.y = ((d * sprite->img.height) / i->sprit_height / 2);
+				pixel = get_img_pixel(&sprite->img, i->text.x, i->text.y);
 				if (*(pixel + 4) != 0)
 					img_pixel_cpy(&g->win.render, x, y, pixel);
 				y++;
@@ -107,7 +143,7 @@ void	put_sprite(t_game *game)
 		info.draw_end.x = info.sprit_height / 2 + info.sprit_screenx;
 		if (info.draw_end.x >= game->win.width)
 			info.draw_end.x = game->win.width - 1;
-		print_sprite(game, &info);
+		print_sprite(game, &info, game->map.sprite->content);
 		lst = lst->next;
 	}
 }

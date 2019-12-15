@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 20:17:20 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:05:29 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ typedef struct	s_sprite
 {
 	t_img		img;
 	int 		step;
+	char		id;
+	char		collision;
+	double		effect;
 }				t_sprite;
 
 typedef struct	s_lstsprite
@@ -169,7 +172,7 @@ typedef struct	s_map
 	t_img		south;
 	t_img		east;
 	t_img		west;
-	t_sprite	sprite;
+	t_list		*sprite;
 	char		as_floor;
 	t_img		floor_text;
 	t_rgb		floor;
@@ -228,6 +231,7 @@ char			*is_complete(t_game *game);
 void			init_map(t_game *game);
 char			*extract_line(char *str, t_game *game);
 char			*extract_resolution(char *str, t_game *game);
+char			*extract_sprite(char *str, t_game *game);
 char			*extract_texture(char *str, t_game *game);
 char			*extract_color(char *str, t_rgb *type, char *as_color);
 
@@ -254,8 +258,10 @@ t_list			*ft_lstadd(t_list **list, t_list *elmt);
 void			free_sprite(void *sprite);
 
 void	print_lstsprite(t_list *lst);
+t_list			*get_sprite(void);
+char			issprite(char id, t_game *game);
 char			add_vector(t_player *ply, double sprit_x, double sprit_y);
-void			print_sprite(t_game *game, t_info *info);
+void			print_sprite(t_game *game, t_info *info, t_sprite *sprite);
 void			put_sprite(t_game *game);
 
 void			sreenshot(t_game *game);
