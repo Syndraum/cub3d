@@ -10,7 +10,4 @@ TODO
 
 Bonus :
 - floorcasting clean
-- more object
-- object collision
-- object damage/heal
 - levels

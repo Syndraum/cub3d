@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 17:20:08 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 17:49:06 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct	s_sprite
 	int 		step;
 	char		id;
 	char		collision;
-	double		effect;
+	int			effect;
 }				t_sprite;
 
 typedef struct	s_object
@@ -260,8 +260,10 @@ void			free_sprite(void *sprite);
 
 void	print_lstsprite(t_list *lst);
 t_list			*new_sprite(void);
+t_sprite		*get_sprite(char *id, t_game *game);
 char			issprite(char id, t_game *game);
 char			issprite_wall(char id, t_game *game);
+char			issprite_damage(char id, t_game *game);
 char			is_id_forbidden(char id);
 char			add_vector(t_player *ply, double x, double y, char id);
 void			print_sprite(t_game *game, t_info *info, t_sprite *sprite);
@@ -274,7 +276,7 @@ void			minimap(t_game *game);
 double			get_anglediff(t_game *game);
 void			skybox(t_game *game, t_ray *ray, int x);
 
-void			damage(t_game *game, double damage);
-void			heal(t_game *game, double heal);
+void			damage(t_game *game, int damage);
+void			heal(t_game *game, int heal);
 
 #endif

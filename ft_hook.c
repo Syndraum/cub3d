@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 18:53:16 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 17:22:05 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 18:12:19 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ int		key_release_hook(int keycode, t_game *game)
 
 void	move(t_game *game, double move_x, double move_y)
 {
-	double	m_x;
-	double	m_y;
-	char	value;
+	double		m_x;
+	double		m_y;
+	char		value;
+	t_sprite	*stripe;
 
 	m_x = move_x * MOVE_SPEED;
 	m_y = move_y * MOVE_SPEED;
@@ -72,6 +73,16 @@ void	move(t_game *game, double move_x, double move_y)
 		value = game->map.map[(int)(game->ply.y - (m_y))][(int)game->ply.x];
 		if (value != '1' && !issprite_wall(value, game))
 			game->ply.y -= m_y;
+		value = game->map.map[(int)game->ply.y][(int)game->ply.x];
+		if (issprite_damage(value, game))
+		{
+			stripe = get_sprite(&value, game);
+			if (stripe->effect < 0 || game->ply.life != 100)
+			{
+				damage(game, stripe->effect);
+				game->map.map[(int)game->ply.y][(int)game->ply.x] = '0';
+			}
+		}
 	}
 	else
 	{

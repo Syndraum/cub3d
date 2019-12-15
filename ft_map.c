@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 16:57:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 17:35:44 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,15 @@ char	*extract_sprite(char *str, t_game *game)
 		cursor++;
 		if (*cursor != ' ')
 			return ("Collision setting not found");
+		while (*cursor == ' ')
+			cursor++;
+		if (!ft_isdigit(*cursor) && *cursor != '-')
+			return ("Effect setting not found");
+		sprite->effect = ft_atoi(cursor);
+		while (ft_isdigit(*cursor) || *cursor == '-')
+			cursor++;
+		if (*cursor != ' ')
+			return ("Bad effect setting");
 		while (*cursor == ' ')
 			cursor++;
 	}
