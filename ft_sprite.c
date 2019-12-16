@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:11:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 17:46:27 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/16 13:06:14 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	print_sprite(t_game *g, t_info *i, t_sprite *sprite)
 				d = (y) * 2 - g->win.height + i->sprit_height;
 				i->text.y = ((d * sprite->img.height) / i->sprit_height / 2);
 				pixel = get_img_pixel(&sprite->img, i->text.x, i->text.y);
-				if (*(pixel + 4) != 0)
+				if (*(pixel + 3) == 0)
 					img_pixel_cpy(&g->win.render, x, y, pixel);
 				y++;
 			}

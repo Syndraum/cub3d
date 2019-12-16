@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:13:51 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/08 11:38:55 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/15 19:53:41 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	floor_casting(t_game *game, t_ray *ray, int x)
 	distply = 0.0;
 	if (ray->pixel_end < 0)
 		ray->pixel_end = game->win.height;
-	int y = ray->pixel_end + 1;
+	int y = ray->pixel_end;
 	while (y < game->win.height)
 	{
-		currentdist = game->win.height / (2.0 * y - game->win.height);
+		currentdist = game->win.height / (2.0 * (y + 1) - game->win.height);
 		weight = (currentdist - distply) / (distwall - distply);
 		currentfloor.x = weight * floorwall.x + (1.0 - weight) * game->ply.x;
 		currentfloor.y = weight * floorwall.y + (1.0 - weight) * game->ply.y;

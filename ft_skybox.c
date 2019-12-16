@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:46:11 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/14 13:00:59 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:25:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	skybox(t_game *game, t_ray *ray, int x)
 
 	img = &game->map.skybox;
 	cursor.y = 0;
-	pi.x = (int)(x * ((double)img->width) / (double)game->win.width / 4);
-	pi.x = (int)ray->angle + pi.x % img->width;
+	pi.x = (int)(x * ((double)img->width) / (double)game->win.width);
+	pi.x = (int)((ray->angle + pi.x) / 2) % img->width;
 	offset = (double)img->height / (((double)game->win.height / 2.0));
 	y = 0;
 	if (ray->pixel_start < 0)
 		ray->pixel_start = 0;
-	while (y < ray->pixel_start)
+	while (y <= ray->pixel_start)
 	{
 		pi.y = (int)cursor.y;
 		img_pixel_cpy(&game->win.render, x, y, get_img_pixel(img, pi.x, pi.y));
