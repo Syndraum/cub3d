@@ -3,11 +3,10 @@
 TODO
 
 - static function
-- makefile
-
-~ free list
-~ all free tab
+- makefile /!\
+- all free
 
 Bonus :
+- visual feedback heal/damage
 - floorcasting clean
 - levels
