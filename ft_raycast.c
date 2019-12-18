@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 13:31:26 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 19:15:14 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,19 @@ void	drawray(t_game *game, t_ray *ray, int line)
 	t_img	*img;
 	char	*pixel;
 
-	i = -1;
+	i = ray->pixel_start - 1;
 	j = ray->pixel_start;
 	img = get_side_texture(&game->map, ray->wall);
-	while (++i < game->win.height)
+	while (++i < ray->pixel_end)
 	{
-		if (i < ray->pixel_start && !BONUS)
-			img_pixel_rgb(&game->win.render, line, i, &game->map.ceil);
-		else if (i >= ray->pixel_end && !BONUS)
-			img_pixel_rgb(&game->win.render, line, i, &game->map.floor);
-		else if (i < ray->pixel_end && i > ray->pixel_start)
-		{
-			d = j * 2 - game->win.height + ray->line_h;
-			ray->text.x = (int)(ray->wall_x * (double)img->width);
-			ray->text.y = ((d * (double)img->height) / (double)ray->line_h) / 2;
-			pixel = get_img_pixel(img, ray->text.x, ray->text.y);
-			img_pixel_cpy(&game->win.render, line, i, pixel);
-			j++;
-		}
+		d = i * 2 - game->win.height + ray->line_h;
+		ray->text.x = (int)(ray->wall_x * (double)img->width);
+		ray->text.y = ((d * (double)img->height) / (double)ray->line_h) / 2;
+		pixel = get_img_pixel(img, ray->text.x, ray->text.y);
+		img_pixel_cpy(&game->win.render, line, i, pixel);
 	}
+	floor_casting(game, ray, line);
+	skybox(game, ray, line);
 }
 
 void	set_pixelcord(t_game *game, t_ray *ray)
@@ -70,6 +64,11 @@ void	set_pixelcord(t_game *game, t_ray *ray)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
+double	get_anglediff(t_game *game)
+{
+	return (atan2(0, -1) - atan2(game->ply.dir.x, game->ply.dir.y));
+}
+
 void	raycasting(t_game *game)
 {
 	int		x;
@@ -84,14 +83,8 @@ void	raycasting(t_game *game)
 		exec_dda(&ray, game);
 		set_pixelcord(game, &ray);
 		drawray(game, &ray, x);
-		if (BONUS && game->map.floor_text.id != NULL)
-			floor_casting(game, &ray, x);
-		if (BONUS && game->map.skybox.id != NULL)
-			skybox(game, &ray, x);
 		game->ply.z_index[x] = ray.len;
 	}
 	put_sprite(game);
-	if (BONUS)
-		minimap(game);
 	ft_lstclear(&game->ply.object, free_sprite);
 }

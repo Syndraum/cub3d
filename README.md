@@ -3,8 +3,9 @@
 TODO
 
 - static function
-- makefile /!\
-- all free
+- makefile depndency ?
+- minimap separation
+- free when error
 
 Bonus :
 - visual feedback heal/damage

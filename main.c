@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 13:04:24 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 19:14:48 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	loop_hook(t_game *game)
 {
 	event_exec(game);
 	raycasting(game);
+	minimap(game);
 	add_step_sprite(game->map.sprite);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 	return (1);

@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skybox.c                                        :+:      :+:    :+:   */
+/*   ft_skybox_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:46:11 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/16 15:25:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 19:08:36 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-double	get_anglediff(t_game *game)
-{
-	return (atan2(0, -1) - atan2(game->ply.dir.x, game->ply.dir.y));
-}
 
 void	skybox(t_game *game, t_ray *ray, int x)
 {
