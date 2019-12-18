@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 15:30:23 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:31:34 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,14 @@ char	*extract_map(int fd, char *line, t_game *game)
 	if ((error = extract_line_map(line, game)))
 		return (error);
 	while (get_next_line(fd, &line) >= 0 && ft_strncmp(line, "", 1))
+	{
 		if ((error = extract_line_map(line, game)))
+		{
+			free(line);
 			return (error);
+		}
+	}
+	free(line);
 	if ((error = analize_map(game->map.map, game)))
 		return (error);
 	return (NULL);

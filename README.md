@@ -9,4 +9,5 @@ TODO
 Bonus :
 - visual feedback heal/damage
 - floorcasting clean
-- levels
+- next levels
+- end levels

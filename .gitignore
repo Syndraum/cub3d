@@ -9,3 +9,4 @@
 .vscode
 *.bmp
 cub3d
+.DS_Store

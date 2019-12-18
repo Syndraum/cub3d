@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 17:35:44 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:30:00 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_map	*set_map(int fd, t_game *game)
 		else if ((error = extract_line(line, game)))
 			return (print_error(error));
 	}
+	free(line);
 	if ((error = is_complete(game)))
 		return (print_error(error));
 	return (&game->map);
