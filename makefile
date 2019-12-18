@@ -8,7 +8,7 @@ SCRS		= 	main.c ft_img.c ft_life.c\
 
 DEFAULT		=	ft_move.c ft_extract_color.c ft_sprite_utils.c ft_floor.c
 BONUS		=	ft_move_bonus.c ft_extract_bonus.c ft_sprite_utils_bonus.c ft_floor_bonus.c \
-				ft_skybox_bonus.cmake
+				ft_skybox_bonus.c
 
 GNL			= get_next_line.c
 
@@ -27,20 +27,14 @@ CFLAG		= -Ofast -Wall -Werror -Wextra
 
 DIR_LIBFT	= libft
 
-include ${DIR_LIBFT}/Makefile.OBJS
-
-all:		${NAME}
+all:	${NAME}
 
 .c.o:
 	${CC} -g ${CFLAG} -c  $< -o ${<:.c=.o}
 
-${NAME}:	lib ${OBJS} ${DEFAULT_OBJS} cub3d.h
+${NAME}:	${DIR_LIBFT} ${OBJS} ${DEFAULT_OBJS} cub3d.h
+	${RM} ${NAME} ${BONUS_OBJS}
 	${CC} -g -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} ${DEFAULT_OBJS} -o ${NAME}
-
-lib: 
-	echo -libft
-	# $(MAKE) ${LIB} 
-	make -C $(DIR_LIBFT) all
 
 clean:
 	make -C $(DIR_LIBFT) clean
@@ -49,7 +43,8 @@ clean:
 fclean:		clean
 	${RM} ${NAME}
 
-bonus: lib ${OBJS} ${BONUS_OBJS} cub3d.h
+bonus:	${DIR_LIBFT} ${OBJS} ${BONUS_OBJS} cub3d.h
+	${RM} ${NAME} ${DEFAULT_OBJS}
 	${CC} -g -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} ${BONUS_OBJS} -o ${NAME}
 
 re:			fclean all
