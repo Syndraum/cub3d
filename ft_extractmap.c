@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 12:31:34 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:48:10 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ char	*extract_line_map(char *line, t_game *game)
 	char	**tab;
 
 	map = &game->map.map;
-	if (!(str_charset(line, " 012NSWE")) && !BONUS)
-		return ("Invalid character in map");
-	if (BONUS && !isvalide_bonus(line, game))
+	if (!isvalide_bonus(line, game))
 		return ("Invalid character in map");
 	if (!(row = strdup_wc(line, ' ')))
 		return (strerror(12));
@@ -101,7 +99,7 @@ char	*extract_map(int fd, char *line, t_game *game)
 		return (error);
 	while (get_next_line(fd, &line) >= 0 && ft_strncmp(line, "", 1))
 	{
-		if ((error = extract_line_map(line, game)))
+		if (NULL != (error = extract_line_map(line, game)))
 		{
 			free(line);
 			return (error);

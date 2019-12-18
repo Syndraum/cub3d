@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:56:26 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 12:02:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:45:45 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		free_game(t_game *game)
 {
 	free_map(game->map.map);
 	free(game->ply.z_index);
-	mlx_destroy_image(game->mlx, game->win.render.id);
+	if (game->win.render.id != NULL)
+		mlx_destroy_image(game->mlx, game->win.render.id);
 	ft_lstclear(&game->ply.object, free_sprite);
 	ft_lstclear(&game->map.sprite, free_sprite);
 	return (0);
