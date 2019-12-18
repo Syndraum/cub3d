@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 17:49:06 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 18:31:29 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,9 +232,7 @@ char			*is_complete(t_game *game);
 void			init_map(t_game *game);
 char			*extract_line(char *str, t_game *game);
 char			*extract_resolution(char *str, t_game *game);
-char			*extract_sprite(char *str, t_game *game);
 char			*extract_texture(char *str, t_game *game);
-char			*extract_color(char *str, t_rgb *type, char *as_color);
 
 char			*extract_map(int fd, char *line, t_game *game);
 
@@ -277,6 +275,13 @@ double			get_anglediff(t_game *game);
 void			skybox(t_game *game, t_ray *ray, int x);
 
 void			damage(t_game *game, int damage);
-void			heal(t_game *game, int heal);
+
+void			move(t_game *game, double move_x, double move_y);
+
+char			*extract_color(char *str, t_game *game, char *as_color);
+char			*extract_sprite(char *str, t_game *game);
+
+void			set_sprite(t_sprite *sprite);
+void			set_textx(t_info *i, t_sprite *sprite);
 
 #endif

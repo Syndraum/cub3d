@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 18:53:16 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 12:51:50 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 17:38:50 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int		exit_hook(t_game *game)
 
 int		key_press_hook(int keycode, t_game *game)
 {
-	// printf("[KEY] = %d\n", keycode);
-	// fflush(stdout);
 	if (keycode == 53)
 		exit_hook(game);
 	if (keycode == 13)
@@ -54,44 +52,6 @@ int		key_release_hook(int keycode, t_game *game)
 	if (keycode == 14 || keycode == 124)
 		game->event[ROTATE_RIGHIT] = 0;
 	return (1);
-}
-
-void	move(t_game *game, double move_x, double move_y)
-{
-	t_vector	m;
-	char		value;
-	t_sprite	*stripe;
-
-	m.x = move_x * MOVE_SPEED;
-	m.y = move_y * MOVE_SPEED;
-	if (BONUS)
-	{
-		value = game->map.map[(int)game->ply.y][(int)(game->ply.x - (m.x))];
-		if (value != '1' && !issprite_wall(value, game))
-			game->ply.x -= m.x;
-		value = game->map.map[(int)(game->ply.y - (m.y))][(int)game->ply.x];
-		if (value != '1' && !issprite_wall(value, game))
-			game->ply.y -= m.y;
-		value = game->map.map[(int)game->ply.y][(int)game->ply.x];
-		if (issprite_damage(value, game))
-		{
-			stripe = get_sprite(&value, game);
-			if (stripe->effect < 0 || game->ply.life != 100)
-			{
-				damage(game, stripe->effect);
-				game->map.map[(int)game->ply.y][(int)game->ply.x] = '0';
-			}
-		}
-	}
-	else
-	{
-		if ((game->ply.x - (m.x)) > 1 &&
-		(game->ply.x - (m.x)) < ft_strlen(game->map.map[0]) - 1)
-			game->ply.x -= m.x;
-		if ((game->ply.y - (m.y)) > 1 &&
-		(game->ply.y - (m.y)) < ft_tablen(game->map.map) - 1)
-			game->ply.y -= m.y;
-	}
 }
 
 int		event_exec(t_game *game)

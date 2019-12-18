@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_life.c                                          :+:      :+:    :+:   */
+/*   ft_sprite_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/14 20:14:18 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 18:31:14 by roalvare         ###   ########.fr       */
+/*   Created: 2019/12/18 18:16:35 by roalvare          #+#    #+#             */
+/*   Updated: 2019/12/18 18:27:12 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	damage(t_game *game, int damage)
+void	set_sprite(t_sprite *sprite)
 {
-	game->ply.life += damage;
-	if (game->ply.life < 0)
-		game->ply.life = 0;
-	if (game->ply.life > PLY_LIFE)
-		game->ply.life = PLY_LIFE;
+	sprite->id = '2';
+}
+
+void	set_textx(t_info *i, t_sprite *sprite)
+{
+	i->text.x = i->text.x * sprite->img.width / i->sprit_widht;
 }

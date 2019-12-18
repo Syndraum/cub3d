@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:11:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/16 13:06:14 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/18 18:29:47 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ t_list	*new_sprite(void)
 
 	if (!(sprite = ft_calloc(1, sizeof(t_sprite))))
 		return (NULL);
-	sprite->id = 0;
-	if (!BONUS)
-		sprite->id = '2';
+	set_sprite(sprite);
 	sprite->img.id = NULL;
 	sprite->step = 0;
 	sprite->collision = 0;
@@ -150,13 +148,7 @@ void	print_sprite(t_game *g, t_info *i, t_sprite *sprite)
 	while (x < i->draw_end.x)
 	{
 		i->text.x = (x - (-i->sprit_widht / 2 + i->sprit_screenx));
-		if (BONUS)
-		{
-			i->text.x = i->text.x * sprite->img.height / i->sprit_widht;
-			i->text.x += sprite->step;
-		}
-		else
-			i->text.x = i->text.x * sprite->img.width / i->sprit_widht;
+		set_textx(i, sprite);
 		if (x > 0 && x < g->win.width && i->trans.y < g->ply.z_index[x])
 		{
 			y = i->draw_start.y;
