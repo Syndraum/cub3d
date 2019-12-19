@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 13:02:15 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 13:12:15 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,7 @@ void			free_sprite(void *sprite);
 t_list			*new_sprite(void);
 t_sprite		*get_sprite(char *id, t_game *game);
 char			issprite(char id, t_game *game);
+char			issprite_end(char id, t_game *game);
 char			issprite_wall(char id, t_game *game);
 char			issprite_damage(char id, t_game *game);
 char			is_id_forbidden(char id);

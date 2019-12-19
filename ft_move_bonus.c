@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:33:01 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 17:34:04 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 13:18:06 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,6 @@ void	move(t_game *game, double move_x, double move_y)
 			game->map.map[(int)game->ply.y][(int)game->ply.x] = '0';
 		}
 	}
+	else if (issprite_end(value, game))
+		exit_hook(game);
 }

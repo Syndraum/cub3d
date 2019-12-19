@@ -11,4 +11,3 @@ Bonus :
 - floorcasting clean
 - sprite clean
 - next levels
-- end levels

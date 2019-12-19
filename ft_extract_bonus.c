@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:45:08 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:33:59 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 13:08:50 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*extract_sprite(char *str, t_game *game)
 		sprite->collision = 1;
 	else if (*cursor == '0')
 		sprite->collision = 0;
+	else if (*cursor == '2')
+		sprite->collision = 2;
 	else
 		return (BAD_COLLISION);
 	cursor++;
