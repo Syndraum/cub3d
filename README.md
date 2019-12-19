@@ -3,7 +3,6 @@
 TODO
 
 - reorganization
-- define
 - free when error
 
 Bonus :

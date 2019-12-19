@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:40:28 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 18:15:47 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:37:14 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*extract_sprite(char *str, t_game *game)
 	t_sprite	*sprite;
 
 	if (game->map.sprite != NULL)
-		return ("Duplicate sprite");
+		return (DUPLICATE_TEXTURE);
 	if (!(elmt = new_sprite()))
-		return ("Allocution failed");
+		return (ALLOC_FAIL);
 	sprite = (t_sprite*)elmt->content;
 	cursor = str + 1;
 	while (*cursor == ' ')
@@ -49,21 +49,21 @@ char	*extract_color(char *str, t_game *game, char *as_color)
 	while (*cursor == ' ')
 		cursor++;
 	if (!isnumber(*cursor) || (255 < (value = ft_atoi(cursor))))
-		return ("Bad red format, colors need to be between 0 and 255");
+		return (BAD_RED_FORMAT);
 	rgb->red = value;
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
-		return ("Bad green format, colors need to be between 0 and 255");
+		return (BAD_GREEN_FORMAT);
 	rgb->green = value;
 	while (isnumber(*cursor))
 		cursor++;
 	if (*cursor == ',')
 		cursor++;
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
-		return ("Bad green format, colors need to be between 0 and 255");
+		return (BAD_BLUE_FORMAT);
 	rgb->blue = value;
 	*as_color = 1;
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:12:57 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:55:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,40 @@
 # define MAX_NBR_SPRITE 256
 # define PADDING_MAP 6
 # define PLY_LIFE 100.0
+
+# define ALLOC_FAIL "Allocution failed"
+# define LINE_NOT_EMPTY "A line is not empty"
+
+# define DUPLICATE_DEFINITION "Duplicate definition"
+# define WRONG_WIDHT "Wrong widht, definition need to be higher than 0 x 0"
+# define WRONG_HEIGHT "Wrong height, definition need to be higher than 0 x 0"
+# define MISSING_DEFINITON "Definition is missing"
+
+# define BAD_RED_FORMAT "Bad red format, colors need to be between 0 and 255"
+# define BAD_GREEN_FORMAT "Bad green format, colors need to be between 0 and 255"
+# define BAD_BLUE_FORMAT "Bad blue format, colors need to be between 0 and 255"
+# define CEIL_MISSING "Ceil is missing"
+# define FLOOR_MISSING "Floor is missing"
+
+# define INVALID_CHAR_MAP "Invalid character in map"
+# define BORDER_MAP_ERROR "Map need to be surrounded by character '1'"
+# define WORNG_LINE_LEN_MAP "Wromg lines lenght in map"
+# define TOO_PLAYER	"Two or more players in map"
+# define MAP_MISSING "Map is missing"
+
+# define DUPLICATE_TEXTURE "Duplicate texture"
+# define NO_TEXT_MISSING "North texture is missing"
+# define SO_TEXT_MISSING "South texture is missing"
+# define EA_TEXT_MISSING "East texture is missing"
+# define WE_TEXT_MISSING "West texture is missing"
+# define SRITE_MISSING "Sprite texture is missing"
+# define SPRITE_FORBIDDEN_ID "Forbiddent identifiant"
+# define SPRITE_ID_BE_UNIQUE "Identifiant be unique"
+# define SPRITE_ID_NOT_FOUND "Srite identifiant not found"
+# define BAD_COLLISION "Bad collision setting"
+# define COLLISION_NOT_FOUND "Collision setting not found"
+# define BAD_EFFECT "Bad effect setting"
+# define EFFECT_NOT_FOUND "Effect setting not found"
 
 typedef enum	e_event
 {

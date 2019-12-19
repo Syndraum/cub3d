@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:45:08 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:21:03 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:33:59 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ char	*extract_sprite(char *str, t_game *game)
 	t_sprite	*sprite;
 
 	if (!(elmt = new_sprite()))
-		return ("Allocution failed");
+		return (ALLOC_FAIL);
 	sprite = (t_sprite*)elmt->content;
 	cursor = str + 1;
 	while (*cursor == ' ')
 		cursor++;
 	if (is_id_forbidden(*cursor))
-		return ("Forbiddent identifiant");
+		return (SPRITE_FORBIDDEN_ID);
 	if (issprite(*cursor, game))
-		return ("Identifiant be unique");
+		return (SPRITE_ID_BE_UNIQUE);
 	sprite->id = *(cursor++);
 	if (*cursor != ' ')
-		return ("Srite identifiant not found");
+		return (SPRITE_ID_NOT_FOUND);
 	while (*cursor == ' ')
 		cursor++;
 	if (*cursor == '1')
@@ -38,19 +38,19 @@ char	*extract_sprite(char *str, t_game *game)
 	else if (*cursor == '0')
 		sprite->collision = 0;
 	else
-		return ("Bad collision setting");
+		return (BAD_COLLISION);
 	cursor++;
 	if (*cursor != ' ')
-		return ("Collision setting not found");
+		return (COLLISION_NOT_FOUND);
 	while (*cursor == ' ')
 		cursor++;
 	if (!ft_isdigit(*cursor) && *cursor != '-')
-		return ("Effect setting not found");
+		return (BAD_EFFECT);
 	sprite->effect = ft_atoi(cursor);
 	while (ft_isdigit(*cursor) || *cursor == '-')
 		cursor++;
 	if (*cursor != ' ')
-		return ("Bad effect setting");
+		return (EFFECT_NOT_FOUND);
 	while (*cursor == ' ')
 		cursor++;
 	if (!(set_xmp(&sprite->img, cursor, game->mlx)))
@@ -72,7 +72,7 @@ char	*extract_color(char *str, t_game *game, char *as_color)
 	else
 		img = &game->map.skybox;
 	if (img->id != NULL)
-		return ("Duplicate texture");
+		return (DUPLICATE_TEXTURE);
 	cursor = str + 2;
 	while (*cursor == ' ')
 		cursor++;

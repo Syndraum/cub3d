@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:19:00 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:54:45 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,23 @@ t_map	*set_map(int fd, t_game *game)
 char	*is_complete(t_game *game)
 {
 	if (game->map.map == NULL)
-		return ("Map is missing");
+		return (MAP_MISSING);
 	else if (game->map.north.id == NULL)
-		return ("North texture is missing");
+		return (NO_TEXT_MISSING);
 	else if (game->map.south.id == NULL)
-		return ("South texture is missing");
+		return (SO_TEXT_MISSING);
 	else if (game->map.east.id == NULL)
-		return ("East texture is missing");
+		return (EA_TEXT_MISSING);
 	else if (game->map.west.id == NULL)
-		return ("West texture is missing");
+		return (WE_TEXT_MISSING);
 	else if (game->map.sprite == NULL)
-		return ("Sprite texture is missing");
+		return (SRITE_MISSING);
 	else if (game->win.height == 0 || game->win.width == 0)
-		return ("Definition is missing");
+		return (MISSING_DEFINITON);
 	else if (game->map.as_ceil == 0)
-		return ("ceil color is missing");
+		return (CEIL_MISSING);
 	else if (game->map.as_floor == 0)
-		return ("floor color is missing");
+		return (FLOOR_MISSING);
 	return (NULL);
 }
 
@@ -89,7 +89,7 @@ void	init_map(t_game *game)
 
 char	*extract_line(char *str, t_game *game)
 {
-	static char *rsl = "A line is not empty";
+	static char *rsl = LINE_NOT_EMPTY;
 
 	if (ft_strnstr(str, "R", 1) == str)
 		rsl = extract_resolution(str, game);
@@ -121,9 +121,9 @@ char	*extract_resolution(char *str, t_game *game)
 	while (*cursor == ' ')
 		cursor++;
 	if (game->win.width != 0)
-		return ("Duplicate resolution");
+		return (DUPLICATE_DEFINITION);
 	if (0 >= (game->win.width = ft_atoi(cursor)))
-		return ("Wrong widht, resolution need to be higher than 0 x 0");
+		return (WRONG_WIDHT);
 	if (game->win.width > MAX_WIDHT)
 		game->win.width = MAX_WIDHT;
 	while (isnumber(*cursor))
@@ -131,7 +131,7 @@ char	*extract_resolution(char *str, t_game *game)
 	while (*cursor == ' ')
 		cursor++;
 	if (0 >= (game->win.height = ft_atoi(cursor)))
-		return ("Wrong height, resolution need to be higher than 0 x 0");
+		return (WRONG_HEIGHT);
 	if (game->win.height > MAX_HEIGHT)
 		game->win.height = MAX_HEIGHT;
 	return (NULL);
@@ -151,7 +151,7 @@ char	*extract_texture(char *str, t_game *game)
 	else
 		img = &game->map.east;
 	if (img->id != NULL)
-		return ("Duplicate texture");
+		return (DUPLICATE_TEXTURE);
 	cursor = str + 2;
 	while (*cursor == ' ')
 		cursor++;

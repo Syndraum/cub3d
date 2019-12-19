@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:08:19 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:44:02 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*extract_line_map(char *line, t_game *game)
 
 	map = &game->map.map;
 	if (!ismapvalide(line, game))
-		return ("Invalid character in map");
+		return (INVALID_CHAR_MAP);
 	if (!(row = strdup_wc(line, ' ')))
 		return (strerror(12));
 	if (!(tab = ft_calloc(sizeof(char*), (ft_tablen(*map) + 2))))
@@ -71,15 +71,15 @@ static char	*analize_map(char **map, t_game *game)
 	{
 		x = 0;
 		if (len != ft_strlen(map[y]))
-			return ("Wrong lenght line in map");
+			return (WORNG_LINE_LEN_MAP);
 		if (map[y][x] != '1' || map[y][ft_strlen(map[y]) - 1] != '1')
-			return ("Border map error");
+			return (BORDER_MAP_ERROR);
 		while (map[y][x])
 		{
 			if ((y == (ft_tablen(map) - 1) || y == 0) && map[y][x] != '1')
-				return ("Border map error");
+				return (BORDER_MAP_ERROR);
 			if (isdir(map[y][x]) && (game->ply.x != 0))
-				return ("Two player in map");
+				return (TOO_PLAYER);
 			else if (isdir(map[y][x]))
 				set_player(game, x, y, isdir(map[y][x]));
 			x++;
