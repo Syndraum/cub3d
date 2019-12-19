@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:56:26 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 16:19:31 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:35:03 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,38 @@ void	*print_error(char *error)
 	return (NULL);
 }
 
-void	free_image(void *mlx, t_img *img)
+void	free_image(t_img *img)
 {
 	if (img->id != NULL)
-		mlx_destroy_image(mlx, img->id);
+		mlx_destroy_image(img->mlx, img->id);
+}
+
+void	free_maps(void *content)
+{
+	t_map *map;
+
+	map = (t_map*)content;
+	free_map(map->map);
+	free_image(&map->north);
+	free_image(&map->south);
+	free_image(&map->east);
+	free_image(&map->west);
+	free_image(&map->floor_text);
+	free_image(&map->skybox);
+	ft_lstclear(&map->sprite, free_sprite);
+	free(map);
 }
 
 int		free_game(t_game *game)
 {
-	free_map(game->map.map);
+	free_map(game->map->map);
 	free(game->ply.z_index);
-	free_image(game->mlx, &game->win.render);
-	free_image(game->mlx, &game->map.north);
-	free_image(game->mlx, &game->map.south);
-	free_image(game->mlx, &game->map.east);
-	free_image(game->mlx, &game->map.west);
-	free_image(game->mlx, &game->map.floor_text);
-	free_image(game->mlx, &game->map.skybox);
-	free_image(game->mlx, &game->map.skybox);
-	free_image(game->mlx, &game->minimap.img);
-	free_image(game->mlx, &game->jauge.jauge);
-	free_image(game->mlx, &game->jauge.life);
+	free_image(&game->win.render);
+	free_image(&game->minimap.img);
+	free_image(&game->jauge.jauge);
+	free_image(&game->jauge.life);
 	ft_lstclear(&game->ply.object, free_sprite);
-	ft_lstclear(&game->map.sprite, free_sprite);
+	ft_lstclear(&game->lst_maps, free_maps);
 	return (0);
 }
 

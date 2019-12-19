@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 16:21:28 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:20:30 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,17 @@ int	main(int argc, char *argv[])
 	if (!(game.mlx = mlx_init()))
 		return (EXIT_FAILURE);
 	game.win.mlx = game.mlx;
+	game.win.height = 0;
+	game.win.width = 0;
 	set_xmp(&game.minimap.img, "./assets/minimap.xpm", game.mlx);
 	set_xmp(&game.jauge.jauge, "assets/jauge.xpm", game.mlx);
 	set_xmp(&game.jauge.life, "assets/life.xpm", game.mlx);
+	printf("INIT\n");
+	fflush(stdout);
 	if (!(set_map(fd, &game)))
 		return (free_game(&game));
+	printf("MAP\n");
+	fflush(stdout);
 	game.ply.z_index = ft_calloc(sizeof(double), game.win.width);
 	set_image(&game.win.render, game.win.width, game.win.height, game.mlx);
 	if (argc == 3 && (!ft_strncmp(argv[2], "-save", 6)))
@@ -63,12 +69,16 @@ void	add_step_sprite(t_list *lst)
 
 int	loop_hook(t_game *game)
 {
+	printf("LOOP\n");
+	fflush(stdout);
 	if (game->ply.life <= 0)
 		exit_hook(game);
 	event_exec(game);
 	raycasting(game);
+	printf("RAY\n");
+	fflush(stdout);
 	hud(game);
-	add_step_sprite(game->map.sprite);
+	add_step_sprite(game->map->sprite);
 	mlx_put_image_to_window(game->mlx, game->win.id, game->win.render.id, 0, 0);
 	return (1);
 }

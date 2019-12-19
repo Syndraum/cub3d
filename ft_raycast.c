@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:04:00 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:22:50 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		drawray(t_game *game, t_ray *ray, int line)
 
 	i = ray->pixel_start - 1;
 	j = ray->pixel_start;
-	img = get_side_texture(&game->map, ray->wall);
+	img = get_side_texture(game->map, ray->wall);
 	while (++i < ray->pixel_end)
 	{
 		d = i * 2 - game->win.height + ray->line_h;
@@ -76,7 +76,7 @@ void			raycasting(t_game *game)
 
 	x = -1;
 	game->ply.object = NULL;
-	ray.angle = ((double)game->map.skybox.width * get_anglediff(game)) / M_PI;
+	ray.angle = ((double)game->map->skybox.width * get_anglediff(game)) / M_PI;
 	while (++x < game->win.width)
 	{
 		init_ray(&ray, game, x);

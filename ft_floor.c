@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 18:34:58 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 20:14:52 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:00:06 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	floor_casting(t_game *game, t_ray *ray, int x)
 		y = ray->pixel_end;
 	while (y < game->win.height)
 	{
-		img_pixel_rgb(&game->win.render, x, y, &game->map.floor);
+		img_pixel_rgb(&game->win.render, x, y, &game->map->floor);
 		y++;
 	}
 }
@@ -37,7 +37,7 @@ void	skybox(t_game *game, t_ray *ray, int x)
 		y = 0;
 	while (y <= ray->pixel_start)
 	{
-		img_pixel_rgb(&game->win.render, x, y, &game->map.ceil);
+		img_pixel_rgb(&game->win.render, x, y, &game->map->ceil);
 		y++;
 	}
 }

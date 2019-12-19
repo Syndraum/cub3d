@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 16:46:11 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 19:08:36 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:00:39 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	skybox(t_game *game, t_ray *ray, int x)
 	double		offset;
 	int			y;
 
-	img = &game->map.skybox;
+	img = &game->map->skybox;
 	cursor.y = 0;
 	pi.x = (int)(x * ((double)img->width) / (double)game->win.width);
 	pi.x = (int)((ray->angle + pi.x) / 2) % img->width;

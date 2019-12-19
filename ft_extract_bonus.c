@@ -6,13 +6,13 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:45:08 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 13:08:50 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:25:36 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*extract_sprite(char *str, t_game *game)
+char	*extract_sprite(char *str, t_game *game, t_map *map)
 {
 	char		*cursor;
 	t_list		*elmt;
@@ -26,7 +26,7 @@ char	*extract_sprite(char *str, t_game *game)
 		cursor++;
 	if (is_id_forbidden(*cursor))
 		return (SPRITE_FORBIDDEN_ID);
-	if (issprite(*cursor, game))
+	if (issprite(*cursor, map))
 		return (SPRITE_ID_BE_UNIQUE);
 	sprite->id = *(cursor++);
 	if (*cursor != ' ')
@@ -60,19 +60,19 @@ char	*extract_sprite(char *str, t_game *game)
 		ft_lstdelone(elmt, free_sprite);
 		return (strerror(2));
 	}
-	ft_lstadd_back(&game->map.sprite, elmt);
+	ft_lstadd_back(&map->sprite, elmt);
 	return (NULL);
 }
 
-char	*extract_color(char *str, t_game *game, char *as_color)
+char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
 {
 	char	*cursor;
 	t_img	*img;
 
 	if (!(ft_strncmp(str, "F", 1)))
-		img = &game->map.floor_text;
+		img = &map->floor_text;
 	else
-		img = &game->map.skybox;
+		img = &map->skybox;
 	if (img->id != NULL)
 		return (DUPLICATE_TEXTURE);
 	cursor = str + 2;

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:11:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 13:10:53 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:11:17 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_sprite	*get_sprite(char *id, t_game *game)
 	t_list		*cursor;
 	t_sprite	*sprite;
 
-	cursor = game->map.sprite;
+	cursor = game->map->sprite;
 	while (cursor != NULL)
 	{
 		sprite = (t_sprite*)cursor->content;
@@ -58,12 +58,12 @@ char	is_id_forbidden(char id)
 	return (0);
 }
 
-char	issprite(char id, t_game *game)
+char	issprite(char id, t_map *map)
 {
 	t_list		*cursor;
 	t_sprite	*sprite;
 
-	cursor = game->map.sprite;
+	cursor = map->sprite;
 	while (cursor != NULL)
 	{
 		sprite = (t_sprite*)cursor->content;
@@ -74,12 +74,12 @@ char	issprite(char id, t_game *game)
 	return (0);
 }
 
-char	issprite_wall(char id, t_game *game)
+char	issprite_wall(char id, t_map *map)
 {
 	t_list		*cursor;
 	t_sprite	*sprite;
 
-	cursor = game->map.sprite;
+	cursor = map->sprite;
 	while (cursor != NULL)
 	{
 		sprite = (t_sprite*)cursor->content;
@@ -92,12 +92,12 @@ char	issprite_wall(char id, t_game *game)
 	return (0);
 }
 
-char	issprite_end(char id, t_game *game)
+char	issprite_end(char id, t_map *map)
 {
 	t_list		*cursor;
 	t_sprite	*sprite;
 
-	cursor = game->map.sprite;
+	cursor = map->sprite;
 	while (cursor != NULL)
 	{
 		sprite = (t_sprite*)cursor->content;
@@ -110,12 +110,12 @@ char	issprite_end(char id, t_game *game)
 	return (0);
 }
 
-char	issprite_damage(char id, t_game *game)
+char	issprite_damage(char id, t_map *map)
 {
 	t_list		*cursor;
 	t_sprite	*sprite;
 
-	cursor = game->map.sprite;
+	cursor = map->sprite;
 	while (cursor != NULL)
 	{
 		sprite = (t_sprite*)cursor->content;

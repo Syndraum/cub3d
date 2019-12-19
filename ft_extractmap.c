@@ -6,31 +6,31 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:44:02 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:16:58 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char	ismapvalide(char *line, t_game *game)
+static char	ismapvalide(char *line, t_map *map)
 {
 	while (*line != 0)
 	{
-		if (!issprite(*line, game) && 0 == ft_strchr(" 01NSWE", *line))
+		if (!issprite(*line, map) && 0 == ft_strchr(" 01NSWE", *line))
 			return (0);
 		line++;
 	}
 	return (1);
 }
 
-static char	*extract_line_map(char *line, t_game *game)
+static char	*extract_line_map(char *line, t_map *m)
 {
 	char	***map;
 	char	*row;
 	char	**tab;
 
-	map = &game->map.map;
-	if (!ismapvalide(line, game))
+	map = &m->map;
+	if (!ismapvalide(line, m))
 		return (INVALID_CHAR_MAP);
 	if (!(row = strdup_wc(line, ' ')))
 		return (strerror(12));
@@ -44,7 +44,7 @@ static char	*extract_line_map(char *line, t_game *game)
 	return (NULL);
 }
 
-static void	set_player(t_game *game, int x, int y, char dir)
+static void	set_player(t_game *game, int x, int y, char dir, char **map)
 {
 	game->ply.x = (double)x + 0.5;
 	game->ply.y = (double)y + 0.5;
@@ -56,7 +56,7 @@ static void	set_player(t_game *game, int x, int y, char dir)
 		set_dir(&game->ply, 1, 0);
 	else if (dir == 'W')
 		set_dir(&game->ply, -1, 0);
-	game->map.map[y][x] = '0';
+	map[y][x] = '0';
 }
 
 static char	*analize_map(char **map, t_game *game)
@@ -81,32 +81,34 @@ static char	*analize_map(char **map, t_game *game)
 			if (isdir(map[y][x]) && (game->ply.x != 0))
 				return (TOO_PLAYER);
 			else if (isdir(map[y][x]))
-				set_player(game, x, y, isdir(map[y][x]));
+				set_player(game, x, y, isdir(map[y][x]), map);
 			x++;
 		}
 	}
 	return (NULL);
 }
 
-char	*extract_map(int fd, char *line, t_game *game)
+char	*extract_map(int fd, char *line, t_game *game, t_map *map)
 {
 	char *error;
 
-	if (!(game->map.map = ft_calloc(sizeof(char*), 1)))
+	if (!(map->map = ft_calloc(sizeof(char*), 1)))
 		return (strerror(12));
 	init_player(&game->ply);
-	if ((error = extract_line_map(line, game)))
+	printf("FIRST\n");
+			fflush(stdout);
+	if ((error = extract_line_map(line, map)))
 		return (error);
 	while (get_next_line(fd, &line) >= 0 && ft_strncmp(line, "", 1))
 	{
-		if (NULL != (error = extract_line_map(line, game)))
+		if (NULL != (error = extract_line_map(line, map)))
 		{
 			free(line);
 			return (error);
 		}
 	}
 	free(line);
-	if ((error = analize_map(game->map.map, game)))
+	if ((error = analize_map(map->map, game)))
 		return (error);
 	return (NULL);
 }

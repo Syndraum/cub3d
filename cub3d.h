@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 13:12:15 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:11:31 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,8 @@ typedef struct	game
 {
 	void		*mlx;
 	t_windows	win;
-	t_map		map;
+	t_list		*lst_maps;
+	t_map		*map;
 	t_player	ply;
 	t_minimap	minimap;
 	t_jauge		jauge;
@@ -259,13 +260,13 @@ int				event_exec(t_game *game);
 int				key_hook(int keycode, t_game *game);
 
 t_map			*set_map(int fd, t_game *game);
-char			*is_complete(t_game *game);
-void			init_map(t_game *game);
-char			*extract_line(char *str, t_game *game);
+char			*is_complete(t_game *game, t_map *map);
+void			init_map(t_map *map);
+char			*extract_line(char *str, t_game *game, t_map *map);
 char			*extract_resolution(char *str, t_game *game);
-char			*extract_texture(char *str, t_game *game);
+char			*extract_texture(char *str, t_game *game, t_map *map);
 
-char			*extract_map(int fd, char *line, t_game *game);
+char			*extract_map(int fd, char *line, t_game *game, t_map *map);
 
 char			str_charset(char *str, char *charset);
 char			*strdup_wc(char *str, char c);
@@ -289,10 +290,10 @@ void			free_sprite(void *sprite);
 
 t_list			*new_sprite(void);
 t_sprite		*get_sprite(char *id, t_game *game);
-char			issprite(char id, t_game *game);
-char			issprite_end(char id, t_game *game);
-char			issprite_wall(char id, t_game *game);
-char			issprite_damage(char id, t_game *game);
+char			issprite(char id, t_map *map);
+char			issprite_end(char id, t_map *map);
+char			issprite_wall(char id, t_map *map);
+char			issprite_damage(char id, t_map *map);
 char			is_id_forbidden(char id);
 char			add_vector(t_player *ply, double x, double y, char id);
 void			print_sprite(t_game *game, t_info *info, t_sprite *sprite);
@@ -310,8 +311,8 @@ void			damage(t_game *game, int damage);
 
 void			move(t_game *game, double move_x, double move_y);
 
-char			*extract_color(char *str, t_game *game, char *as_color);
-char			*extract_sprite(char *str, t_game *game);
+char			*extract_color(char *str, t_game *game, char *as_color, t_map *map);
+char			*extract_sprite(char *str, t_game *game, t_map *map);
 
 void			set_textx(t_info *i, t_sprite *sprite);
 

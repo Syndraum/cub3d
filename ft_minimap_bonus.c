@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 12:47:56 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:00:39 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ static void	print_minimap(t_minimap *map, t_game *game)
 		map->crs = get_img_pixel(&map->img, (int)map->tmp.x, (int)map->tmp.y);
 		if (rgbcmp(map->crs, &map->ignore))
 		{
-			if (!(is_inmap(game->map.map, &map->begin)))
+			if (!(is_inmap(game->map->map, &map->begin)))
 				color = map->blank;
-			else if (game->map.map[(int)map->begin.y][(int)map->begin.x] == '1')
+			else if (game->map->map[(int)map->begin.y][(int)map->begin.x] == '1')
 				color = map->wall;
 			else
 				color = map->fill;

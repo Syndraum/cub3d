@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 18:53:16 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 17:38:50 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:00:39 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		exit_hook(t_game *game)
 {
 	mlx_destroy_window(game->mlx, game->win.id);
-	exit(free_map(game->map.map));
+	exit(free_map(game->map->map));
 }
 
 int		key_press_hook(int keycode, t_game *game)

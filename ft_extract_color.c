@@ -6,19 +6,19 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:40:28 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:37:14 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 17:43:39 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*extract_sprite(char *str, t_game *game)
+char	*extract_sprite(char *str, t_game *game, t_map *map)
 {
 	char		*cursor;
 	t_list		*elmt;
 	t_sprite	*sprite;
 
-	if (game->map.sprite != NULL)
+	if (map->sprite != NULL)
 		return (DUPLICATE_TEXTURE);
 	if (!(elmt = new_sprite()))
 		return (ALLOC_FAIL);
@@ -31,20 +31,21 @@ char	*extract_sprite(char *str, t_game *game)
 		ft_lstdelone(elmt, free_sprite);
 		return (strerror(2));
 	}
-	ft_lstadd_back(&game->map.sprite, elmt);
+	ft_lstadd_back(&map->sprite, elmt);
 	return (NULL);
 }
 
-char	*extract_color(char *str, t_game *game, char *as_color)
+char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
 {
 	char		*cursor;
 	int			value;
 	t_rgb		*rgb;
 
+	(void)game;
 	if (!(ft_strncmp(str, "F", 1)))
-		rgb = &game->map.floor;
+		rgb = &map->floor;
 	else
-		rgb = &game->map.ceil;
+		rgb = &map->ceil;
 	cursor = str + 1;
 	while (*cursor == ' ')
 		cursor++;
