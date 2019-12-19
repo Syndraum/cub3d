@@ -5,7 +5,7 @@ TODO
 - reorganization
 - free when error
 
-Bonus :
+Bonus :makk
 - visual feedback heal/damage
 - floorcasting clean
 - sprite clean
