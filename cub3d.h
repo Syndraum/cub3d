@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 20:05:18 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 20:15:13 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 
 int				ft_error(int error);
 int				free_game(t_game *game);
+void			free_maps(void *content);
 int				free_map(char **tab);
 int				print_error(char *error);
 

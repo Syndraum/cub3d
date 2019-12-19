@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:33:01 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 18:15:01 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 20:22:00 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	move(t_game *game, double move_x, double move_y)
 {
+	t_list		*elmt;
 	t_vector	m;
 	char		value;
 	t_sprite	*stripe;
@@ -37,5 +38,16 @@ void	move(t_game *game, double move_x, double move_y)
 		}
 	}
 	else if (issprite_end(value, game->map))
-		exit_hook(game);
+	{
+		if (game->lst_maps->next != NULL)
+		{
+			game->map = game->lst_maps->next->content;
+			elmt = game->lst_maps->next;
+			ft_lstdelone(game->lst_maps, free_maps);
+			game->lst_maps = elmt;
+			set_dira(game);
+		}
+		else
+			exit_hook(game);
+	}
 }
