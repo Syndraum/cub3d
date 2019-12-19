@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 10:54:27 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 13:02:56 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int	main(int argc, char *argv[])
 	}
 	if (!(create_windows(&game.win, "cub3d")))
 		return (free_game(&game));
+	set_xmp(&game.minimap.img, "./assets/minimap.xpm", game.mlx);
+	set_xmp(&game.jauge.jauge, "assets/jauge.xpm", game.mlx);
+	set_xmp(&game.jauge.life, "assets/life.xpm", game.mlx);
 	mlx_do_key_autorepeatoff(game.mlx);
 	mlx_loop_hook(game.mlx, loop_hook, &game);
 	mlx_hook(game.win.id, 2, 0, key_press_hook, &game);
@@ -60,6 +63,8 @@ void	add_step_sprite(t_list *lst)
 
 int	loop_hook(t_game *game)
 {
+	if (game->ply.life <= 0)
+		exit_hook(game);
 	event_exec(game);
 	raycasting(game);
 	hud(game);

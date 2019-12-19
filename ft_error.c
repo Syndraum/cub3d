@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:56:26 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 12:45:45 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 12:49:01 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,27 @@ void	*print_error(char *error)
 	return (NULL);
 }
 
+void	free_image(void *mlx, t_img *img)
+{
+	if (img->id != NULL)
+		mlx_destroy_image(mlx, img->id);
+}
+
 int		free_game(t_game *game)
 {
 	free_map(game->map.map);
 	free(game->ply.z_index);
-	if (game->win.render.id != NULL)
-		mlx_destroy_image(game->mlx, game->win.render.id);
+	free_image(game->mlx, &game->win.render);
+	free_image(game->mlx, &game->map.north);
+	free_image(game->mlx, &game->map.south);
+	free_image(game->mlx, &game->map.east);
+	free_image(game->mlx, &game->map.west);
+	free_image(game->mlx, &game->map.floor_text);
+	free_image(game->mlx, &game->map.skybox);
+	free_image(game->mlx, &game->map.skybox);
+	free_image(game->mlx, &game->minimap.img);
+	free_image(game->mlx, &game->jauge.jauge);
+	free_image(game->mlx, &game->jauge.life);
 	ft_lstclear(&game->ply.object, free_sprite);
 	ft_lstclear(&game->map.sprite, free_sprite);
 	return (0);

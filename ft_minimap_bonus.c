@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minimap.c                                       :+:      :+:    :+:   */
+/*   ft_minimap_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 10:53:26 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 12:47:56 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ void	set_rgb(t_rgb *rgb, char red, char green, char blue)
 	rgb->alpha = 0;
 }
 
-static void		init_minimap(t_minimap *map, t_game *game)
+void		init_minimap(t_minimap *map, t_game *game)
 {
-	set_xmp(&map->img, "./assets/minimap.xpm", game->mlx);
 	set_rgb(&map->blank, 27, 51, 82);
 	set_rgb(&map->wall, 54, 89, -120);
 	set_rgb(&map->fill, 74, 124, -68);
@@ -118,8 +117,6 @@ static void	print_minimap(t_minimap *map, t_game *game)
 
 void	init_jauge(t_jauge *jauge, t_minimap *map, t_game *game)
 {
-	set_xmp(&jauge->jauge, "assets/jauge.xpm", game->mlx);
-	set_xmp(&jauge->life, "assets/life.xpm", game->mlx);
 	jauge->height = game->win.height / 25;
 	jauge->widht = game->win.width / 3.5;
 	jauge->del.x = (double)jauge->jauge.width / jauge->widht;
@@ -156,18 +153,15 @@ void	print_jauge(t_jauge *j, t_minimap *map, t_game *game)
 
 void		hud(t_game *game)
 {
-	t_minimap	map;
-	t_jauge		jauge;
-
-	init_minimap(&map, game);
-	while (map.tmp.x < map.img.width)
+	init_minimap(&game->minimap, game);
+	while (game->minimap.tmp.x < game->minimap.img.width)
 	{
-		print_minimap(&map, game);
-		(map.pi.x)++;
-		map.tmp.x += map.del.x;
-		map.begin.x += map.delcalage;
+		print_minimap(&game->minimap, game);
+		(game->minimap.pi.x)++;
+		game->minimap.tmp.x += game->minimap.del.x;
+		game->minimap.begin.x += game->minimap.delcalage;
 	}
-	print_ply(&map, game);
-	init_jauge(&jauge, &map, game);
-	print_jauge(&jauge, &map, game);
+	print_ply(&game->minimap, game);
+	init_jauge(&game->jauge, &game->minimap, game);
+	print_jauge(&game->jauge, &game->minimap, game);
 }

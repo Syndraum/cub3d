@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 11:55:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 13:02:15 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,8 @@ typedef struct	game
 	t_windows	win;
 	t_map		map;
 	t_player	ply;
+	t_minimap	minimap;
+	t_jauge		jauge;
 	char		event[ESCAPE];
 }				t_game;
 
@@ -298,6 +300,8 @@ void			put_sprite(t_game *game);
 void			sreenshot(t_game *game);
 
 void			hud(t_game *game);
+void			init_minimap(t_minimap *map, t_game *game);
+void			init_jauge(t_jauge *jauge, t_minimap *map, t_game *game);
 
 void			skybox(t_game *game, t_ray *ray, int x);
 
