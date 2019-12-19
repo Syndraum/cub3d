@@ -6,13 +6,13 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 18:44:49 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 20:05:30 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_map	*set_map(int fd, t_game *game)
+int		set_map(int fd, t_game *game)
 {
 	t_list	*elmt;
 	t_map	*map;
@@ -21,22 +21,18 @@ t_map	*set_map(int fd, t_game *game)
 	char	finish;
 
 	if (!(map = ft_calloc(1, sizeof(t_map))))
-		return (NULL); //
+		return (-1); //
 	if (!(elmt = ft_lstnew(map)))
-		return (NULL); //
+		return (-1); //
 	finish = 0;
 	error = NULL;
 	init_map(map);
-	while (get_next_line(fd, &line) == 1 && !finish)
+	while ((map->read = get_next_line(fd, &line)) == 1 && !finish)
 	{
 		if (ft_strnstr(line, "1", 1) == line)
 		{
-			printf("BEGIN_MAP\n");
-			fflush(stdout);
-			if ((error = extract_map(fd, line, game, map)))
+			if ((error = extract_map(fd, line, map)))
 				return (print_error(error));
-			printf("END_MAP\n");
-			fflush(stdout);
 			finish = 1;
 		}
 		else if ((error = extract_line(line, game, map)))
@@ -46,8 +42,7 @@ t_map	*set_map(int fd, t_game *game)
 	if ((error = is_complete(game, map)))
 		return (print_error(error));
 	ft_lstadd_back(&game->lst_maps, elmt);
-	game->map = map;
-	return (map);
+	return (map->read);
 }
 
 char	*is_complete(t_game *game, t_map *map)

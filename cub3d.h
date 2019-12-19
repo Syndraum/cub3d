@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 18:11:31 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 20:05:18 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,9 @@ typedef struct	s_map
 	char		as_ceil;
 	t_img		skybox;
 	t_rgb		ceil;
+	int			read;
+	t_vector	pos;
+	char		dir;		
 }				t_map;
 
 typedef struct	s_player
@@ -251,7 +254,7 @@ void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 int				ft_error(int error);
 int				free_game(t_game *game);
 int				free_map(char **tab);
-void			*print_error(char *error);
+int				print_error(char *error);
 
 int				exit_hook(t_game *game);
 int				key_press_hook(int keycode, t_game *game);
@@ -259,14 +262,15 @@ int				key_release_hook(int keycode, t_game *game);
 int				event_exec(t_game *game);
 int				key_hook(int keycode, t_game *game);
 
-t_map			*set_map(int fd, t_game *game);
+int				set_map(int fd, t_game *game);
 char			*is_complete(t_game *game, t_map *map);
 void			init_map(t_map *map);
 char			*extract_line(char *str, t_game *game, t_map *map);
 char			*extract_resolution(char *str, t_game *game);
 char			*extract_texture(char *str, t_game *game, t_map *map);
 
-char			*extract_map(int fd, char *line, t_game *game, t_map *map);
+void			set_dira(t_game *game);
+char			*extract_map(int fd, char *line, t_map *map);
 
 char			str_charset(char *str, char *charset);
 char			*strdup_wc(char *str, char c);

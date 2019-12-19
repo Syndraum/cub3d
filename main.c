@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 18:20:30 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 20:09:34 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char *argv[])
 {
 	t_game		game;
 	int			fd;
+	int			result;
 
 	if (argc < 2)
 		return (ft_error(ENOENT));
@@ -23,16 +24,26 @@ int	main(int argc, char *argv[])
 		return (ft_error(-1));
 	if (!(game.mlx = mlx_init()))
 		return (EXIT_FAILURE);
+	result = 1;
 	game.win.mlx = game.mlx;
 	game.win.height = 0;
 	game.win.width = 0;
 	set_xmp(&game.minimap.img, "./assets/minimap.xpm", game.mlx);
 	set_xmp(&game.jauge.jauge, "assets/jauge.xpm", game.mlx);
 	set_xmp(&game.jauge.life, "assets/life.xpm", game.mlx);
+	init_player(&game.ply);
 	printf("INIT\n");
 	fflush(stdout);
-	if (!(set_map(fd, &game)))
+	while (0 < result)
+	{
+		result = set_map(fd, &game);
+		printf("result %d\n", result);
+	}
+	if (result == -1)
 		return (free_game(&game));
+	game.map = game.lst_maps->content;
+	set_dira(&game);
+	printf("dir (%.1f, %.1f)\n", game.ply.dir.x, game.ply.dir.y);
 	printf("MAP\n");
 	fflush(stdout);
 	game.ply.z_index = ft_calloc(sizeof(double), game.win.width);
@@ -74,6 +85,8 @@ int	loop_hook(t_game *game)
 	if (game->ply.life <= 0)
 		exit_hook(game);
 	event_exec(game);
+	printf("DDA\n");
+	fflush(stdout);
 	raycasting(game);
 	printf("RAY\n");
 	fflush(stdout);

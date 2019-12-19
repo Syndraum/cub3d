@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:56:26 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 18:35:03 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 19:31:08 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int		ft_error(int error)
 	return (EXIT_FAILURE);
 }
 
-void	*print_error(char *error)
+int	print_error(char *error)
 {
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(error, 2);
-	return (NULL);
+	return (-1);
 }
 
 void	free_image(t_img *img)
@@ -52,7 +52,6 @@ void	free_maps(void *content)
 
 int		free_game(t_game *game)
 {
-	free_map(game->map->map);
 	free(game->ply.z_index);
 	free_image(&game->win.render);
 	free_image(&game->minimap.img);
