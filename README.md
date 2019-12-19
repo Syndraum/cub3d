@@ -6,7 +6,6 @@ TODO
 - free when error
 
 Bonus :
-- makefile relink bonus ?
 - visual feedback heal/damage
 - floorcasting clean
 - sprite clean

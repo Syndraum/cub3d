@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 13:02:56 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 16:21:28 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	main(int argc, char *argv[])
 	if (!(game.mlx = mlx_init()))
 		return (EXIT_FAILURE);
 	game.win.mlx = game.mlx;
+	set_xmp(&game.minimap.img, "./assets/minimap.xpm", game.mlx);
+	set_xmp(&game.jauge.jauge, "assets/jauge.xpm", game.mlx);
+	set_xmp(&game.jauge.life, "assets/life.xpm", game.mlx);
 	if (!(set_map(fd, &game)))
 		return (free_game(&game));
 	game.ply.z_index = ft_calloc(sizeof(double), game.win.width);
@@ -35,9 +38,6 @@ int	main(int argc, char *argv[])
 	}
 	if (!(create_windows(&game.win, "cub3d")))
 		return (free_game(&game));
-	set_xmp(&game.minimap.img, "./assets/minimap.xpm", game.mlx);
-	set_xmp(&game.jauge.jauge, "assets/jauge.xpm", game.mlx);
-	set_xmp(&game.jauge.life, "assets/life.xpm", game.mlx);
 	mlx_do_key_autorepeatoff(game.mlx);
 	mlx_loop_hook(game.mlx, loop_hook, &game);
 	mlx_hook(game.win.id, 2, 0, key_press_hook, &game);

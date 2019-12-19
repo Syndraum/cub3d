@@ -49,3 +49,5 @@ bonus:	${DIR_LIBFT} ${OBJS} ${BONUS_OBJS} cub3d.h
 re:			fclean all
 
 re_bonus:	fclean bonus
+
+.PHONY: all clean fclean re bonus re_bonus
