@@ -6,13 +6,13 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 12:48:10 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:08:19 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	isvalide_bonus(char *line, t_game *game)
+static char	ismapvalide(char *line, t_game *game)
 {
 	while (*line != 0)
 	{
@@ -23,14 +23,14 @@ char	isvalide_bonus(char *line, t_game *game)
 	return (1);
 }
 
-char	*extract_line_map(char *line, t_game *game)
+static char	*extract_line_map(char *line, t_game *game)
 {
 	char	***map;
 	char	*row;
 	char	**tab;
 
 	map = &game->map.map;
-	if (!isvalide_bonus(line, game))
+	if (!ismapvalide(line, game))
 		return ("Invalid character in map");
 	if (!(row = strdup_wc(line, ' ')))
 		return (strerror(12));
@@ -44,7 +44,7 @@ char	*extract_line_map(char *line, t_game *game)
 	return (NULL);
 }
 
-void	set_player(t_game *game, int x, int y, char dir)
+static void	set_player(t_game *game, int x, int y, char dir)
 {
 	game->ply.x = (double)x + 0.5;
 	game->ply.y = (double)y + 0.5;
@@ -59,7 +59,7 @@ void	set_player(t_game *game, int x, int y, char dir)
 	game->map.map[y][x] = '0';
 }
 
-char	*analize_map(char **map, t_game *game)
+static char	*analize_map(char **map, t_game *game)
 {
 	size_t	len;
 	int		x;

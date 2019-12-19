@@ -6,13 +6,13 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 19:15:14 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:04:00 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_img	*get_side_texture(t_map *map, char side)
+static t_img	*get_side_texture(t_map *map, char side)
 {
 	if (side == 0)
 		return (&map->west);
@@ -25,7 +25,7 @@ t_img	*get_side_texture(t_map *map, char side)
 	return (NULL);
 }
 
-void	drawray(t_game *game, t_ray *ray, int line)
+static void		drawray(t_game *game, t_ray *ray, int line)
 {
 	int		i;
 	int		j;
@@ -48,7 +48,7 @@ void	drawray(t_game *game, t_ray *ray, int line)
 	skybox(game, ray, line);
 }
 
-void	set_pixelcord(t_game *game, t_ray *ray)
+static void		set_pixelcord(t_game *game, t_ray *ray)
 {
 	ray->line_h = (int)(game->win.height / ray->len);
 	ray->pixel_start = -ray->line_h / 2 + game->win.height / 2;
@@ -64,12 +64,12 @@ void	set_pixelcord(t_game *game, t_ray *ray)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
-double	get_anglediff(t_game *game)
+static double	get_anglediff(t_game *game)
 {
 	return (atan2(0, -1) - atan2(game->ply.dir.x, game->ply.dir.y));
 }
 
-void	raycasting(t_game *game)
+void			raycasting(t_game *game)
 {
 	int		x;
 	t_ray	ray;

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:45:08 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 18:11:07 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:21:03 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,20 @@ char	*extract_sprite(char *str, t_game *game)
 
 char	*extract_color(char *str, t_game *game, char *as_color)
 {
-	char *rsl;
+	char	*cursor;
+	t_img	*img;
 
-	if (NULL != (rsl = extract_texture(str, game)))
-		return (rsl);
+	if (!(ft_strncmp(str, "F", 1)))
+		img = &game->map.floor_text;
+	else
+		img = &game->map.skybox;
+	if (img->id != NULL)
+		return ("Duplicate texture");
+	cursor = str + 2;
+	while (*cursor == ' ')
+		cursor++;
+	if (!(set_xmp(img, cursor, game->mlx)))
+		return (strerror(2));
 	*as_color = 1;
 	return (NULL);
 }

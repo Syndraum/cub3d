@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 20:35:43 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:12:57 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@
 # include "get_next_line.h"
 # include "libft/libft.h"
 
-# ifndef BONUS
-#  define BONUS 0
-# endif
 # define MAX_HEIGHT 1400
 # define MAX_WIDHT 2560
 # define FOV 0.6
@@ -205,7 +202,6 @@ typedef struct	game
 int				loop_hook(t_game *game);
 
 t_windows		*create_windows(t_windows *win, char *title);
-void			*free_windows(t_windows	*windows);
 
 void			*set_image(t_img *img, int width, int height, void *mlx);
 void			*set_xmp(t_img *img, char *path, void *mlx);
@@ -213,8 +209,7 @@ void			img_pixel_cpy(t_img *img, int x, int y, char *color);
 void			img_pixel_rgb(t_img *img, int x, int y, t_rgb *color);
 char			*get_img_pixel(t_img *img, int x, int y);
 
-void	img_xpm_put(t_img *img, t_img *xpm, int x, int y);
-void	xpm_resize_pit(t_img *img, t_img *xpm, int x, int y, int size);
+void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 
 int				ft_error(int error);
 int				free_game(t_game *game);
@@ -256,7 +251,6 @@ t_list			*new_object(double dist, double sprit_x, double sprit_y, char id);
 t_list			*ft_lstadd(t_list **list, t_list *elmt);
 void			free_sprite(void *sprite);
 
-void	print_lstsprite(t_list *lst);
 t_list			*new_sprite(void);
 t_sprite		*get_sprite(char *id, t_game *game);
 char			issprite(char id, t_game *game);
@@ -269,9 +263,8 @@ void			put_sprite(t_game *game);
 
 void			sreenshot(t_game *game);
 
-void			minimap(t_game *game);
+void			hud(t_game *game);
 
-double			get_anglediff(t_game *game);
 void			skybox(t_game *game, t_ray *ray, int x);
 
 void			damage(t_game *game, int damage);
@@ -281,7 +274,6 @@ void			move(t_game *game, double move_x, double move_y);
 char			*extract_color(char *str, t_game *game, char *as_color);
 char			*extract_sprite(char *str, t_game *game);
 
-void			set_sprite(t_sprite *sprite);
 void			set_textx(t_info *i, t_sprite *sprite);
 
 #endif

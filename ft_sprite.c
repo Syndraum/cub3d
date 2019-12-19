@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:11:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 18:29:47 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:46:56 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*new_sprite(void)
 
 	if (!(sprite = ft_calloc(1, sizeof(t_sprite))))
 		return (NULL);
-	set_sprite(sprite);
+	sprite->id = '2';
 	sprite->img.id = NULL;
 	sprite->step = 0;
 	sprite->collision = 0;

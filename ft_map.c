@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 18:13:08 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:19:00 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,28 +141,18 @@ char	*extract_texture(char *str, t_game *game)
 {
 	char	*cursor;
 	t_img	*img;
-	char	s_prefix;
 
-	s_prefix = 2;
 	if (!(ft_strncmp(str, "NO", 2)))
 		img = &game->map.north;
 	else if (!(ft_strncmp(str, "SO", 2)))
 		img = &game->map.south;
 	else if (!(ft_strncmp(str, "WE", 2)))
 		img = &game->map.west;
-	else if (!(ft_strncmp(str, "EA", 2)))
-		img = &game->map.east;
 	else
-	{
-		if (!(ft_strncmp(str, "F", 1)))
-			img = &game->map.floor_text;
-		else
-			img = &game->map.skybox;
-		s_prefix = 1;
-	}
+		img = &game->map.east;
 	if (img->id != NULL)
 		return ("Duplicate texture");
-	cursor = str + s_prefix;
+	cursor = str + 2;
 	while (*cursor == ' ')
 		cursor++;
 	if (!(set_xmp(img, cursor, game->mlx)))

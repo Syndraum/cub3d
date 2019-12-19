@@ -6,15 +6,15 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 18:16:35 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/18 18:27:12 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:52:02 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	set_sprite(t_sprite *sprite)
+void	hud(t_game *game)
 {
-	sprite->id = '2';
+	(void)game;
 }
 
 void	set_textx(t_info *i, t_sprite *sprite)

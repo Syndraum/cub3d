@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/15 11:14:21 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:53:26 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void	print_jauge(t_jauge *j, t_minimap *map, t_game *game)
 	}
 }
 
-void		minimap(t_game *game)
+void		hud(t_game *game)
 {
 	t_minimap	map;
 	t_jauge		jauge;

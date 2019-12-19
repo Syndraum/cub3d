@@ -2,8 +2,8 @@
 
 TODO
 
-- static function
-- minimap separation
+- reorganization
+- define
 - free when error
 
 Bonus :
