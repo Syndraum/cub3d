@@ -8,7 +8,7 @@ SCRS		= 	ft_main.c ft_img.c ft_utils.c ft_free.c\
 
 DEFAULT		=	ft_move.c ft_extract_color.c ft_sprite_utils.c ft_floor.c
 BONUS		=	ft_move_bonus.c ft_extract_bonus.c ft_sprite_utils_bonus.c ft_floor_bonus.c \
-				ft_skybox_bonus.c ft_minimap_bonus.c ft_sprite_bonus.c
+				ft_skybox_bonus.c ft_minimap_bonus.c ft_sprite_bonus.c ft_jauge_bonus.c
 
 GNL			= get_next_line.c
 

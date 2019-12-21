@@ -2,10 +2,5 @@
 
 TODO
 
-- reorganization
-
-Bonus :makk
+Bonus :
 - visual feedback heal/damage
-- floorcasting clean
-- sprite clean
-- next levels clean

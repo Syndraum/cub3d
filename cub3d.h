@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 17:02:48 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 18:43:39 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define MISSING_DEFINITON "Definition is missing"
 
 # define BAD_RED_FORMAT "Bad red format, colors need to be between 0 and 255"
-# define BAD_GREEN_FORMAT "Bad green format, colors need to be between 0 and 255"
+# define BAD_GRE_FORMAT "Bad green format, colors need to be between 0 and 255"
 # define BAD_BLUE_FORMAT "Bad blue format, colors need to be between 0 and 255"
 # define CEIL_MISSING "Ceil is missing"
 # define FLOOR_MISSING "Floor is missing"
@@ -89,7 +89,7 @@ typedef struct	s_coord
 	int			y;
 }				t_coord;
 
-typedef struct s_rgb
+typedef struct	s_rgb
 {
 	char		red;
 	char		green;
@@ -112,7 +112,7 @@ typedef struct	s_ray
 	char		wall;
 	double		wall_x;
 	t_coord		text;
-	double 		angle;
+	double		angle;
 }				t_ray;
 
 typedef struct	s_img
@@ -130,7 +130,7 @@ typedef struct	s_img
 typedef struct	s_sprite
 {
 	t_img		img;
-	int 		step;
+	int			step;
 	char		id;
 	char		collision;
 	int			effect;
@@ -143,7 +143,18 @@ typedef struct	s_object
 	char		id;
 }				t_object;
 
-typedef struct s_info
+typedef struct	s_floor
+{
+	t_vector	init;
+	t_vector	curr;
+	t_coord		text;
+	double		dist_w;
+	double		dist_p;
+	double		dist_c;
+	double		weight;
+}				t_floor;
+
+typedef struct	s_info
 {
 	t_vector	tmp;
 	double		det;
@@ -188,7 +199,7 @@ typedef struct	s_jauge
 	char		*crs_l;
 }				t_jauge;
 
-typedef struct s_windows
+typedef struct	s_windows
 {
 	void		*mlx;
 	void		*id;
@@ -213,7 +224,7 @@ typedef struct	s_map
 	t_rgb		ceil;
 	int			read;
 	t_vector	pos;
-	char		dir;		
+	char		dir;
 }				t_map;
 
 typedef struct	s_player
@@ -227,7 +238,7 @@ typedef struct	s_player
 	double		*z_index;
 }				t_player;
 
-typedef struct	game
+typedef struct	s_game
 {
 	void		*mlx;
 	t_windows	win;
@@ -239,6 +250,9 @@ typedef struct	game
 	char		event[ESCAPE];
 }				t_game;
 
+void			init_game(t_game *game, int *result);
+void			setup_game(t_game *game);
+void			set_hook(t_game *game);
 int				loop_hook(t_game *game);
 
 t_windows		*create_windows(t_windows *win, char *title);
@@ -292,7 +306,7 @@ void			exec_dda(t_ray *ray, t_game *g);
 void			raycasting(t_game *game);
 void			floor_casting(t_game *game, t_ray *ray, int x);
 
-t_list			*new_object(double dist, double sprit_x, double sprit_y, char id);
+t_list			*new_object(double d, double s_x, double s_y, char id);
 t_list			*ft_lstadd(t_list **list, t_list *elmt);
 void			free_sprite(void *sprite);
 
@@ -316,6 +330,11 @@ void			hud(t_game *game);
 void			init_minimap(t_minimap *map, t_game *game);
 void			init_jauge(t_jauge *jauge, t_minimap *map, t_game *game);
 
+void			print_jauge(t_jauge *j, t_minimap *map, t_game *game);
+void			init_jauge(t_jauge *jauge, t_minimap *map, t_game *game);
+void			set_rgb(t_rgb *rgb, char red, char green, char blue);
+char			rgbcmp(char *cursor, t_rgb *rgb);
+
 void			skybox(t_game *game, t_ray *ray, int x);
 
 void			strmv_if(char **line, char c);
@@ -323,7 +342,7 @@ void			strmv_wh(char **line, char c);
 
 void			move(t_game *game, double move_x, double move_y);
 
-char			*extract_color(char *str, t_game *game, char *as_color, t_map *map);
+char			*extract_color(char *str, t_game *g, char *as_col, t_map *m);
 char			*extract_sprite(char *str, t_game *game, t_map *map);
 
 void			set_textx(t_info *i, t_sprite *sprite);

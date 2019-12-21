@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 14:43:45 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 17:44:53 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,33 +57,31 @@ static char	*analize_map(t_map *m)
 	size_t	len;
 	int		x;
 	int		y;
-	char	**map;
 
 	y = -1;
-	map = m->map;
-	len = ft_strlen(*map);
-	while (map[++y])
+	len = ft_strlen(*m->map);
+	while (m->map[++y])
 	{
 		x = 0;
-		if (len != ft_strlen(map[y]))
+		if (len != ft_strlen(m->map[y]))
 			return (WORNG_LINE_LEN_MAP);
-		if (map[y][x] != '1' || map[y][ft_strlen(map[y]) - 1] != '1')
+		if (m->map[y][x] != '1' || m->map[y][ft_strlen(m->map[y]) - 1] != '1')
 			return (BORDER_MAP_ERROR);
-		while (map[y][x])
+		while (m->map[y][x])
 		{
-			if ((y == (ft_tablen(map) - 1) || y == 0) && map[y][x] != '1')
+			if ((y == (ft_tablen(m->map) - 1) || y == 0) && m->map[y][x] != '1')
 				return (BORDER_MAP_ERROR);
-			if (isdir(map[y][x]) && (m->pos.x != 0))
+			if (isdir(m->map[y][x]) && (m->pos.x != 0))
 				return (TOO_PLAYER);
-			else if (isdir(map[y][x]))
-				set_player(x, y, isdir(map[y][x]), m);
+			else if (isdir(m->map[y][x]))
+				set_player(x, y, isdir(m->map[y][x]), m);
 			x++;
 		}
 	}
 	return (NULL);
 }
 
-char	*extract_map(int fd, char *line, t_map *map)
+char		*extract_map(int fd, char *line, t_map *map)
 {
 	char *error;
 
@@ -91,7 +89,8 @@ char	*extract_map(int fd, char *line, t_map *map)
 		return (strerror(12));
 	if ((error = extract_line_map(line, map)))
 		return (error);
-	while ((map->read = get_next_line(fd, &line)) >= 0 && ft_strncmp(line, "", 1))
+	while ((map->read = get_next_line(fd, &line)) >=
+	0 && ft_strncmp(line, "", 1))
 	{
 		if (NULL != (error = extract_line_map(line, map)))
 		{

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:40:28 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 15:55:33 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 17:48:50 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
 		cursor++;
 	strmv_if(&cursor, ',');
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
-		return (BAD_GREEN_FORMAT);
+		return (BAD_GRE_FORMAT);
 	rgb->green = value;
 	while (isnumber(*cursor))
 		cursor++;
