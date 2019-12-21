@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 20:11:10 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 14:43:45 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,6 @@ static void	set_player(int x, int y, char dir, t_map *map)
 	map->pos.y = (double)y + 0.5;
 	map->dir = dir;
 	map->map[y][x] = '0';
-}
-
-void	set_dira(t_game *game)
-{
-	char dir;
-
-	dir = game->map->dir;
-	game->ply.x = game->map->pos.x;
-	game->ply.y = game->map->pos.y;
-	if (dir == 'N')
-		set_dir(&game->ply, 0, -1);
-	else if (dir == 'S')
-		set_dir(&game->ply, 0, 1);
-	else if (dir == 'E')
-		set_dir(&game->ply, 1, 0);
-	else if (dir == 'W')
-		set_dir(&game->ply, -1, 0);
 }
 
 static char	*analize_map(t_map *m)

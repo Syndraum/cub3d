@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 18:14:30 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 18:00:39 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 15:03:38 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,31 +87,31 @@ static void	print_ply(t_minimap *map, t_game *game)
 	}
 }
 
-static void	print_minimap(t_minimap *map, t_game *game)
+static void	print_minimap(t_minimap *m, t_game *game)
 {
 	t_rgb color;
 
-	map->begin.y = game->ply.y - PADDING_MAP;
-	map->pi.y = map->padding;
-	map->tmp.y = 0;
-	while (map->tmp.y < map->img.height)
+	m->begin.y = game->ply.y - PADDING_MAP;
+	m->pi.y = m->padding;
+	m->tmp.y = 0;
+	while (m->tmp.y < m->img.height)
 	{
-		map->crs = get_img_pixel(&map->img, (int)map->tmp.x, (int)map->tmp.y);
-		if (rgbcmp(map->crs, &map->ignore))
+		m->crs = get_img_pixel(&m->img, (int)m->tmp.x, (int)m->tmp.y);
+		if (rgbcmp(m->crs, &m->ignore))
 		{
-			if (!(is_inmap(game->map->map, &map->begin)))
-				color = map->blank;
-			else if (game->map->map[(int)map->begin.y][(int)map->begin.x] == '1')
-				color = map->wall;
+			if (!(is_inmap(game->map->map, &m->begin)))
+				color = m->blank;
+			else if (game->map->map[(int)m->begin.y][(int)m->begin.x] == '1')
+				color = m->wall;
 			else
-				color = map->fill;
-			img_pixel_rgb(&game->win.render, map->pi.x, map->pi.y, &color);
+				color = m->fill;
+			img_pixel_rgb(&game->win.render, m->pi.x, m->pi.y, &color);
 		}
-		else if (*(map->crs + 3) == 0)
-			img_pixel_cpy(&game->win.render, map->pi.x, map->pi.y, map->crs);
-		map->begin.y += map->delcalage;
-		map->tmp.y += map->del.y;
-		(map->pi.y)++;
+		else if (*(m->crs + 3) == 0)
+			img_pixel_cpy(&game->win.render, m->pi.x, m->pi.y, m->crs);
+		m->begin.y += m->delcalage;
+		m->tmp.y += m->del.y;
+		(m->pi.y)++;
 	}
 }
 

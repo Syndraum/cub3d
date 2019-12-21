@@ -3,8 +3,6 @@
 TODO
 
 - reorganization
-- free when error
-- if caracter after end of map ?
 
 Bonus :makk
 - visual feedback heal/damage

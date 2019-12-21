@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:40:28 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 17:43:39 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 15:55:33 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ char	*extract_sprite(char *str, t_game *game, t_map *map)
 		return (ALLOC_FAIL);
 	sprite = (t_sprite*)elmt->content;
 	cursor = str + 1;
-	while (*cursor == ' ')
-		cursor++;
+	strmv_wh(&cursor, ' ');
 	if (!(set_xmp(&sprite->img, cursor, game->mlx)))
 	{
 		ft_lstdelone(elmt, free_sprite);
@@ -42,27 +41,21 @@ char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
 	t_rgb		*rgb;
 
 	(void)game;
-	if (!(ft_strncmp(str, "F", 1)))
-		rgb = &map->floor;
-	else
-		rgb = &map->ceil;
+	rgb = (!(ft_strncmp(str, "F", 1))) ? &map->floor : &map->ceil;
 	cursor = str + 1;
-	while (*cursor == ' ')
-		cursor++;
+	strmv_wh(&cursor, ' ');
 	if (!isnumber(*cursor) || (255 < (value = ft_atoi(cursor))))
 		return (BAD_RED_FORMAT);
 	rgb->red = value;
 	while (isnumber(*cursor))
 		cursor++;
-	if (*cursor == ',')
-		cursor++;
+	strmv_if(&cursor, ',');
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
 		return (BAD_GREEN_FORMAT);
 	rgb->green = value;
 	while (isnumber(*cursor))
 		cursor++;
-	if (*cursor == ',')
-		cursor++;
+	strmv_if(&cursor, ',');
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
 		return (BAD_BLUE_FORMAT);
 	rgb->blue = value;

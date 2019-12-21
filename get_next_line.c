@@ -6,12 +6,11 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 11:25:04 by syndraum          #+#    #+#             */
-/*   Updated: 2019/12/19 19:33:06 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 10:51:48 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int		get_next_line(int fd, char **line)
 {
@@ -30,7 +29,6 @@ int		get_next_line(int fd, char **line)
 	if (!(list_to_str(lst, line, count)))
 		return (-1);
 	free_list(lst);
-	printf("line : |%s|\n", *line);
 	if (brk == 0)
 		return (0);
 	return (1);

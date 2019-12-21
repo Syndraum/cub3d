@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 20:05:30 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 14:05:14 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,31 @@
 
 int		set_map(int fd, t_game *game)
 {
-	t_list	*elmt;
-	t_map	*map;
-	char	*line;
-	char	*error;
-	char	finish;
+	t_list		*elmt;
+	t_map		*map;
+	char		*line;
+	static char	*error = NULL;
+	char		finish;
 
-	if (!(map = ft_calloc(1, sizeof(t_map))))
-		return (-1); //
-	if (!(elmt = ft_lstnew(map)))
-		return (-1); //
+	if (!(elmt = init_lstmap()))
+		return (print_error(ALLOC_FAIL, elmt));
 	finish = 0;
-	error = NULL;
-	init_map(map);
+	map = (t_map*)elmt->content;
 	while ((map->read = get_next_line(fd, &line)) == 1 && !finish)
 	{
-		if (ft_strnstr(line, "1", 1) == line)
+		if (ft_strnstr(line, "1", 1) == line && (finish = 1) == 1)
 		{
 			if ((error = extract_map(fd, line, map)))
-				return (print_error(error));
-			finish = 1;
+				return (print_error(error, elmt));
 		}
 		else if ((error = extract_line(line, game, map)))
-			return (print_error(error));
+			return (print_error(error, elmt));
 	}
 	free(line);
 	if ((error = is_complete(game, map)))
-		return (print_error(error));
+		return (print_error(error, elmt));
 	ft_lstadd_back(&game->lst_maps, elmt);
-	return (map->read);
+	return (get_read(map->read));
 }
 
 char	*is_complete(t_game *game, t_map *map)
@@ -66,30 +62,6 @@ char	*is_complete(t_game *game, t_map *map)
 	else if (map->as_floor == 0)
 		return (FLOOR_MISSING);
 	return (NULL);
-}
-
-void	init_rgb(t_rgb *rgb)
-{
-	rgb->alpha = 0;
-	rgb->blue = 0;
-	rgb->green = 0;
-	rgb->red = 0;
-}
-
-void	init_map(t_map *map)
-{
-	map->map = NULL;
-	map->north.id = NULL;
-	map->south.id = NULL;
-	map->east.id = NULL;
-	map->west.id = NULL;
-	map->sprite = NULL;
-	map->floor_text.id = NULL;
-	map->skybox.id = NULL;
-	init_rgb(&map->ceil);
-	init_rgb(&map->floor);
-	map->as_ceil = 0;
-	map->as_floor = 0;
 }
 
 char	*extract_line(char *str, t_game *game, t_map *map)

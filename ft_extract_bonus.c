@@ -6,62 +6,15 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:45:08 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 18:25:36 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 16:38:59 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*extract_sprite(char *str, t_game *game, t_map *map)
+int		get_read(int i)
 {
-	char		*cursor;
-	t_list		*elmt;
-	t_sprite	*sprite;
-
-	if (!(elmt = new_sprite()))
-		return (ALLOC_FAIL);
-	sprite = (t_sprite*)elmt->content;
-	cursor = str + 1;
-	while (*cursor == ' ')
-		cursor++;
-	if (is_id_forbidden(*cursor))
-		return (SPRITE_FORBIDDEN_ID);
-	if (issprite(*cursor, map))
-		return (SPRITE_ID_BE_UNIQUE);
-	sprite->id = *(cursor++);
-	if (*cursor != ' ')
-		return (SPRITE_ID_NOT_FOUND);
-	while (*cursor == ' ')
-		cursor++;
-	if (*cursor == '1')
-		sprite->collision = 1;
-	else if (*cursor == '0')
-		sprite->collision = 0;
-	else if (*cursor == '2')
-		sprite->collision = 2;
-	else
-		return (BAD_COLLISION);
-	cursor++;
-	if (*cursor != ' ')
-		return (COLLISION_NOT_FOUND);
-	while (*cursor == ' ')
-		cursor++;
-	if (!ft_isdigit(*cursor) && *cursor != '-')
-		return (BAD_EFFECT);
-	sprite->effect = ft_atoi(cursor);
-	while (ft_isdigit(*cursor) || *cursor == '-')
-		cursor++;
-	if (*cursor != ' ')
-		return (EFFECT_NOT_FOUND);
-	while (*cursor == ' ')
-		cursor++;
-	if (!(set_xmp(&sprite->img, cursor, game->mlx)))
-	{
-		ft_lstdelone(elmt, free_sprite);
-		return (strerror(2));
-	}
-	ft_lstadd_back(&map->sprite, elmt);
-	return (NULL);
+	return (i);
 }
 
 char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
@@ -76,8 +29,7 @@ char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
 	if (img->id != NULL)
 		return (DUPLICATE_TEXTURE);
 	cursor = str + 2;
-	while (*cursor == ' ')
-		cursor++;
+	strmv_wh(&cursor, ' ');
 	if (!(set_xmp(img, cursor, game->mlx)))
 		return (strerror(2));
 	*as_color = 1;

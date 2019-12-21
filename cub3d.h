@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/19 20:15:13 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 17:02:48 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,10 +252,11 @@ char			*get_img_pixel(t_img *img, int x, int y);
 void			img_xpm_put(t_img *img, t_img *xpm, int x, int y);
 
 int				ft_error(int error);
+int				print_error(char *error, t_list *elmt);
+
 int				free_game(t_game *game);
 void			free_maps(void *content);
 int				free_map(char **tab);
-int				print_error(char *error);
 
 int				exit_hook(t_game *game);
 int				key_press_hook(int keycode, t_game *game);
@@ -265,12 +266,13 @@ int				key_hook(int keycode, t_game *game);
 
 int				set_map(int fd, t_game *game);
 char			*is_complete(t_game *game, t_map *map);
-void			init_map(t_map *map);
 char			*extract_line(char *str, t_game *game, t_map *map);
 char			*extract_resolution(char *str, t_game *game);
 char			*extract_texture(char *str, t_game *game, t_map *map);
 
-void			set_dira(t_game *game);
+void			init_map(t_map *map);
+t_list			*init_lstmap(void);
+
 char			*extract_map(int fd, char *line, t_map *map);
 
 char			str_charset(char *str, char *charset);
@@ -281,6 +283,7 @@ char			isdir(char c);
 
 void			init_player(t_player *player);
 void			set_dir(t_player *player, double x, double y);
+void			set_ply(t_game *game);
 void			set_vector(t_vector *vector, double x, double y);
 void			rotate_vector(t_vector *vector, double speed);
 
@@ -293,16 +296,19 @@ t_list			*new_object(double dist, double sprit_x, double sprit_y, char id);
 t_list			*ft_lstadd(t_list **list, t_list *elmt);
 void			free_sprite(void *sprite);
 
+char			add_vector(t_player *ply, double x, double y, char id);
+void			print_sprite(t_game *game, t_info *info, t_sprite *sprite);
+void			put_sprite(t_game *game);
+
 t_list			*new_sprite(void);
 t_sprite		*get_sprite(char *id, t_game *game);
+void			add_step_sprite(t_list *lst);
+
 char			issprite(char id, t_map *map);
 char			issprite_end(char id, t_map *map);
 char			issprite_wall(char id, t_map *map);
 char			issprite_damage(char id, t_map *map);
 char			is_id_forbidden(char id);
-char			add_vector(t_player *ply, double x, double y, char id);
-void			print_sprite(t_game *game, t_info *info, t_sprite *sprite);
-void			put_sprite(t_game *game);
 
 void			sreenshot(t_game *game);
 
@@ -312,7 +318,8 @@ void			init_jauge(t_jauge *jauge, t_minimap *map, t_game *game);
 
 void			skybox(t_game *game, t_ray *ray, int x);
 
-void			damage(t_game *game, int damage);
+void			strmv_if(char **line, char c);
+void			strmv_wh(char **line, char c);
 
 void			move(t_game *game, double move_x, double move_y);
 
@@ -320,5 +327,5 @@ char			*extract_color(char *str, t_game *game, char *as_color, t_map *map);
 char			*extract_sprite(char *str, t_game *game, t_map *map);
 
 void			set_textx(t_info *i, t_sprite *sprite);
-
+int				get_read(int i);
 #endif
