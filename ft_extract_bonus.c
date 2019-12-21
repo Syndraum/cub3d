@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:45:08 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 16:38:59 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 19:24:18 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
 	char	*cursor;
 	t_img	*img;
 
+	if (*as_color == 1)
+		return (DUPLICATE_COLOR);
 	if (!(ft_strncmp(str, "F", 1)))
 		img = &map->floor_text;
 	else

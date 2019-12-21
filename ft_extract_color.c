@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:40:28 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 17:48:50 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 19:32:43 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ char	*extract_color(char *str, t_game *game, char *as_color, t_map *map)
 	t_rgb		*rgb;
 
 	(void)game;
+	if (*as_color == 1)
+		return (DUPLICATE_COLOR);
 	rgb = (!(ft_strncmp(str, "F", 1))) ? &map->floor : &map->ceil;
 	cursor = str + 1;
 	strmv_wh(&cursor, ' ');
 	if (!isnumber(*cursor) || (255 < (value = ft_atoi(cursor))))
 		return (BAD_RED_FORMAT);
 	rgb->red = value;
-	while (isnumber(*cursor))
-		cursor++;
+	strmv_ft(&cursor, isnumber);
 	strmv_if(&cursor, ',');
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
 		return (BAD_GRE_FORMAT);
 	rgb->green = value;
-	while (isnumber(*cursor))
-		cursor++;
+	strmv_ft(&cursor, isnumber);
 	strmv_if(&cursor, ',');
 	if (!isnumber(*cursor) || 255 < (value = ft_atoi(cursor)))
 		return (BAD_BLUE_FORMAT);

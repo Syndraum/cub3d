@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:03:06 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 17:44:53 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 20:23:30 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,30 @@ static char	*analize_map(t_map *m)
 	return (NULL);
 }
 
-char		*extract_map(int fd, char *line, t_map *map)
+char		*extract_map(int fd, char *str, t_map *map)
 {
 	char *error;
 
 	if (!(map->map = ft_calloc(sizeof(char*), 1)))
 		return (strerror(12));
-	if ((error = extract_line_map(line, map)))
+	if ((error = extract_line_map(str, map)))
 		return (error);
-	while ((map->read = get_next_line(fd, &line)) >=
-	0 && ft_strncmp(line, "", 1))
+	while ((map->read = get_next_line(fd, &str)) > 0 || ft_strncmp(str, "", 1))
 	{
-		if (NULL != (error = extract_line_map(line, map)))
+		if (0 == ft_strncmp(str, "=", 1))
+			break ;
+		else if (ft_strncmp(str, "", 1))
 		{
-			free(line);
-			return (error);
+			if (NULL != (error = extract_line_map(str, map)))
+			{
+				free(str);
+				return (error);
+			}
 		}
+		else
+			free(str);
 	}
-	free(line);
+	free(str);
 	if ((error = analize_map(map)))
 		return (error);
 	return (NULL);

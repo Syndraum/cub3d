@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 18:43:39 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 19:50:57 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,37 @@
 # define ALLOC_FAIL "Allocution failed"
 # define LINE_NOT_EMPTY "A line is not empty"
 
-# define DUPLICATE_DEFINITION "Duplicate definition"
-# define WRONG_WIDHT "Wrong widht, definition need to be higher than 0 x 0"
-# define WRONG_HEIGHT "Wrong height, definition need to be higher than 0 x 0"
-# define MISSING_DEFINITON "Definition is missing"
+# define DUPLICATE_DEFINITION "Too many resolution"
+# define WRONG_WIDHT "Wrong widht, need to be above 0"
+# define WRONG_HEIGHT "Wrong height, need to be above 0"
+# define MISSING_DEFINITON "Missing or incomplete resolution"
 
-# define BAD_RED_FORMAT "Bad red format, colors need to be between 0 and 255"
-# define BAD_GRE_FORMAT "Bad green format, colors need to be between 0 and 255"
-# define BAD_BLUE_FORMAT "Bad blue format, colors need to be between 0 and 255"
-# define CEIL_MISSING "Ceil is missing"
-# define FLOOR_MISSING "Floor is missing"
+# define DUPLICATE_COLOR "Too many color argument"
+# define BAD_RED_FORMAT "Wrong red format, need to be between 0 and 255"
+# define BAD_GRE_FORMAT "Wrong green format, need to be between 0 and 255"
+# define BAD_BLUE_FORMAT "Wrong blue format, need to be between 0 and 255"
+# define CEIL_MISSING "Missing ceil argument"
+# define FLOOR_MISSING "Missing floor argument"
 
 # define INVALID_CHAR_MAP "Invalid character in map"
 # define BORDER_MAP_ERROR "Map need to be surrounded by character '1'"
-# define WORNG_LINE_LEN_MAP "Wromg lines lenght in map"
-# define TOO_PLAYER	"Two or more players in map"
-# define MAP_MISSING "Map is missing"
+# define WORNG_LINE_LEN_MAP "Wrong lines lenght in map"
+# define TOO_PLAYER	"Too many players on the map"
+# define PLAYER_MISSING	"Player not found"
+# define MAP_MISSING "Map not found"
 
 # define DUPLICATE_TEXTURE "Duplicate texture"
-# define NO_TEXT_MISSING "North texture is missing"
-# define SO_TEXT_MISSING "South texture is missing"
-# define EA_TEXT_MISSING "East texture is missing"
-# define WE_TEXT_MISSING "West texture is missing"
-# define SRITE_MISSING "Sprite texture is missing"
-# define SPRITE_FORBIDDEN_ID "Forbiddent identifiant"
-# define SPRITE_ID_BE_UNIQUE "Identifiant be unique"
-# define SPRITE_ID_NOT_FOUND "Srite identifiant not found"
-# define BAD_COLLISION "Bad collision setting"
+# define NO_TEXT_MISSING "North texture not found"
+# define SO_TEXT_MISSING "South texture not found"
+# define EA_TEXT_MISSING "East texture not found"
+# define WE_TEXT_MISSING "West texture not found"
+# define SRITE_MISSING "Sprite texture not found"
+# define SPRITE_FORBIDDEN_ID "Forbiddent sprite ID"
+# define SPRITE_ID_BE_UNIQUE "Sprite ID must be unique"
+# define SPRITE_ID_NOT_FOUND "Srite ID not found"
+# define BAD_COLLISION "Wrong collision setting"
 # define COLLISION_NOT_FOUND "Collision setting not found"
-# define BAD_EFFECT "Bad effect setting"
+# define BAD_EFFECT "Wrong effect setting"
 # define EFFECT_NOT_FOUND "Effect setting not found"
 
 typedef enum	e_event
@@ -339,6 +341,7 @@ void			skybox(t_game *game, t_ray *ray, int x);
 
 void			strmv_if(char **line, char c);
 void			strmv_wh(char **line, char c);
+void			strmv_ft(char **line, int (*f)(int));
 
 void			move(t_game *game, double move_x, double move_y);
 

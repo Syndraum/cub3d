@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 14:05:14 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/21 20:23:10 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		set_map(int fd, t_game *game)
 		return (print_error(ALLOC_FAIL, elmt));
 	finish = 0;
 	map = (t_map*)elmt->content;
-	while ((map->read = get_next_line(fd, &line)) == 1 && !finish)
+	while (!finish && (map->read = get_next_line(fd, &line)) == 1)
 	{
 		if (ft_strnstr(line, "1", 1) == line && (finish = 1) == 1)
 		{
@@ -34,10 +34,10 @@ int		set_map(int fd, t_game *game)
 		else if ((error = extract_line(line, game, map)))
 			return (print_error(error, elmt));
 	}
-	free(line);
 	if ((error = is_complete(game, map)))
 		return (print_error(error, elmt));
 	ft_lstadd_back(&game->lst_maps, elmt);
+	printf("END\n");
 	return (get_read(map->read));
 }
 
@@ -61,6 +61,8 @@ char	*is_complete(t_game *game, t_map *map)
 		return (CEIL_MISSING);
 	else if (map->as_floor == 0)
 		return (FLOOR_MISSING);
+	else if (map->pos.x == 0)
+		return (PLAYER_MISSING);
 	return (NULL);
 }
 
@@ -103,8 +105,7 @@ char	*extract_resolution(char *str, t_game *game)
 		return (WRONG_WIDHT);
 	if (game->win.width > MAX_WIDHT)
 		game->win.width = MAX_WIDHT;
-	while (isnumber(*cursor))
-		cursor++;
+	strmv_ft(&cursor, isnumber);
 	while (*cursor == ' ')
 		cursor++;
 	if (0 >= (game->win.height = ft_atoi(cursor)))
