@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 19:43:32 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 20:23:10 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/22 13:33:55 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		set_map(int fd, t_game *game)
 	if ((error = is_complete(game, map)))
 		return (print_error(error, elmt));
 	ft_lstadd_back(&game->lst_maps, elmt);
-	printf("END\n");
 	return (get_read(map->read));
 }
 

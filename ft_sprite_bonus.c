@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:35:59 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 16:45:30 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/22 13:33:24 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char		*verif_effect(t_sprite *sprite, char **cursor)
 
 static	char	*error_free(char *str, t_list *elmt)
 {
-	ft_lstdelone(elmt, free_maps);
+	ft_lstdelone(elmt, free_sprite);
 	return (str);
 }
 
