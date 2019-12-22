@@ -36,7 +36,7 @@ ${NAME}:	${DIR_LIBFT}/libft.a ${OBJS} ${DEFAULT_OBJS} cub3d.h
 	${RM} ${NAME} ${BONUS_OBJS}
 	${CC} -g -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} ${DEFAULT_OBJS} -o ${NAME}
 
-${DIR_LIBFT}/libft.a : ${DIR_LIBFT}
+${DIR_LIBFT}/libft.a :
 	make -C $(DIR_LIBFT)
 
 clean:
@@ -47,7 +47,7 @@ fclean:		clean
 	make -C $(DIR_LIBFT) fclean
 	${RM} ${NAME}
 
-bonus:	${DIR_LIBFT} ${OBJS} ${BONUS_OBJS} cub3d.h
+bonus:	${DIR_LIBFT}/libft.a ${OBJS} ${BONUS_OBJS} cub3d.h
 	${RM} ${NAME} ${DEFAULT_OBJS}
 	${CC} -g -lmlx -framework OpenGL -framework AppKit ${DIR_LIBFT}/libft.a ${OBJS} ${BONUS_OBJS} -o ${NAME}
 
