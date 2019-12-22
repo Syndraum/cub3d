@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 15:24:55 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 15:37:29 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/22 19:09:09 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		free_game(t_game *game)
 		mlx_clear_window(game->mlx, game->win.id);
 		mlx_destroy_window(game->mlx, game->win.id);
 	}
-	system("leaks cub3d");
 	return (0);
 }
 

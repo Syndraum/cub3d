@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 17:53:36 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/22 18:47:47 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	init_game(t_game *game, int *result)
 	game->win.width = 0;
 	game->lst_maps = NULL;
 	game->map = NULL;
-	set_xmp(&game->minimap.img, "./assets/minimap.xpm", game->mlx);
-	set_xmp(&game->jauge.jauge, "assets/jauge.xpm", game->mlx);
-	set_xmp(&game->jauge.life, "assets/life.xpm", game->mlx);
+	set_xmp(&game->minimap.img, "./assets/hud/minimap.xpm", game->mlx);
+	set_xmp(&game->jauge.jauge, "assets/hud/jauge.xpm", game->mlx);
+	set_xmp(&game->jauge.life, "assets/hud/life.xpm", game->mlx);
 	init_player(&game->ply);
 	while (++i < ESCAPE)
 		game->event[i] = 0;
