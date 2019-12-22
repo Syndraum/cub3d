@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 14:11:10 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 15:33:29 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/22 17:01:13 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ void	print_sprite(t_game *g, t_info *i, t_sprite *sprite)
 	{
 		i->text.x = (x - (-i->sprit_widht / 2 + i->sprit_screenx));
 		set_textx(i, sprite);
-		if (x > 0 && x < g->win.width && i->trans.y < g->ply.z_index[x])
+		if (i->trans.y > 0 && x > 0 && x < g->win.width &&
+		i->trans.y < g->ply.z_index[x])
 		{
-			y = i->draw_start.y;
-			while (y < i->draw_end.y)
+			y = i->draw_start.y - 1;
+			while (++y < i->draw_end.y)
 			{
 				d = (y) * 2 - g->win.height + i->sprit_height;
 				i->text.y = ((d * sprite->img.height) / i->sprit_height / 2);
 				pixel = get_img_pixel(&sprite->img, i->text.x, i->text.y);
 				if (*(pixel + 3) == 0)
 					img_pixel_cpy(&g->win.render, x, y, pixel);
-				y++;
 			}
 		}
 		x++;
