@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/23 11:57:57 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 14:24:27 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void		drawray(t_game *game, t_ray *ray, int line)
 	{
 		y = i * 2 - game->win.height + ray->line_h;
 		ray->text.x = ray->wall_x * img->width;
-		ray->text.y = y * img->height / ray->line_h / 2;
+		ray->text.y = ((y * img->height) / ray->line_h) / 2;
 		pixel = get_img_pixel(img, ray->text.x, ray->text.y);
 		img_pixel_cpy(&game->win.render, line, i, pixel);
 	}

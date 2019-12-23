@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:13:51 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/23 12:12:39 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 14:30:28 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static void	printfloor(t_floor *f, t_ray *ray, t_game *game, int x)
 
 	img = &game->map->floor_text;
 	if (ray->pixel_end < 0)
-		ray->pixel_end = game->win.height;
+		ray->pixel_end = game->win.height - 1;
 	y = ray->pixel_end;
-	while (y < game->win.height)
+	while (y < game->win.height - 1)
 	{
 		f->dist_c = game->win.height / (2.0 * (y + 1) - game->win.height);
 		f->weight = f->dist_c / f->dist_w;
