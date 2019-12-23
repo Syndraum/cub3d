@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 19:50:57 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 12:38:51 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,14 @@ typedef struct	s_ray
 	double		camera;
 	t_vector	ray;
 	t_coord		map;
-	t_vector	side_d;
-	t_vector	delta_d;
+	t_vector	side;
+	t_vector	delta;
 	t_coord		step;
 	double		len;
 	int			line_h;
 	int			pixel_start;
 	int			pixel_end;
-	char		wall;
+	char		side_w;
 	double		wall_x;
 	t_coord		text;
 	double		angle;
@@ -151,7 +151,6 @@ typedef struct	s_floor
 	t_vector	curr;
 	t_coord		text;
 	double		dist_w;
-	double		dist_p;
 	double		dist_c;
 	double		weight;
 }				t_floor;
@@ -160,12 +159,12 @@ typedef struct	s_info
 {
 	t_vector	tmp;
 	double		det;
-	t_vector	trans;
-	int			sprit_screenx;
-	int			sprit_height;
-	int			sprit_widht;
-	t_coord		draw_start;
-	t_coord		draw_end;
+	t_vector	rotate;
+	int			screen_x;
+	int			height;
+	int			widht;
+	t_coord		start;
+	t_coord		end;
 	t_coord		text;
 }				t_info;
 
@@ -237,7 +236,7 @@ typedef struct	s_player
 	t_vector	dir;
 	t_vector	plan;
 	t_list		*object;
-	double		*z_index;
+	double		*z_wall;
 }				t_player;
 
 typedef struct	s_game

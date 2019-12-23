@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 14:11:10 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/22 17:01:13 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 12:47:27 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,32 @@ char	add_vector(t_player *ply, double sprit_x, double sprit_y, char id)
 	return (1);
 }
 
-void	print_sprite(t_game *g, t_info *i, t_sprite *sprite)
+void	print_sprite(t_game *g, t_info *s, t_sprite *sprite)
 {
-	int		x;
+	int		i;
+	int		j;
 	int		y;
-	int		d;
 	char	*pixel;
 
-	x = i->draw_start.x;
-	while (x < i->draw_end.x)
+	i = s->start.x;
+	while (i < s->end.x)
 	{
-		i->text.x = (x - (-i->sprit_widht / 2 + i->sprit_screenx));
-		set_textx(i, sprite);
-		if (i->trans.y > 0 && x > 0 && x < g->win.width &&
-		i->trans.y < g->ply.z_index[x])
+		s->text.x = (i - (s->screen_x - s->widht / 2));
+		set_textx(s, sprite);
+		if (s->rotate.y > 0 && i > 0 && i < g->win.width &&
+		s->rotate.y < g->ply.z_wall[i])
 		{
-			y = i->draw_start.y - 1;
-			while (++y < i->draw_end.y)
+			j = s->start.y - 1;
+			while (++j < s->end.y)
 			{
-				d = (y) * 2 - g->win.height + i->sprit_height;
-				i->text.y = ((d * sprite->img.height) / i->sprit_height / 2);
-				pixel = get_img_pixel(&sprite->img, i->text.x, i->text.y);
+				y = j * 2 - g->win.height + s->height;
+				s->text.y = ((y * sprite->img.height) / s->height / 2);
+				pixel = get_img_pixel(&sprite->img, s->text.x, s->text.y);
 				if (*(pixel + 3) == 0)
-					img_pixel_cpy(&g->win.render, x, y, pixel);
+					img_pixel_cpy(&g->win.render, i, j, pixel);
 			}
 		}
-		x++;
+		i++;
 	}
 }
 
@@ -73,11 +73,11 @@ void	set_info(t_player *ply, t_windows *w, t_info *i, t_object *object)
 	i->tmp.x = object->pos.x - ply->x;
 	i->tmp.y = object->pos.y - ply->y;
 	i->det = 1.0 / (ply->plan.x * ply->dir.y - ply->dir.x * ply->plan.y);
-	i->trans.x = i->det * (ply->dir.y * i->tmp.x - ply->dir.x * i->tmp.y);
-	i->trans.y = i->det * (-ply->plan.y * i->tmp.x + ply->plan.x * i->tmp.y);
-	i->sprit_screenx = (int)((w->width / 2) * (1 + i->trans.x / i->trans.y));
-	i->sprit_height = abs((int)(w->height / (i->trans.y)));
-	i->sprit_widht = abs((int)(w->height / (i->trans.y)));
+	i->rotate.x = i->det * (ply->dir.y * i->tmp.x - ply->dir.x * i->tmp.y);
+	i->rotate.y = i->det * (-ply->plan.y * i->tmp.x + ply->plan.x * i->tmp.y);
+	i->screen_x = (int)((w->width / 2) * (1 + i->rotate.x / i->rotate.y));
+	i->height = abs((int)(w->height / (i->rotate.y)));
+	i->widht = abs((int)(w->height / (i->rotate.y)));
 }
 
 void	put_sprite(t_game *game)
@@ -91,18 +91,18 @@ void	put_sprite(t_game *game)
 	{
 		object = (t_object*)lst->content;
 		set_info(&game->ply, &game->win, &info, object);
-		info.draw_start.y = -info.sprit_height / 2 + game->win.height / 2;
-		if (info.draw_start.y < 0)
-			info.draw_start.y = 0;
-		info.draw_end.y = info.sprit_height / 2 + game->win.height / 2;
-		if (info.draw_end.y >= game->win.height)
-			info.draw_end.y = game->win.height - 1;
-		info.draw_start.x = -info.sprit_widht / 2 + info.sprit_screenx;
-		if (info.draw_start.x < 0)
-			info.draw_start.x = 0;
-		info.draw_end.x = info.sprit_height / 2 + info.sprit_screenx;
-		if (info.draw_end.x >= game->win.width)
-			info.draw_end.x = game->win.width - 1;
+		info.start.y = game->win.height / 2 - info.height / 2;
+		if (info.start.y < 0)
+			info.start.y = 0;
+		info.end.y = game->win.height / 2 + info.height / 2;
+		if (info.end.y >= game->win.height)
+			info.end.y = game->win.height - 1;
+		info.start.x = info.screen_x - info.widht / 2;
+		if (info.start.x < 0)
+			info.start.x = 0;
+		info.end.x = info.screen_x + info.height / 2;
+		if (info.end.x >= game->win.width)
+			info.end.x = game->win.width - 1;
 		print_sprite(game, &info, get_sprite(&object->id, game));
 		lst = lst->next;
 	}

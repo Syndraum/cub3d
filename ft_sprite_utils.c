@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 18:16:35 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 15:33:13 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 12:26:37 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	hud(t_game *game)
 
 void	set_textx(t_info *i, t_sprite *sprite)
 {
-	i->text.x = i->text.x * sprite->img.width / i->sprit_widht;
+	i->text.x = i->text.x * sprite->img.width / i->widht;
 }
 
 int		get_read(int i)

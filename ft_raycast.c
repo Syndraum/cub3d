@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 11:10:00 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/22 18:21:41 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 11:57:57 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ static void		drawray(t_game *game, t_ray *ray, int line)
 {
 	int		i;
 	int		j;
-	int		d;
+	int		y;
 	t_img	*img;
 	char	*pixel;
 
 	i = ray->pixel_start - 1;
 	j = ray->pixel_start;
-	img = get_side_texture(game->map, ray->wall);
+	img = get_side_texture(game->map, ray->side_w);
 	while (++i < ray->pixel_end)
 	{
-		d = i * 2 - game->win.height + ray->line_h;
-		ray->text.x = (int)(ray->wall_x * (double)img->width);
-		ray->text.y = ((d * (double)img->height) / (double)ray->line_h) / 2;
+		y = i * 2 - game->win.height + ray->line_h;
+		ray->text.x = ray->wall_x * img->width;
+		ray->text.y = y * img->height / ray->line_h / 2;
 		pixel = get_img_pixel(img, ray->text.x, ray->text.y);
 		img_pixel_cpy(&game->win.render, line, i, pixel);
 	}
@@ -51,13 +51,13 @@ static void		drawray(t_game *game, t_ray *ray, int line)
 static void		set_pixelcord(t_game *game, t_ray *ray)
 {
 	ray->line_h = (int)(game->win.height / ray->len);
-	ray->pixel_start = -ray->line_h / 2 + game->win.height / 2;
+	ray->pixel_start = game->win.height / 2 - ray->line_h / 2;
 	if (ray->pixel_start < 0)
 		ray->pixel_start = 0;
-	ray->pixel_end = ray->line_h / 2 + game->win.height / 2;
+	ray->pixel_end = game->win.height / 2 + ray->line_h / 2;
 	if (ray->pixel_end >= game->win.height)
 		ray->pixel_end = game->win.height - 1;
-	if (ray->wall % 2)
+	if (ray->side_w % 2)
 		ray->wall_x = game->ply.x + ray->len * ray->ray.x;
 	else
 		ray->wall_x = game->ply.y + ray->len * ray->ray.y;
@@ -84,7 +84,7 @@ void			raycasting(t_game *game)
 		exec_dda(&ray, game);
 		set_pixelcord(game, &ray);
 		drawray(game, &ray, x);
-		game->ply.z_index[x] = ray.len;
+		game->ply.z_wall[x] = ray.len;
 	}
 	put_sprite(game);
 	hud(game);

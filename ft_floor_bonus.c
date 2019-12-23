@@ -6,33 +6,33 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:13:51 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/21 18:45:47 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 12:12:39 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	set_beginfloor(t_ray *ray, t_vector *floor)
+static void	set_beginfloor(t_ray *ray, t_vector *init)
 {
-	if (ray->wall == 2)
+	if (ray->side_w == 2)
 	{
-		floor->x = ray->map.x;
-		floor->y = ray->map.y + ray->wall_x;
+		init->x = ray->map.x;
+		init->y = ray->map.y + ray->wall_x;
 	}
-	else if (ray->wall == 0)
+	else if (ray->side_w == 0)
 	{
-		floor->x = ray->map.x + 1.0;
-		floor->y = ray->map.y + ray->wall_x;
+		init->x = ray->map.x + 1.0;
+		init->y = ray->map.y + ray->wall_x;
 	}
-	else if (ray->wall == 3)
+	else if (ray->side_w == 3)
 	{
-		floor->x = ray->map.x + ray->wall_x;
-		floor->y = ray->map.y;
+		init->x = ray->map.x + ray->wall_x;
+		init->y = ray->map.y;
 	}
-	else if (ray->wall == 1)
+	else if (ray->side_w == 1)
 	{
-		floor->x = ray->map.x + ray->wall_x;
-		floor->y = ray->map.y + 1.0;
+		init->x = ray->map.x + ray->wall_x;
+		init->y = ray->map.y + 1.0;
 	}
 }
 
@@ -49,7 +49,7 @@ static void	printfloor(t_floor *f, t_ray *ray, t_game *game, int x)
 	while (y < game->win.height)
 	{
 		f->dist_c = game->win.height / (2.0 * (y + 1) - game->win.height);
-		f->weight = (f->dist_c - f->dist_p) / (f->dist_w - f->dist_p);
+		f->weight = f->dist_c / f->dist_w;
 		f->curr.x = f->weight * f->init.x + (1.0 - f->weight) * game->ply.x;
 		f->curr.y = f->weight * f->init.y + (1.0 - f->weight) * game->ply.y;
 		f->text.x = (int)(f->curr.x * img->width) % img->width;
@@ -66,6 +66,5 @@ void		floor_casting(t_game *game, t_ray *ray, int x)
 
 	set_beginfloor(ray, &floor.init);
 	floor.dist_w = ray->len;
-	floor.dist_p = 0.0;
 	printfloor(&floor, ray, game, x);
 }

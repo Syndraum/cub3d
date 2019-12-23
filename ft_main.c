@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/22 18:47:47 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 11:29:29 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	setup_game(t_game *game)
 {
 	game->map = game->lst_maps->content;
 	set_ply(game);
-	game->ply.z_index = ft_calloc(sizeof(double), game->win.width);
+	game->ply.z_wall = ft_calloc(sizeof(double), game->win.width);
 	set_image(&game->win.render, game->win.width, game->win.height, game->mlx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 15:24:55 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/22 19:09:09 by roalvare         ###   ########.fr       */
+/*   Updated: 2019/12/23 11:29:29 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_maps(void *content)
 
 int		free_game(t_game *game)
 {
-	free(game->ply.z_index);
+	free(game->ply.z_wall);
 	free_image(&game->minimap.img);
 	free_image(&game->jauge.jauge);
 	free_image(&game->jauge.life);
