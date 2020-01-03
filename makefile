@@ -19,7 +19,7 @@ BONUS_OBJS	= ${BONUS:.c=.o}
 
 RM			= rm -f
 
-NAME		= cub3d
+NAME		= Cub3D
 
 CC			= gcc
 

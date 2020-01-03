@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 19:50:29 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/23 12:38:51 by roalvare         ###   ########.fr       */
+/*   Updated: 2020/01/03 20:03:22 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,7 @@ void			skybox(t_game *game, t_ray *ray, int x);
 void			strmv_if(char **line, char c);
 void			strmv_wh(char **line, char c);
 void			strmv_ft(char **line, int (*f)(int));
+int				get_file(const char *filename);
 
 void			move(t_game *game, double move_x, double move_y);
 

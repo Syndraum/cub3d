@@ -6,7 +6,7 @@
 /*   By: roalvare <roalvare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:53:39 by roalvare          #+#    #+#             */
-/*   Updated: 2019/12/23 11:29:29 by roalvare         ###   ########.fr       */
+/*   Updated: 2020/01/03 20:05:04 by roalvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int		main(int argc, char *argv[])
 
 	if (argc < 2)
 		return (ft_error(ENOENT));
-	if (0 > (fd = open(argv[1], O_RDONLY)))
-		return (ft_error(-1));
+	if (EXIT_FAILURE == (fd = get_file(argv[1])))
+		return (fd);
 	if (!(game.mlx = mlx_init()))
 		return (ft_error(-1));
 	init_game(&game, &result);
